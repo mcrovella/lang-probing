@@ -1,0 +1,2738 @@
+{
+  "meta": {
+    "lang_key": "heb",
+    "target_lang_name": "Hebrew",
+    "mode": "full",
+    "top_k": 20,
+    "top_k_collective": 5,
+    "max_pairs": 200,
+    "n_pairs_used": 200,
+    "n_layers": 32,
+    "n_heads": 32,
+    "head_dim": 128,
+    "model_id": "meta-llama/Llama-3.1-8B",
+    "gcm_source_dirs": [
+      "Arabic__Hebrew",
+      "English__Hebrew",
+      "French__Hebrew",
+      "German__Hebrew",
+      "Hindi__Hebrew",
+      "Spanish__Hebrew",
+      "Turkish__Hebrew"
+    ],
+    "top_heads": [
+      {
+        "layer": 17,
+        "head": 21,
+        "mean_abs_ie_agg": 0.2738955318927765,
+        "mean_signed_ie_agg": -0.22359661757946014
+      },
+      {
+        "layer": 30,
+        "head": 24,
+        "mean_abs_ie_agg": 0.24241197109222412,
+        "mean_signed_ie_agg": -0.20536789298057556
+      },
+      {
+        "layer": 16,
+        "head": 1,
+        "mean_abs_ie_agg": 0.20761682093143463,
+        "mean_signed_ie_agg": -0.1373801827430725
+      },
+      {
+        "layer": 31,
+        "head": 2,
+        "mean_abs_ie_agg": 0.19836534559726715,
+        "mean_signed_ie_agg": 0.16441352665424347
+      },
+      {
+        "layer": 30,
+        "head": 25,
+        "mean_abs_ie_agg": 0.19586621224880219,
+        "mean_signed_ie_agg": 0.16732822358608246
+      },
+      {
+        "layer": 13,
+        "head": 18,
+        "mean_abs_ie_agg": 0.1950923353433609,
+        "mean_signed_ie_agg": -0.052719566971063614
+      },
+      {
+        "layer": 20,
+        "head": 23,
+        "mean_abs_ie_agg": 0.16713590919971466,
+        "mean_signed_ie_agg": -0.11625296622514725
+      },
+      {
+        "layer": 15,
+        "head": 6,
+        "mean_abs_ie_agg": 0.16466917097568512,
+        "mean_signed_ie_agg": 0.13838979601860046
+      },
+      {
+        "layer": 31,
+        "head": 1,
+        "mean_abs_ie_agg": 0.16369059681892395,
+        "mean_signed_ie_agg": -0.14128804206848145
+      },
+      {
+        "layer": 15,
+        "head": 17,
+        "mean_abs_ie_agg": 0.15852399170398712,
+        "mean_signed_ie_agg": -0.1202077716588974
+      },
+      {
+        "layer": 16,
+        "head": 0,
+        "mean_abs_ie_agg": 0.15286016464233398,
+        "mean_signed_ie_agg": 0.11418710649013519
+      },
+      {
+        "layer": 14,
+        "head": 29,
+        "mean_abs_ie_agg": 0.15279272198677063,
+        "mean_signed_ie_agg": -0.07630201429128647
+      },
+      {
+        "layer": 14,
+        "head": 22,
+        "mean_abs_ie_agg": 0.15120144188404083,
+        "mean_signed_ie_agg": 0.12992224097251892
+      },
+      {
+        "layer": 16,
+        "head": 25,
+        "mean_abs_ie_agg": 0.14330874383449554,
+        "mean_signed_ie_agg": -0.10142670571804047
+      },
+      {
+        "layer": 14,
+        "head": 31,
+        "mean_abs_ie_agg": 0.14231525361537933,
+        "mean_signed_ie_agg": -0.045380447059869766
+      },
+      {
+        "layer": 13,
+        "head": 27,
+        "mean_abs_ie_agg": 0.14098693430423737,
+        "mean_signed_ie_agg": -0.07515410333871841
+      },
+      {
+        "layer": 17,
+        "head": 27,
+        "mean_abs_ie_agg": 0.1404518336057663,
+        "mean_signed_ie_agg": 0.06421022117137909
+      },
+      {
+        "layer": 13,
+        "head": 13,
+        "mean_abs_ie_agg": 0.13464002311229706,
+        "mean_signed_ie_agg": 0.06927832961082458
+      },
+      {
+        "layer": 17,
+        "head": 24,
+        "mean_abs_ie_agg": 0.13213296234607697,
+        "mean_signed_ie_agg": -0.0457233190536499
+      },
+      {
+        "layer": 13,
+        "head": 4,
+        "mean_abs_ie_agg": 0.12938790023326874,
+        "mean_signed_ie_agg": -0.056929826736450195
+      }
+    ],
+    "control_heads": [
+      {
+        "layer": 17,
+        "head": 20
+      },
+      {
+        "layer": 30,
+        "head": 3
+      },
+      {
+        "layer": 16,
+        "head": 2
+      },
+      {
+        "layer": 31,
+        "head": 25
+      },
+      {
+        "layer": 30,
+        "head": 8
+      },
+      {
+        "layer": 13,
+        "head": 8
+      },
+      {
+        "layer": 20,
+        "head": 7
+      },
+      {
+        "layer": 15,
+        "head": 4
+      },
+      {
+        "layer": 31,
+        "head": 25
+      },
+      {
+        "layer": 15,
+        "head": 3
+      },
+      {
+        "layer": 16,
+        "head": 23
+      },
+      {
+        "layer": 14,
+        "head": 24
+      },
+      {
+        "layer": 14,
+        "head": 30
+      },
+      {
+        "layer": 16,
+        "head": 19
+      },
+      {
+        "layer": 14,
+        "head": 2
+      },
+      {
+        "layer": 13,
+        "head": 21
+      },
+      {
+        "layer": 17,
+        "head": 13
+      },
+      {
+        "layer": 13,
+        "head": 1
+      },
+      {
+        "layer": 17,
+        "head": 0
+      },
+      {
+        "layer": 13,
+        "head": 2
+      }
+    ],
+    "pair_meta": [
+      {
+        "id": "heb_SV-P_01430",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01364",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_00815",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-#_01289",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-G_01748",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_00302",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_01125",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_01436",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_00001",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00018",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-G_00682",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-#_00907",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01411",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01981",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-G_01449",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_00655",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_01399",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-G_01719",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_01839",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-#_00349",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00887",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00875",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-G_00977",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_01949",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-#_00369",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01857",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_02266",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_01885",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01869",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_02071",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_00138",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_00407",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_02247",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_00851",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-G_01941",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_00963",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-#_00054",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00484",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_01673",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-G_01791",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_02011",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_00434",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00334",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-G_02080",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_01140",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_02126",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-G_01930",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_02010",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-P_01599",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-G_01740",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_00107",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_00536",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_00254",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_00045",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_02300",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_01613",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-P_01983",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-G_00708",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-#_00853",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00870",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00860",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_02049",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-G_01467",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_02054",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-#_00929",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_01164",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_00843",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00154",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_01190",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-#_00037",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01361",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_02283",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-#_02322",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_00255",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-G_01760",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_02320",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_01186",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_01875",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-#_00371",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00100",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-G_00600",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_02117",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_00543",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_01076",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_01811",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_00835",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_01464",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-#_00358",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00882",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01610",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-P_00267",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01883",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_00563",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_00594",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-#_01686",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01000",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-#_00049",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01807",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_00023",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-G_00741",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_01747",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_01098",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-G_00788",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_01385",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-#_01191",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01448",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_00303",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_01282",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-G_00969",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_01632",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-#_00408",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01984",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_02316",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-#_01296",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-G_00539",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_02153",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-#_00395",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01980",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_00139",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_01689",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_00885",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00060",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_02235",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_00274",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_01117",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_02229",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01458",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_01478",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_02058",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_02285",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_00943",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_02025",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_00184",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_00230",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_01102",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_00159",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01116",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-#_00924",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_01167",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-#_00903",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01851",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_01284",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00372",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00351",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01355",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_00276",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-G_02147",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-P_00217",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SP-G_00627",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_00420",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00471",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01593",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-G_00783",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_02029",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_00213",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-#_00178",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_01573",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-#_00409",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01829",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_02018",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-G_01112",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-G_00697",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_01069",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_00534",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_01447",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-#_01226",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01511",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_01563",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-G_01915",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-P_00268",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01581",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SP-G_01782",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SP-G_01926",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-#_00352",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_01687",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01039",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_01486",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_00734",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-#_02248",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_02168",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_01292",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_00806",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_00208",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-P_01836",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-#_01252",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SP-#_00390",
+        "phenomenon": "SP-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-P_01611",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-P_00291",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "heb_SV-P_01640",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "heb_SV-#_01241",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "heb_SV-#_00185",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SP-G_00794",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-G_00973",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SV-#_00209",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_00588",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-G_00996",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_01909",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "heb_SP-G_00612",
+        "phenomenon": "SP-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "heb_SV-#_02274",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Plur",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "heb_SV-G_01531",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      }
+    ],
+    "total_elapsed_s": 422.2979943752289
+  },
+  "conditions": [
+    {
+      "name": "baseline",
+      "ablations": [],
+      "n_pairs": 200,
+      "mean_delta": 11.483163833618164,
+      "std_delta": 7.614686012268066,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.827493667602539
+    },
+    {
+      "name": "top_rank01_L17H21_mean",
+      "ablations": [
+        [
+          17,
+          21,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.487129211425781,
+      "std_delta": 7.617690086364746,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.028897047042847,
+      "mean_diff_from_baseline": 0.003964834846556187,
+      "mean_abs_diff_from_baseline": 0.06419923901557922,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.3400000035762787,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank02_L30H24_mean",
+      "ablations": [
+        [
+          30,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.496367454528809,
+      "std_delta": 7.666368007659912,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.03901219367981,
+      "mean_diff_from_baseline": 0.013203115202486515,
+      "mean_abs_diff_from_baseline": 0.09585937857627869,
+      "max_abs_diff": 0.40625,
+      "frac_decreased": 0.3799999952316284,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank03_L16H01_mean",
+      "ablations": [
+        [
+          16,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.49039077758789,
+      "std_delta": 7.618483543395996,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.042992353439331,
+      "mean_diff_from_baseline": 0.007226565852761269,
+      "mean_abs_diff_from_baseline": 0.06175782158970833,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.33500000834465027,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank04_L31H02_mean",
+      "ablations": [
+        [
+          31,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.5892972946167,
+      "std_delta": 7.664291858673096,
+      "median_delta": 9.25,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.964134693145752,
+      "mean_diff_from_baseline": 0.10613281279802322,
+      "mean_abs_diff_from_baseline": 0.14628908038139343,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.14000000059604645,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank05_L30H25_mean",
+      "ablations": [
+        [
+          30,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.453378677368164,
+      "std_delta": 7.523439884185791,
+      "median_delta": 9.25,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.015614032745361,
+      "mean_diff_from_baseline": -0.029785146936774254,
+      "mean_abs_diff_from_baseline": 0.14287112653255463,
+      "max_abs_diff": 1.15625,
+      "frac_decreased": 0.4300000071525574,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank06_L13H18_mean",
+      "ablations": [
+        [
+          13,
+          18,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.49869155883789,
+      "std_delta": 7.609066486358643,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.031151056289673,
+      "mean_diff_from_baseline": 0.015527346171438694,
+      "mean_abs_diff_from_baseline": 0.09029299765825272,
+      "max_abs_diff": 1.6875,
+      "frac_decreased": 0.36000001430511475,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank07_L20H23_mean",
+      "ablations": [
+        [
+          20,
+          23,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.485605239868164,
+      "std_delta": 7.622908115386963,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.024891376495361,
+      "mean_diff_from_baseline": 0.0024414092767983675,
+      "mean_abs_diff_from_baseline": 0.05525394529104233,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.32499998807907104,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank08_L15H06_mean",
+      "ablations": [
+        [
+          15,
+          6,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.571269989013672,
+      "std_delta": 7.648157119750977,
+      "median_delta": 9.4375,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.014845609664917,
+      "mean_diff_from_baseline": 0.0881054699420929,
+      "mean_abs_diff_from_baseline": 0.17802734673023224,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.2549999952316284,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank09_L31H01_mean",
+      "ablations": [
+        [
+          31,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.221210479736328,
+      "std_delta": 7.560408115386963,
+      "median_delta": 8.75,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.00377607345581,
+      "mean_diff_from_baseline": -0.26195311546325684,
+      "mean_abs_diff_from_baseline": 0.3030468821525574,
+      "max_abs_diff": 2.28125,
+      "frac_decreased": 0.7799999713897705,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank10_L15H17_mean",
+      "ablations": [
+        [
+          15,
+          17,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.48812484741211,
+      "std_delta": 7.609311103820801,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.017225980758667,
+      "mean_diff_from_baseline": 0.00496094161644578,
+      "mean_abs_diff_from_baseline": 0.06464844942092896,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.36000001430511475,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank11_L16H00_mean",
+      "ablations": [
+        [
+          16,
+          0,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.503281593322754,
+      "std_delta": 7.6224164962768555,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.954853296279907,
+      "mean_diff_from_baseline": 0.02011718600988388,
+      "mean_abs_diff_from_baseline": 0.07550782710313797,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.28999999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank12_L14H29_mean",
+      "ablations": [
+        [
+          14,
+          29,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.471308708190918,
+      "std_delta": 7.613152980804443,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.02449655532837,
+      "mean_diff_from_baseline": -0.011855480261147022,
+      "mean_abs_diff_from_baseline": 0.07033206522464752,
+      "max_abs_diff": 0.3125,
+      "frac_decreased": 0.38999998569488525,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank13_L14H22_mean",
+      "ablations": [
+        [
+          14,
+          22,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.4906644821167,
+      "std_delta": 7.617403507232666,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.034637689590454,
+      "mean_diff_from_baseline": 0.007499998435378075,
+      "mean_abs_diff_from_baseline": 0.06484376639127731,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.33000001311302185,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank14_L16H25_mean",
+      "ablations": [
+        [
+          16,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.486640930175781,
+      "std_delta": 7.6161041259765625,
+      "median_delta": 9.0,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.028067588806152,
+      "mean_diff_from_baseline": 0.003476554760709405,
+      "mean_abs_diff_from_baseline": 0.07621095329523087,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.35499998927116394,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank15_L14H31_mean",
+      "ablations": [
+        [
+          14,
+          31,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.48388671875,
+      "std_delta": 7.606725215911865,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.038842916488647,
+      "mean_diff_from_baseline": 0.0007226592279039323,
+      "mean_abs_diff_from_baseline": 0.07408205419778824,
+      "max_abs_diff": 0.5,
+      "frac_decreased": 0.36000001430511475,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank16_L13H27_mean",
+      "ablations": [
+        [
+          13,
+          27,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.4912109375,
+      "std_delta": 7.6229352951049805,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.029472827911377,
+      "mean_diff_from_baseline": 0.008046871982514858,
+      "mean_abs_diff_from_baseline": 0.06390628218650818,
+      "max_abs_diff": 0.3750009536743164,
+      "frac_decreased": 0.3100000023841858,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank17_L17H27_mean",
+      "ablations": [
+        [
+          17,
+          27,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.497968673706055,
+      "std_delta": 7.621010780334473,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.019407033920288,
+      "mean_diff_from_baseline": 0.014804679900407791,
+      "mean_abs_diff_from_baseline": 0.07058596611022949,
+      "max_abs_diff": 0.28125,
+      "frac_decreased": 0.28999999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank18_L13H13_mean",
+      "ablations": [
+        [
+          13,
+          13,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.486425399780273,
+      "std_delta": 7.633650779724121,
+      "median_delta": 9.1875,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.98811650276184,
+      "mean_diff_from_baseline": 0.0032617063261568546,
+      "mean_abs_diff_from_baseline": 0.09498048573732376,
+      "max_abs_diff": 1.1875,
+      "frac_decreased": 0.3700000047683716,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank19_L17H24_mean",
+      "ablations": [
+        [
+          17,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.48324203491211,
+      "std_delta": 7.61160945892334,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.042236566543579,
+      "mean_diff_from_baseline": 7.812320836819708e-05,
+      "mean_abs_diff_from_baseline": 0.05703127011656761,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.36000001430511475,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank20_L13H04_mean",
+      "ablations": [
+        [
+          13,
+          4,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.487753868103027,
+      "std_delta": 7.621698379516602,
+      "median_delta": 9.0,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.016016006469727,
+      "mean_diff_from_baseline": 0.004589845426380634,
+      "mean_abs_diff_from_baseline": 0.07169923931360245,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.36000001430511475,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank01_L17H20_mean",
+      "ablations": [
+        [
+          17,
+          20,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.472460746765137,
+      "std_delta": 7.612224578857422,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.030614852905273,
+      "mean_diff_from_baseline": -0.01070313435047865,
+      "mean_abs_diff_from_baseline": 0.09000001102685928,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.39500001072883606,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank02_L30H03_mean",
+      "ablations": [
+        [
+          30,
+          3,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.497851371765137,
+      "std_delta": 7.615105152130127,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.989701509475708,
+      "mean_diff_from_baseline": 0.01468750461935997,
+      "mean_abs_diff_from_baseline": 0.04304687678813934,
+      "max_abs_diff": 0.1875,
+      "frac_decreased": 0.20000000298023224,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank03_L16H02_mean",
+      "ablations": [
+        [
+          16,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.505566596984863,
+      "std_delta": 7.624189853668213,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.033468961715698,
+      "mean_diff_from_baseline": 0.02240234613418579,
+      "mean_abs_diff_from_baseline": 0.06880861520767212,
+      "max_abs_diff": 0.296875,
+      "frac_decreased": 0.2549999952316284,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank04_L31H25_mean",
+      "ablations": [
+        [
+          31,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.552988052368164,
+      "std_delta": 7.642505168914795,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.005666017532349,
+      "mean_diff_from_baseline": 0.06982419639825821,
+      "mean_abs_diff_from_baseline": 0.08998049050569534,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.13500000536441803,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank05_L30H08_mean",
+      "ablations": [
+        [
+          30,
+          8,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.488984107971191,
+      "std_delta": 7.617959976196289,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.928497552871704,
+      "mean_diff_from_baseline": 0.005820299964398146,
+      "mean_abs_diff_from_baseline": 0.05753907561302185,
+      "max_abs_diff": 0.4375,
+      "frac_decreased": 0.30000001192092896,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank06_L13H08_mean",
+      "ablations": [
+        [
+          13,
+          8,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.474823951721191,
+      "std_delta": 7.612693786621094,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.00201416015625,
+      "mean_diff_from_baseline": -0.008339844644069672,
+      "mean_abs_diff_from_baseline": 0.09048829972743988,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.4000000059604645,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank07_L20H07_mean",
+      "ablations": [
+        [
+          20,
+          7,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.493555068969727,
+      "std_delta": 7.627243518829346,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.015269994735718,
+      "mean_diff_from_baseline": 0.010390620678663254,
+      "mean_abs_diff_from_baseline": 0.06007813289761543,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.28999999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank08_L15H04_mean",
+      "ablations": [
+        [
+          15,
+          4,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.461015701293945,
+      "std_delta": 7.603173732757568,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.016624689102173,
+      "mean_diff_from_baseline": -0.022148435935378075,
+      "mean_abs_diff_from_baseline": 0.09316407889127731,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.4749999940395355,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank09_L31H25_mean",
+      "ablations": [
+        [
+          31,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.552988052368164,
+      "std_delta": 7.642505168914795,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.015413522720337,
+      "mean_diff_from_baseline": 0.06982419639825821,
+      "mean_abs_diff_from_baseline": 0.08998049050569534,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.13500000536441803,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank10_L15H03_mean",
+      "ablations": [
+        [
+          15,
+          3,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.49007797241211,
+      "std_delta": 7.6255412101745605,
+      "median_delta": 9.1875,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.955723524093628,
+      "mean_diff_from_baseline": 0.006914052180945873,
+      "mean_abs_diff_from_baseline": 0.06269532442092896,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.3199999928474426,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank11_L16H23_mean",
+      "ablations": [
+        [
+          16,
+          23,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.487323760986328,
+      "std_delta": 7.617231845855713,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.872051239013672,
+      "mean_diff_from_baseline": 0.004160156939178705,
+      "mean_abs_diff_from_baseline": 0.06251955032348633,
+      "max_abs_diff": 0.3125,
+      "frac_decreased": 0.3199999928474426,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank12_L14H24_mean",
+      "ablations": [
+        [
+          14,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.483320236206055,
+      "std_delta": 7.626072883605957,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.839431762695312,
+      "mean_diff_from_baseline": 0.00015624880325049162,
+      "mean_abs_diff_from_baseline": 0.0871874988079071,
+      "max_abs_diff": 0.5,
+      "frac_decreased": 0.375,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank13_L14H30_mean",
+      "ablations": [
+        [
+          14,
+          30,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.488691329956055,
+      "std_delta": 7.6321635246276855,
+      "median_delta": 9.1875,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.879834413528442,
+      "mean_diff_from_baseline": 0.005527344532310963,
+      "mean_abs_diff_from_baseline": 0.0755273699760437,
+      "max_abs_diff": 0.875,
+      "frac_decreased": 0.32499998807907104,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank14_L16H19_mean",
+      "ablations": [
+        [
+          16,
+          19,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.502460479736328,
+      "std_delta": 7.611360549926758,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.873607635498047,
+      "mean_diff_from_baseline": 0.019296884536743164,
+      "mean_abs_diff_from_baseline": 0.08304688334465027,
+      "max_abs_diff": 0.3125,
+      "frac_decreased": 0.3199999928474426,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank15_L14H02_mean",
+      "ablations": [
+        [
+          14,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.474003791809082,
+      "std_delta": 7.6198225021362305,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.870397329330444,
+      "mean_diff_from_baseline": -0.00916016660630703,
+      "mean_abs_diff_from_baseline": 0.07568361610174179,
+      "max_abs_diff": 0.5625,
+      "frac_decreased": 0.4000000059604645,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank16_L13H21_mean",
+      "ablations": [
+        [
+          13,
+          21,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.490957260131836,
+      "std_delta": 7.626389026641846,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.825360536575317,
+      "mean_diff_from_baseline": 0.007792988326400518,
+      "mean_abs_diff_from_baseline": 0.06466799974441528,
+      "max_abs_diff": 0.28125,
+      "frac_decreased": 0.32499998807907104,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank17_L17H13_mean",
+      "ablations": [
+        [
+          17,
+          13,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.461172103881836,
+      "std_delta": 7.613918781280518,
+      "median_delta": 9.1875,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.84006643295288,
+      "mean_diff_from_baseline": -0.02199220098555088,
+      "mean_abs_diff_from_baseline": 0.08714845031499863,
+      "max_abs_diff": 0.53125,
+      "frac_decreased": 0.4650000035762787,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank18_L13H01_mean",
+      "ablations": [
+        [
+          13,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.5,
+      "std_delta": 7.614797115325928,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.804098844528198,
+      "mean_diff_from_baseline": 0.01683593913912773,
+      "mean_abs_diff_from_baseline": 0.08292972296476364,
+      "max_abs_diff": 1.4375,
+      "frac_decreased": 0.3499999940395355,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank19_L17H00_mean",
+      "ablations": [
+        [
+          17,
+          0,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.4951753616333,
+      "std_delta": 7.622056007385254,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.847860336303711,
+      "mean_diff_from_baseline": 0.012011732906103134,
+      "mean_abs_diff_from_baseline": 0.0581054724752903,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.28999999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank20_L13H02_mean",
+      "ablations": [
+        [
+          13,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.4761323928833,
+      "std_delta": 7.619235038757324,
+      "median_delta": 9.0625,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 8.869431734085083,
+      "mean_diff_from_baseline": -0.007031251210719347,
+      "mean_abs_diff_from_baseline": 0.08484378457069397,
+      "max_abs_diff": 0.28125,
+      "frac_decreased": 0.4050000011920929,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_collective_k5_mean",
+      "ablations": [
+        [
+          17,
+          21,
+          "mean"
+        ],
+        [
+          30,
+          24,
+          "mean"
+        ],
+        [
+          16,
+          1,
+          "mean"
+        ],
+        [
+          31,
+          2,
+          "mean"
+        ],
+        [
+          30,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.549901962280273,
+      "std_delta": 7.6093902587890625,
+      "median_delta": 9.3125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.145899057388306,
+      "mean_diff_from_baseline": 0.06673829257488251,
+      "mean_abs_diff_from_baseline": 0.18048828840255737,
+      "max_abs_diff": 1.375,
+      "frac_decreased": 0.32499998807907104,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_collective_k5_mean",
+      "ablations": [
+        [
+          17,
+          20,
+          "mean"
+        ],
+        [
+          30,
+          3,
+          "mean"
+        ],
+        [
+          16,
+          2,
+          "mean"
+        ],
+        [
+          31,
+          25,
+          "mean"
+        ],
+        [
+          30,
+          8,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.544258117675781,
+      "std_delta": 7.631393909454346,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.11701226234436,
+      "mean_diff_from_baseline": 0.061093758791685104,
+      "mean_abs_diff_from_baseline": 0.11957032233476639,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.24500000476837158,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_collective_signedPOS_n7_mean",
+      "ablations": [
+        [
+          31,
+          2,
+          "mean"
+        ],
+        [
+          30,
+          25,
+          "mean"
+        ],
+        [
+          15,
+          6,
+          "mean"
+        ],
+        [
+          16,
+          0,
+          "mean"
+        ],
+        [
+          14,
+          22,
+          "mean"
+        ],
+        [
+          17,
+          27,
+          "mean"
+        ],
+        [
+          13,
+          13,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.639433860778809,
+      "std_delta": 7.614048957824707,
+      "median_delta": 9.625,
+      "frac_pos": 0.9750000238418579,
+      "elapsed_s": 9.395222902297974,
+      "mean_diff_from_baseline": 0.15626955032348633,
+      "mean_abs_diff_from_baseline": 0.29126954078674316,
+      "max_abs_diff": 1.8125,
+      "frac_decreased": 0.25,
+      "frac_sign_flip": 0.004999999888241291
+    },
+    {
+      "name": "top_collective_signedNEG_n13_mean",
+      "ablations": [
+        [
+          17,
+          21,
+          "mean"
+        ],
+        [
+          30,
+          24,
+          "mean"
+        ],
+        [
+          16,
+          1,
+          "mean"
+        ],
+        [
+          13,
+          18,
+          "mean"
+        ],
+        [
+          20,
+          23,
+          "mean"
+        ],
+        [
+          31,
+          1,
+          "mean"
+        ],
+        [
+          15,
+          17,
+          "mean"
+        ],
+        [
+          14,
+          29,
+          "mean"
+        ],
+        [
+          16,
+          25,
+          "mean"
+        ],
+        [
+          14,
+          31,
+          "mean"
+        ],
+        [
+          13,
+          27,
+          "mean"
+        ],
+        [
+          17,
+          24,
+          "mean"
+        ],
+        [
+          13,
+          4,
+          "mean"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.208632469177246,
+      "std_delta": 7.5708417892456055,
+      "median_delta": 8.6875,
+      "frac_pos": 0.9750000238418579,
+      "elapsed_s": 9.571073770523071,
+      "mean_diff_from_baseline": -0.2745312452316284,
+      "mean_abs_diff_from_baseline": 0.3689843714237213,
+      "max_abs_diff": 2.6875,
+      "frac_decreased": 0.7450000047683716,
+      "frac_sign_flip": 0.004999999888241291
+    },
+    {
+      "name": "top_collective_k5_zero",
+      "ablations": [
+        [
+          17,
+          21,
+          "zero"
+        ],
+        [
+          30,
+          24,
+          "zero"
+        ],
+        [
+          16,
+          1,
+          "zero"
+        ],
+        [
+          31,
+          2,
+          "zero"
+        ],
+        [
+          30,
+          25,
+          "zero"
+        ]
+      ],
+      "n_pairs": 200,
+      "mean_delta": 11.430527687072754,
+      "std_delta": 7.5486884117126465,
+      "median_delta": 9.125,
+      "frac_pos": 0.9800000190734863,
+      "elapsed_s": 9.094042778015137,
+      "mean_diff_from_baseline": -0.05263672024011612,
+      "mean_abs_diff_from_baseline": 0.19095705449581146,
+      "max_abs_diff": 1.375,
+      "frac_decreased": 0.5099999904632568,
+      "frac_sign_flip": 0.0
+    }
+  ]
+}

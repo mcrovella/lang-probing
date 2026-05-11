@@ -6,7 +6,7 @@
 
 Take the top 20 attention heads by aggregated `mean_abs_ie` across all 7 `*__L` GCM directions (excluding self-source) per target language L. Score each Multi-BLIMP minimal pair as Δ = logp(correct_token | prefix) − logp(incorrect_token | prefix) at the prefix-final position. Run mean-ablation conditions (replace the head's `o_proj.input` slice with its position-averaged mean over BLIMP-L) and compare against (a) stratified random controls (same layer, head excluded from top-20), (b) sign-split top heads (positive vs negative `mean_signed_ie_agg`), and (c) zero-ablation spot check. n=400 per language. Llama-3.1-8B bf16.
 
-## Cross-language results (6/8 langs; heb + hin OOM'd, retry submitted)
+## Cross-language results (7/8 langs; hin retry still running)
 
 Δ change from baseline per condition (more negative = ablation hurt grammaticality more):
 
@@ -18,6 +18,7 @@ Take the top 20 attention heads by aggregated `mean_abs_ie` across all 7 `*__L` 
 | fra  | 400 | +9.16    | −0.01      | −0.01       | −0.01      | +0.09 (n=4)            | **−0.28 (n=16)**       |
 | spa  | 400 | +9.61    | +0.02      | −0.01       | +0.03      | +0.10 (n=6)            | **−0.12 (n=14)**       |
 | tur  | 400 | +9.56    | +0.05      | +0.02       | +0.01      | +0.18 (n=5)            | **−0.65 (n=15)**       |
+| heb  | 200 | +11.48   | +0.07      | +0.06       | −0.05      | +0.16 (n=7)            | **−0.28 (n=13)**       |
 
 ## Key findings
 
