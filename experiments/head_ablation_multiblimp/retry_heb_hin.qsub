@@ -1,0 +1,38 @@
+#!/bin/bash -l
+
+# Retry heb + hin with reduced max_pairs (memory leak with n=400 OOM'd 80GB).
+
+#$ -N habl_retry
+#$ -t 1-2
+#$ -l h_rt=1:30:00
+#$ -l gpus=1
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(_ heb hin)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== Retry task ${SGE_TASK_ID}: lang=${LANG} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --top_k 20 \
+    --top_k_collective 5 \
+    --max_pairs 200 \
+    --mode full
+

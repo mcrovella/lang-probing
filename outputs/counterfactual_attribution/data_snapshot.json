@@ -43,5 +43,44 @@
       "Gender|Masc": 110,
       "Person|3": 373
     }
+  },
+  "eng": {
+    "n_pairs": 770,
+    "per_cell": {
+      "Person|3": 453,
+      "Number|Plur": 216,
+      "Number|Sing": 101
+    }
+  },
+  "deu": {
+    "n_pairs": 1830,
+    "per_cell": {
+      "Number|Sing": 400,
+      "Person|2": 30,
+      "Person|3": 500,
+      "Person|1": 500,
+      "Number|Plur": 400
+    }
+  },
+  "heb": {
+    "n_pairs": 2244,
+    "per_cell": {
+      "Number|Sing": 499,
+      "Gender|Fem": 402,
+      "Number|Plur": 355,
+      "Person|3": 500,
+      "Gender|Masc": 484,
+      "Person|1": 4
+    }
+  },
+  "hin": {
+    "n_pairs": 1439,
+    "per_cell": {
+      "Number|Sing": 304,
+      "Gender|Fem": 204,
+      "Person|3": 411,
+      "Gender|Masc": 318,
+      "Number|Plur": 202
+    }
   }
 }

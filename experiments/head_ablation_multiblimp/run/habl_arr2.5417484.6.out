@@ -1,0 +1,125 @@
+=== Array2 task 6: lang=spa (host=scc-212) ===
+NVIDIA A100 80GB PCIe, 81920 MiB
+NVIDIA A100 80GB PCIe, 81920 MiB
+NVIDIA A100 80GB PCIe, 81920 MiB
+NVIDIA A100 80GB PCIe, 81920 MiB
+2026-05-11 05:20:19,856 INFO === head_ablation_multiblimp: target=Spanish (spa) mode=full ===
+2026-05-11 05:20:19,856 INFO     top_k=20 top_k_collective=5 max_pairs=400
+2026-05-11 05:20:20,034 INFO GPU compute capability: 8.0
+2026-05-11 05:20:20,196 INFO Aggregated over 7 dirs: ['Arabic__Spanish', 'English__Spanish', 'French__Spanish', 'German__Spanish', 'Hebrew__Spanish', 'Hindi__Spanish', 'Turkish__Spanish']
+2026-05-11 05:20:20,196 INFO Top-20 heads:
+2026-05-11 05:20:20,196 INFO   rank= 1  L30.H25  abs=0.4310  signed=+0.4120
+2026-05-11 05:20:20,196 INFO   rank= 2  L30.H27  abs=0.4162  signed=-0.3941
+2026-05-11 05:20:20,196 INFO   rank= 3  L17.H21  abs=0.3516  signed=-0.3097
+2026-05-11 05:20:20,196 INFO   rank= 4  L28.H10  abs=0.3025  signed=-0.2729
+2026-05-11 05:20:20,196 INFO   rank= 5  L23.H28  abs=0.2837  signed=-0.2547
+2026-05-11 05:20:20,196 INFO   rank= 6  L20.H23  abs=0.2277  signed=-0.1840
+2026-05-11 05:20:20,196 INFO   rank= 7  L31.H 3  abs=0.2104  signed=-0.1835
+2026-05-11 05:20:20,196 INFO   rank= 8  L15.H17  abs=0.2097  signed=-0.1701
+2026-05-11 05:20:20,196 INFO   rank= 9  L13.H18  abs=0.1981  signed=+0.0008
+2026-05-11 05:20:20,196 INFO   rank=10  L15.H 6  abs=0.1960  signed=+0.1846
+2026-05-11 05:20:20,196 INFO   rank=11  L16.H 1  abs=0.1789  signed=-0.1178
+2026-05-11 05:20:20,196 INFO   rank=12  L14.H29  abs=0.1757  signed=-0.0561
+2026-05-11 05:20:20,196 INFO   rank=13  L26.H23  abs=0.1753  signed=-0.1304
+2026-05-11 05:20:20,196 INFO   rank=14  L28.H11  abs=0.1738  signed=+0.1550
+2026-05-11 05:20:20,196 INFO   rank=15  L13.H27  abs=0.1726  signed=-0.0982
+2026-05-11 05:20:20,196 INFO   rank=16  L15.H 2  abs=0.1658  signed=-0.1483
+2026-05-11 05:20:20,196 INFO   rank=17  L17.H27  abs=0.1570  signed=+0.0844
+2026-05-11 05:20:20,196 INFO   rank=18  L14.H31  abs=0.1481  signed=-0.0128
+2026-05-11 05:20:20,196 INFO   rank=19  L17.H24  abs=0.1468  signed=-0.0640
+2026-05-11 05:20:20,196 INFO   rank=20  L13.H 0  abs=0.1466  signed=+0.0207
+2026-05-11 05:20:20,196 INFO Loading model meta-llama/Llama-3.1-8B...
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-05-11 05:20:21,576 INFO   loaded in 1.4s on cuda
+2026-05-11 05:20:21,583 INFO   n_layers=32  n_heads=32  head_dim=128
+2026-05-11 05:20:21,583 INFO Stratified controls:
+2026-05-11 05:20:21,583 INFO   rank= 1  top=L30.H25  ctrl=L30.H20
+2026-05-11 05:20:21,583 INFO   rank= 2  top=L30.H27  ctrl=L30.H 3
+2026-05-11 05:20:21,583 INFO   rank= 3  top=L17.H21  ctrl=L17.H 0
+2026-05-11 05:20:21,583 INFO   rank= 4  top=L28.H10  ctrl=L28.H25
+2026-05-11 05:20:21,583 INFO   rank= 5  top=L23.H28  ctrl=L23.H 8
+2026-05-11 05:20:21,583 INFO   rank= 6  top=L20.H23  ctrl=L20.H 7
+2026-05-11 05:20:21,583 INFO   rank= 7  top=L31.H 3  ctrl=L31.H 8
+2026-05-11 05:20:21,583 INFO   rank= 8  top=L15.H17  ctrl=L15.H 5
+2026-05-11 05:20:21,583 INFO   rank= 9  top=L13.H18  ctrl=L13.H25
+2026-05-11 05:20:21,583 INFO   rank=10  top=L15.H 6  ctrl=L15.H 4
+2026-05-11 05:20:21,583 INFO   rank=11  top=L16.H 1  ctrl=L16.H22
+2026-05-11 05:20:21,583 INFO   rank=12  top=L14.H29  ctrl=L14.H23
+2026-05-11 05:20:21,583 INFO   rank=13  top=L26.H23  ctrl=L26.H29
+2026-05-11 05:20:21,583 INFO   rank=14  top=L28.H11  ctrl=L28.H19
+2026-05-11 05:20:21,583 INFO   rank=15  top=L13.H27  ctrl=L13.H 3
+2026-05-11 05:20:21,583 INFO   rank=16  top=L15.H 2  ctrl=L15.H21
+2026-05-11 05:20:21,584 INFO   rank=17  top=L17.H27  ctrl=L17.H13
+2026-05-11 05:20:21,584 INFO   rank=18  top=L14.H31  ctrl=L14.H 1
+2026-05-11 05:20:21,584 INFO   rank=19  top=L17.H24  ctrl=L17.H 0
+2026-05-11 05:20:21,584 INFO   rank=20  top=L13.H 0  ctrl=L13.H 3
+2026-05-11 05:20:21,665 INFO Loaded 400 pairs (skipped 0 degenerate)
+2026-05-11 05:20:21,666 INFO Computing per-head mean activations over reference pairs...
+You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.55it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.50it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.52it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.88it/s]
+2026-05-11 05:20:28,826 INFO   mean-acts pass: 25/400 pairs (526 positions)
+2026-05-11 05:20:33,429 INFO   mean-acts pass: 50/400 pairs (1248 positions)
+2026-05-11 05:20:38,100 INFO   mean-acts pass: 75/400 pairs (1945 positions)
+2026-05-11 05:20:42,867 INFO   mean-acts pass: 100/400 pairs (2555 positions)
+2026-05-11 05:20:47,716 INFO   mean-acts pass: 125/400 pairs (3283 positions)
+2026-05-11 05:20:52,662 INFO   mean-acts pass: 150/400 pairs (3904 positions)
+2026-05-11 05:20:57,717 INFO   mean-acts pass: 175/400 pairs (4711 positions)
+2026-05-11 05:21:02,815 INFO   mean-acts pass: 200/400 pairs (5269 positions)
+2026-05-11 05:21:08,017 INFO   mean-acts pass: 225/400 pairs (5910 positions)
+2026-05-11 05:21:13,350 INFO   mean-acts pass: 250/400 pairs (6719 positions)
+2026-05-11 05:21:18,677 INFO   mean-acts pass: 275/400 pairs (7276 positions)
+2026-05-11 05:21:24,143 INFO   mean-acts pass: 300/400 pairs (7948 positions)
+2026-05-11 05:21:29,704 INFO   mean-acts pass: 325/400 pairs (8645 positions)
+2026-05-11 05:21:35,312 INFO   mean-acts pass: 350/400 pairs (9131 positions)
+2026-05-11 05:21:41,120 INFO   mean-acts pass: 375/400 pairs (10022 positions)
+2026-05-11 05:21:46,936 INFO   mean-acts pass: 400/400 pairs (10581 positions)
+2026-05-11 05:21:47,116 INFO   mean activations done in 85.5s; shape=(32, 32, 128)
+2026-05-11 05:21:47,117 INFO Running 46 conditions...
+2026-05-11 05:22:03,457 INFO   [  1/46] baseline                                            mean_Δ=+9.6111  frac_pos=0.92  16.3s
+2026-05-11 05:22:20,069 INFO   [  2/46] top_rank01_L30H25_mean                              mean_Δ=+9.6467  frac_pos=0.91  |Δ|=0.0913  frac_dec=0.33  16.6s
+2026-05-11 05:22:36,674 INFO   [  3/46] top_rank02_L30H27_mean                              mean_Δ=+9.6199  frac_pos=0.91  |Δ|=0.0494  frac_dec=0.26  16.6s
+2026-05-11 05:22:53,393 INFO   [  4/46] top_rank03_L17H21_mean                              mean_Δ=+9.6166  frac_pos=0.92  |Δ|=0.0455  frac_dec=0.33  16.7s
+2026-05-11 05:23:10,111 INFO   [  5/46] top_rank04_L28H10_mean                              mean_Δ=+9.5869  frac_pos=0.92  |Δ|=0.0708  frac_dec=0.43  16.7s
+2026-05-11 05:23:26,801 INFO   [  6/46] top_rank05_L23H28_mean                              mean_Δ=+9.6148  frac_pos=0.92  |Δ|=0.0457  frac_dec=0.31  16.7s
+2026-05-11 05:23:43,543 INFO   [  7/46] top_rank06_L20H23_mean                              mean_Δ=+9.6105  frac_pos=0.92  |Δ|=0.0368  frac_dec=0.31  16.7s
+2026-05-11 05:24:00,269 INFO   [  8/46] top_rank07_L31H03_mean                              mean_Δ=+9.6080  frac_pos=0.92  |Δ|=0.0431  frac_dec=0.33  16.7s
+2026-05-11 05:24:16,993 INFO   [  9/46] top_rank08_L15H17_mean                              mean_Δ=+9.6074  frac_pos=0.91  |Δ|=0.0456  frac_dec=0.35  16.7s
+2026-05-11 05:24:33,727 INFO   [ 10/46] top_rank09_L13H18_mean                              mean_Δ=+9.6024  frac_pos=0.91  |Δ|=0.0640  frac_dec=0.42  16.7s
+2026-05-11 05:24:50,463 INFO   [ 11/46] top_rank10_L15H06_mean                              mean_Δ=+9.6976  frac_pos=0.92  |Δ|=0.1607  frac_dec=0.26  16.7s
+2026-05-11 05:25:07,247 INFO   [ 12/46] top_rank11_L16H01_mean                              mean_Δ=+9.6144  frac_pos=0.91  |Δ|=0.0427  frac_dec=0.31  16.8s
+2026-05-11 05:25:23,945 INFO   [ 13/46] top_rank12_L14H29_mean                              mean_Δ=+9.6045  frac_pos=0.92  |Δ|=0.0572  frac_dec=0.38  16.7s
+2026-05-11 05:25:40,637 INFO   [ 14/46] top_rank13_L26H23_mean                              mean_Δ=+9.5275  frac_pos=0.92  |Δ|=0.1974  frac_dec=0.56  16.7s
+2026-05-11 05:25:57,346 INFO   [ 15/46] top_rank14_L28H11_mean                              mean_Δ=+9.6044  frac_pos=0.91  |Δ|=0.0916  frac_dec=0.43  16.7s
+2026-05-11 05:26:14,092 INFO   [ 16/46] top_rank15_L13H27_mean                              mean_Δ=+9.6106  frac_pos=0.92  |Δ|=0.0475  frac_dec=0.32  16.7s
+2026-05-11 05:26:30,844 INFO   [ 17/46] top_rank16_L15H02_mean                              mean_Δ=+9.6097  frac_pos=0.92  |Δ|=0.0382  frac_dec=0.34  16.8s
+2026-05-11 05:26:47,613 INFO   [ 18/46] top_rank17_L17H27_mean                              mean_Δ=+9.6127  frac_pos=0.92  |Δ|=0.0476  frac_dec=0.34  16.8s
+2026-05-11 05:27:04,387 INFO   [ 19/46] top_rank18_L14H31_mean                              mean_Δ=+9.6141  frac_pos=0.92  |Δ|=0.0552  frac_dec=0.31  16.8s
+2026-05-11 05:27:21,157 INFO   [ 20/46] top_rank19_L17H24_mean                              mean_Δ=+9.6108  frac_pos=0.92  |Δ|=0.0473  frac_dec=0.34  16.8s
+2026-05-11 05:27:37,687 INFO   [ 21/46] top_rank20_L13H00_mean                              mean_Δ=+9.6347  frac_pos=0.92  |Δ|=0.0863  frac_dec=0.31  16.5s
+2026-05-11 05:27:53,747 INFO   [ 22/46] ctrl_rank01_L30H20_mean                             mean_Δ=+9.6079  frac_pos=0.92  |Δ|=0.0519  frac_dec=0.32  16.1s
+2026-05-11 05:28:09,786 INFO   [ 23/46] ctrl_rank02_L30H03_mean                             mean_Δ=+9.6102  frac_pos=0.92  |Δ|=0.0139  frac_dec=0.18  16.0s
+2026-05-11 05:28:25,942 INFO   [ 24/46] ctrl_rank03_L17H00_mean                             mean_Δ=+9.6053  frac_pos=0.91  |Δ|=0.0450  frac_dec=0.37  16.2s
+2026-05-11 05:28:42,067 INFO   [ 25/46] ctrl_rank04_L28H25_mean                             mean_Δ=+9.6111  frac_pos=0.92  |Δ|=0.0295  frac_dec=0.28  16.1s
+2026-05-11 05:28:58,238 INFO   [ 26/46] ctrl_rank05_L23H08_mean                             mean_Δ=+9.6145  frac_pos=0.92  |Δ|=0.0495  frac_dec=0.32  16.2s
+2026-05-11 05:29:14,296 INFO   [ 27/46] ctrl_rank06_L20H07_mean                             mean_Δ=+9.6073  frac_pos=0.92  |Δ|=0.0389  frac_dec=0.35  16.1s
+2026-05-11 05:29:30,297 INFO   [ 28/46] ctrl_rank07_L31H08_mean                             mean_Δ=+9.6101  frac_pos=0.92  |Δ|=0.0329  frac_dec=0.28  16.0s
+2026-05-11 05:29:46,337 INFO   [ 29/46] ctrl_rank08_L15H05_mean                             mean_Δ=+9.5692  frac_pos=0.91  |Δ|=0.0989  frac_dec=0.52  16.0s
+2026-05-11 05:30:02,440 INFO   [ 30/46] ctrl_rank09_L13H25_mean                             mean_Δ=+9.6267  frac_pos=0.91  |Δ|=0.0742  frac_dec=0.34  16.1s
+2026-05-11 05:30:18,854 INFO   [ 31/46] ctrl_rank10_L15H04_mean                             mean_Δ=+9.5798  frac_pos=0.92  |Δ|=0.0885  frac_dec=0.50  16.4s
+2026-05-11 05:30:35,353 INFO   [ 32/46] ctrl_rank11_L16H22_mean                             mean_Δ=+9.5978  frac_pos=0.91  |Δ|=0.0938  frac_dec=0.43  16.5s
+2026-05-11 05:30:51,859 INFO   [ 33/46] ctrl_rank12_L14H23_mean                             mean_Δ=+9.6032  frac_pos=0.91  |Δ|=0.0572  frac_dec=0.40  16.5s
+2026-05-11 05:31:08,237 INFO   [ 34/46] ctrl_rank13_L26H29_mean                             mean_Δ=+9.6074  frac_pos=0.92  |Δ|=0.0325  frac_dec=0.28  16.4s
+2026-05-11 05:31:24,665 INFO   [ 35/46] ctrl_rank14_L28H19_mean                             mean_Δ=+9.6118  frac_pos=0.92  |Δ|=0.0267  frac_dec=0.24  16.4s
+2026-05-11 05:31:41,181 INFO   [ 36/46] ctrl_rank15_L13H03_mean                             mean_Δ=+9.6047  frac_pos=0.91  |Δ|=0.0691  frac_dec=0.41  16.5s
+2026-05-11 05:31:58,300 INFO   [ 37/46] ctrl_rank16_L15H21_mean                             mean_Δ=+9.6084  frac_pos=0.92  |Δ|=0.0537  frac_dec=0.35  17.1s
+2026-05-11 05:32:15,519 INFO   [ 38/46] ctrl_rank17_L17H13_mean                             mean_Δ=+9.6336  frac_pos=0.92  |Δ|=0.1045  frac_dec=0.36  17.2s
+2026-05-11 05:32:31,720 INFO   [ 39/46] ctrl_rank18_L14H01_mean                             mean_Δ=+9.6189  frac_pos=0.92  |Δ|=0.0650  frac_dec=0.35  16.2s
+2026-05-11 05:32:47,975 INFO   [ 40/46] ctrl_rank19_L17H00_mean                             mean_Δ=+9.6053  frac_pos=0.91  |Δ|=0.0450  frac_dec=0.37  16.3s
+2026-05-11 05:33:04,156 INFO   [ 41/46] ctrl_rank20_L13H03_mean                             mean_Δ=+9.6047  frac_pos=0.91  |Δ|=0.0691  frac_dec=0.41  16.2s
+2026-05-11 05:33:20,965 INFO   [ 42/46] top_collective_k5_mean                              mean_Δ=+9.6256  frac_pos=0.92  |Δ|=0.1270  frac_dec=0.39  16.8s
+2026-05-11 05:33:37,741 INFO   [ 43/46] ctrl_collective_k5_mean                             mean_Δ=+9.6012  frac_pos=0.91  |Δ|=0.0676  frac_dec=0.41  16.8s
+2026-05-11 05:33:54,904 INFO   [ 44/46] top_collective_signedPOS_n6_mean                    mean_Δ=+9.7151  frac_pos=0.92  |Δ|=0.2368  frac_dec=0.32  17.2s
+2026-05-11 05:34:12,918 INFO   [ 45/46] top_collective_signedNEG_n14_mean                   mean_Δ=+9.4913  frac_pos=0.92  |Δ|=0.2574  frac_dec=0.60  18.0s
+2026-05-11 05:34:29,704 INFO   [ 46/46] top_collective_k5_zero                              mean_Δ=+9.6401  frac_pos=0.92  |Δ|=0.1281  frac_dec=0.34  16.8s
+2026-05-11 05:34:29,725 INFO === Done: 46 conditions in 762.6s -> /projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp/spa ===
+2026-05-11 05:34:29,725 INFO BASELINE Δ = +9.6111 (frac_pos=0.92) -- should be >> 0

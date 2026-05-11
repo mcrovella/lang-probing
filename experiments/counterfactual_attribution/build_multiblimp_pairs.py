@@ -41,6 +41,10 @@ LANG_SPECS = {
     "spa": {"code": "spa", "name": "Spanish"},
     "tur": {"code": "tur", "name": "Turkish"},
     "ara": {"code": "arb", "name": "Arabic"},
+    "eng": {"code": "eng", "name": "English"},
+    "deu": {"code": "deu", "name": "German"},
+    "heb": {"code": "heb", "name": "Hebrew"},
+    "hin": {"code": "hin", "name": "Hindi"},
 }
 
 

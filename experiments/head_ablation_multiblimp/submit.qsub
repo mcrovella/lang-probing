@@ -1,0 +1,40 @@
+#!/bin/bash -l
+
+# Array job: one task per language. SGE_TASK_ID 1..8 -> lang key.
+
+#$ -N habl_array
+#$ -t 1-8
+#$ -l h_rt=2:00:00
+#$ -l gpus=1
+#$ -l gpu_c=8.9
+#$ -l gpu_memory=40G
+#$ -l gpu_type=L40S|L40|A40|A6000|RTX6000ada|A100
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+# Fragmentation mitigation per the bf16 OOM hint we hit on 44GB L40S.
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+# Lang lookup table (1-indexed to match SGE_TASK_ID)
+LANGS=(_ ara eng deu fra heb hin spa tur)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== Array task ${SGE_TASK_ID}: lang=${LANG} ==="
+
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --top_k 20 \
+    --top_k_collective 5 \
+    --max_pairs 400 \
+    --mode full
+

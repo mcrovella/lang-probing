@@ -1,0 +1,4138 @@
+{
+  "meta": {
+    "lang_key": "ara",
+    "target_lang_name": "Arabic",
+    "mode": "full",
+    "top_k": 20,
+    "top_k_collective": 5,
+    "max_pairs": 400,
+    "n_pairs_used": 400,
+    "n_layers": 32,
+    "n_heads": 32,
+    "head_dim": 128,
+    "model_id": "meta-llama/Llama-3.1-8B",
+    "gcm_source_dirs": [
+      "English__Arabic",
+      "French__Arabic",
+      "German__Arabic",
+      "Hebrew__Arabic",
+      "Hindi__Arabic",
+      "Spanish__Arabic",
+      "Turkish__Arabic"
+    ],
+    "top_heads": [
+      {
+        "layer": 26,
+        "head": 23,
+        "mean_abs_ie_agg": 0.6070564389228821,
+        "mean_signed_ie_agg": -0.5271815061569214
+      },
+      {
+        "layer": 17,
+        "head": 21,
+        "mean_abs_ie_agg": 0.35036319494247437,
+        "mean_signed_ie_agg": -0.3136579096317291
+      },
+      {
+        "layer": 23,
+        "head": 28,
+        "mean_abs_ie_agg": 0.3306198716163635,
+        "mean_signed_ie_agg": -0.26613277196884155
+      },
+      {
+        "layer": 21,
+        "head": 9,
+        "mean_abs_ie_agg": 0.27729663252830505,
+        "mean_signed_ie_agg": -0.22387933731079102
+      },
+      {
+        "layer": 31,
+        "head": 2,
+        "mean_abs_ie_agg": 0.2747894823551178,
+        "mean_signed_ie_agg": 0.24022865295410156
+      },
+      {
+        "layer": 31,
+        "head": 25,
+        "mean_abs_ie_agg": 0.2270282357931137,
+        "mean_signed_ie_agg": 0.21203210949897766
+      },
+      {
+        "layer": 31,
+        "head": 24,
+        "mean_abs_ie_agg": 0.22309038043022156,
+        "mean_signed_ie_agg": -0.2012552171945572
+      },
+      {
+        "layer": 22,
+        "head": 17,
+        "mean_abs_ie_agg": 0.21904341876506805,
+        "mean_signed_ie_agg": -0.17683766782283783
+      },
+      {
+        "layer": 30,
+        "head": 24,
+        "mean_abs_ie_agg": 0.20941747725009918,
+        "mean_signed_ie_agg": -0.16879954934120178
+      },
+      {
+        "layer": 30,
+        "head": 25,
+        "mean_abs_ie_agg": 0.19836969673633575,
+        "mean_signed_ie_agg": 0.1653367429971695
+      },
+      {
+        "layer": 16,
+        "head": 1,
+        "mean_abs_ie_agg": 0.19729295372962952,
+        "mean_signed_ie_agg": -0.13598741590976715
+      },
+      {
+        "layer": 17,
+        "head": 29,
+        "mean_abs_ie_agg": 0.1951310932636261,
+        "mean_signed_ie_agg": -0.14859721064567566
+      },
+      {
+        "layer": 13,
+        "head": 18,
+        "mean_abs_ie_agg": 0.19504474103450775,
+        "mean_signed_ie_agg": 0.06101744621992111
+      },
+      {
+        "layer": 20,
+        "head": 23,
+        "mean_abs_ie_agg": 0.1931019276380539,
+        "mean_signed_ie_agg": -0.14302928745746613
+      },
+      {
+        "layer": 15,
+        "head": 6,
+        "mean_abs_ie_agg": 0.17861993610858917,
+        "mean_signed_ie_agg": 0.1651073396205902
+      },
+      {
+        "layer": 31,
+        "head": 1,
+        "mean_abs_ie_agg": 0.17138366401195526,
+        "mean_signed_ie_agg": -0.1451035439968109
+      },
+      {
+        "layer": 14,
+        "head": 29,
+        "mean_abs_ie_agg": 0.17100761830806732,
+        "mean_signed_ie_agg": -0.037436842918395996
+      },
+      {
+        "layer": 28,
+        "head": 20,
+        "mean_abs_ie_agg": 0.16987787187099457,
+        "mean_signed_ie_agg": -0.05367237329483032
+      },
+      {
+        "layer": 29,
+        "head": 2,
+        "mean_abs_ie_agg": 0.1611006259918213,
+        "mean_signed_ie_agg": -0.06643129140138626
+      },
+      {
+        "layer": 20,
+        "head": 30,
+        "mean_abs_ie_agg": 0.16022169589996338,
+        "mean_signed_ie_agg": -0.131423220038414
+      }
+    ],
+    "control_heads": [
+      {
+        "layer": 26,
+        "head": 20
+      },
+      {
+        "layer": 17,
+        "head": 3
+      },
+      {
+        "layer": 23,
+        "head": 0
+      },
+      {
+        "layer": 21,
+        "head": 24
+      },
+      {
+        "layer": 31,
+        "head": 10
+      },
+      {
+        "layer": 31,
+        "head": 9
+      },
+      {
+        "layer": 31,
+        "head": 9
+      },
+      {
+        "layer": 22,
+        "head": 4
+      },
+      {
+        "layer": 30,
+        "head": 23
+      },
+      {
+        "layer": 30,
+        "head": 3
+      },
+      {
+        "layer": 16,
+        "head": 22
+      },
+      {
+        "layer": 17,
+        "head": 24
+      },
+      {
+        "layer": 13,
+        "head": 29
+      },
+      {
+        "layer": 20,
+        "head": 17
+      },
+      {
+        "layer": 15,
+        "head": 2
+      },
+      {
+        "layer": 31,
+        "head": 20
+      },
+      {
+        "layer": 14,
+        "head": 13
+      },
+      {
+        "layer": 28,
+        "head": 1
+      },
+      {
+        "layer": 29,
+        "head": 0
+      },
+      {
+        "layer": 20,
+        "head": 2
+      }
+    ],
+    "pair_meta": [
+      {
+        "id": "ara_SV-#_00905",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00227",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00398",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00022",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00623",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00896",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00033",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00977",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00213",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00107",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00037",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00676",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00485",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_01210",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00409",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00642",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00618",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00539",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00089",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00049",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00163",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00897",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00831",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00358",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00660",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00350",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01201",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_01016",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-G_00475",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_01001",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00048",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00012",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00307",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01129",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00152",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00845",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00414",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00844",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00017",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00092",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00670",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00669",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00989",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-P_00461",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00225",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00170",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00867",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00375",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00648",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00121",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00667",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00683",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00224",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00532",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00330",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00157",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00315",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00393",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00034",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_01147",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00650",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00702",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00046",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00701",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00707",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00907",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00404",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_01043",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-P_00922",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-G_00855",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00567",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01139",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00333",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00716",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00428",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00804",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00410",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_01000",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00360",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00384",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00431",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_01128",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01110",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00425",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00458",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00663",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00766",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00011",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00882",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00394",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00081",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00417",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_01058",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00117",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00056",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00587",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00066",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00908",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00686",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00365",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00206",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00752",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00420",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00385",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_01191",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00622",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00432",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00909",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00399",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00151",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00651",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00695",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01200",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00103",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00312",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00119",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00540",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00391",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00914",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00647",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00700",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00379",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00744",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00068",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00703",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00245",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-G_00509",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00050",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00817",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00986",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00180",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00240",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-P_00280",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00328",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00073",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00886",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00326",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00352",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00538",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00838",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00104",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00636",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00279",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00715",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00449",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00299",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01197",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00067",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00382",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00166",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00053",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_01066",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00390",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00305",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-G_00861",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00789",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00148",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00649",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00444",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00076",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00323",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00115",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00951",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01175",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00057",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00969",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00215",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00160",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_01083",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00208",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00030",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00063",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00395",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00374",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00545",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00773",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00407",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00378",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00184",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00150",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00018",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_01079",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00441",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00016",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00223",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00029",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_01112",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00234",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00275",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00931",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00325",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00120",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00367",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00411",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00427",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00713",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00981",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00255",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01165",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00601",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_01080",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-G_00027",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00142",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00436",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00988",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-P_01113",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00091",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00194",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00116",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00590",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_01019",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00147",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00755",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00624",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00453",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00764",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00302",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-G_00799",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00098",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00912",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00674",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00434",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00521",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_01096",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00231",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00185",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00684",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00841",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01138",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00426",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00810",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01120",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00113",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00837",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00606",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00790",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00243",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-P_00267",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00976",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_01109",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00405",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_01146",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00999",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00043",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00097",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00281",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00589",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00552",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00133",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00721",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00469",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00577",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00893",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00464",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00884",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00251",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "2",
+        "concept_value_cf": "3"
+      },
+      {
+        "id": "ara_SV-P_00735",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00610",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00762",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00044",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00125",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00754",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00784",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01135",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00430",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00513",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00863",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00140",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00687",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00090",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00887",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00900",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00991",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00355",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00195",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00235",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_01196",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00605",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00491",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00006",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "2",
+        "concept_value_cf": "3"
+      },
+      {
+        "id": "ara_SV-#_00183",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_01052",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00901",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_01178",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00294",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00186",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00994",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-P_01202",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00656",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00693",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01141",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00658",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00848",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00038",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00101",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00205",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00995",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-G_00564",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01194",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00324",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-G_01097",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00433",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00397",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00911",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00340",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00085",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00199",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00655",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00828",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00252",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00574",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_01002",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00064",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00078",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00767",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00814",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00126",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00416",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00020",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_01150",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00904",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00035",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00362",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00771",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00188",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00026",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00301",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00413",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00041",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00515",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00129",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00537",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_01162",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00661",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00419",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00628",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00246",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00175",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00757",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00607",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00870",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_00895",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00768",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00672",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00737",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00569",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00690",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00776",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00888",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01188",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01183",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_01092",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00990",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-#_00084",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00400",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00220",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00372",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00181",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00875",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00014",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00964",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00237",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00141",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00626",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00112",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00304",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00406",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00228",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00457",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01111",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_01193",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00415",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00746",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00939",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00322",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00711",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00584",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00468",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00010",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00386",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00968",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-P_00327",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00673",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-G_00852",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-P_00456",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-P_00729",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00031",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-P_00455",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-G_00507",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-#_00659",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      },
+      {
+        "id": "ara_SV-#_00447",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-P_00779",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "1"
+      },
+      {
+        "id": "ara_SV-#_00996",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Dual",
+        "concept_value_cf": "Sing"
+      },
+      {
+        "id": "ara_SV-P_00972",
+        "phenomenon": "SV-P",
+        "concept": "Person",
+        "concept_value_orig": "3",
+        "concept_value_cf": "2"
+      },
+      {
+        "id": "ara_SV-#_00422",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00158",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-#_00143",
+        "phenomenon": "SV-#",
+        "concept": "Dual",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Dual"
+      },
+      {
+        "id": "ara_SV-G_00869",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Fem",
+        "concept_value_cf": "Masc"
+      },
+      {
+        "id": "ara_SV-G_01101",
+        "phenomenon": "SV-G",
+        "concept": "Gender",
+        "concept_value_orig": "Masc",
+        "concept_value_cf": "Fem"
+      },
+      {
+        "id": "ara_SV-#_00616",
+        "phenomenon": "SV-#",
+        "concept": "Number",
+        "concept_value_orig": "Sing",
+        "concept_value_cf": "Plur"
+      }
+    ],
+    "total_elapsed_s": 767.7770862579346
+  },
+  "conditions": [
+    {
+      "name": "baseline",
+      "ablations": [],
+      "n_pairs": 400,
+      "mean_delta": 7.445322036743164,
+      "std_delta": 5.14675235748291,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 15.989007234573364
+    },
+    {
+      "name": "top_rank01_L26H23_mean",
+      "ablations": [
+        [
+          26,
+          23,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.370175838470459,
+      "std_delta": 5.1298136711120605,
+      "median_delta": 7.125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.247752904891968,
+      "mean_diff_from_baseline": -0.07514648139476776,
+      "mean_abs_diff_from_baseline": 0.13106447458267212,
+      "max_abs_diff": 0.796875,
+      "frac_decreased": 0.5649999976158142,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank02_L17H21_mean",
+      "ablations": [
+        [
+          17,
+          21,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.446523666381836,
+      "std_delta": 5.141133785247803,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.42781686782837,
+      "mean_diff_from_baseline": 0.001201164093799889,
+      "mean_abs_diff_from_baseline": 0.045595720410346985,
+      "max_abs_diff": 0.24999988079071045,
+      "frac_decreased": 0.3675000071525574,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank03_L23H28_mean",
+      "ablations": [
+        [
+          23,
+          28,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.43997049331665,
+      "std_delta": 5.141052722930908,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.396697998046875,
+      "mean_diff_from_baseline": -0.005351587664335966,
+      "mean_abs_diff_from_baseline": 0.04730471596121788,
+      "max_abs_diff": 0.40625,
+      "frac_decreased": 0.375,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank04_L21H09_mean",
+      "ablations": [
+        [
+          21,
+          9,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.349687576293945,
+      "std_delta": 5.114137172698975,
+      "median_delta": 7.187500476837158,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.45669174194336,
+      "mean_diff_from_baseline": -0.09563478827476501,
+      "mean_abs_diff_from_baseline": 0.1621386855840683,
+      "max_abs_diff": 1.749999761581421,
+      "frac_decreased": 0.5975000262260437,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank05_L31H02_mean",
+      "ablations": [
+        [
+          31,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.478369235992432,
+      "std_delta": 5.148494243621826,
+      "median_delta": 7.3125,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.352534532546997,
+      "mean_diff_from_baseline": 0.03304687887430191,
+      "mean_abs_diff_from_baseline": 0.0964648649096489,
+      "max_abs_diff": 0.453125,
+      "frac_decreased": 0.3149999976158142,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank06_L31H25_mean",
+      "ablations": [
+        [
+          31,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.464863300323486,
+      "std_delta": 5.153584957122803,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.399099588394165,
+      "mean_diff_from_baseline": 0.019541000947356224,
+      "mean_abs_diff_from_baseline": 0.05833011120557785,
+      "max_abs_diff": 0.34375,
+      "frac_decreased": 0.29249998927116394,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank07_L31H24_mean",
+      "ablations": [
+        [
+          31,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.423144340515137,
+      "std_delta": 5.1396589279174805,
+      "median_delta": 7.250000476837158,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.337550163269043,
+      "mean_diff_from_baseline": -0.022177746519446373,
+      "mean_abs_diff_from_baseline": 0.0642676055431366,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.4925000071525574,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank08_L22H17_mean",
+      "ablations": [
+        [
+          22,
+          17,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.410995960235596,
+      "std_delta": 5.114051342010498,
+      "median_delta": 7.21875,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.444379806518555,
+      "mean_diff_from_baseline": -0.034326184540987015,
+      "mean_abs_diff_from_baseline": 0.11555665731430054,
+      "max_abs_diff": 3.000000476837158,
+      "frac_decreased": 0.48750001192092896,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank09_L30H24_mean",
+      "ablations": [
+        [
+          30,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.428183555603027,
+      "std_delta": 5.149385929107666,
+      "median_delta": 7.187500476837158,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.37317156791687,
+      "mean_diff_from_baseline": -0.017138691619038582,
+      "mean_abs_diff_from_baseline": 0.06860353797674179,
+      "max_abs_diff": 0.6875,
+      "frac_decreased": 0.47749999165534973,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank10_L30H25_mean",
+      "ablations": [
+        [
+          30,
+          25,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.457480430603027,
+      "std_delta": 5.1697797775268555,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.369494438171387,
+      "mean_diff_from_baseline": 0.012158201076090336,
+      "mean_abs_diff_from_baseline": 0.10663087666034698,
+      "max_abs_diff": 1.46875,
+      "frac_decreased": 0.4424999952316284,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank11_L16H01_mean",
+      "ablations": [
+        [
+          16,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.444355487823486,
+      "std_delta": 5.145341396331787,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.422528743743896,
+      "mean_diff_from_baseline": -0.0009668080601841211,
+      "mean_abs_diff_from_baseline": 0.04506838321685791,
+      "max_abs_diff": 0.1875,
+      "frac_decreased": 0.35249999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank12_L17H29_mean",
+      "ablations": [
+        [
+          17,
+          29,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.439589977264404,
+      "std_delta": 5.137115478515625,
+      "median_delta": 7.312499523162842,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.42207407951355,
+      "mean_diff_from_baseline": -0.005732457619160414,
+      "mean_abs_diff_from_baseline": 0.054189492017030716,
+      "max_abs_diff": 0.4375,
+      "frac_decreased": 0.375,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank13_L13H18_mean",
+      "ablations": [
+        [
+          13,
+          18,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.440312385559082,
+      "std_delta": 5.138149261474609,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.37687087059021,
+      "mean_diff_from_baseline": -0.0050097880885005,
+      "mean_abs_diff_from_baseline": 0.06653323024511337,
+      "max_abs_diff": 0.4375,
+      "frac_decreased": 0.41499999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank14_L20H23_mean",
+      "ablations": [
+        [
+          20,
+          23,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.447080135345459,
+      "std_delta": 5.1446099281311035,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.37653923034668,
+      "mean_diff_from_baseline": 0.0017577887047082186,
+      "mean_abs_diff_from_baseline": 0.04294924437999725,
+      "max_abs_diff": 0.1875019073486328,
+      "frac_decreased": 0.3400000035762787,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank15_L15H06_mean",
+      "ablations": [
+        [
+          15,
+          6,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.497187614440918,
+      "std_delta": 5.201590061187744,
+      "median_delta": 7.3125,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.39718532562256,
+      "mean_diff_from_baseline": 0.051865220069885254,
+      "mean_abs_diff_from_baseline": 0.14041991531848907,
+      "max_abs_diff": 0.65625,
+      "frac_decreased": 0.33000001311302185,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank16_L31H01_mean",
+      "ablations": [
+        [
+          31,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.349072456359863,
+      "std_delta": 5.0695271492004395,
+      "median_delta": 7.125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.336748361587524,
+      "mean_diff_from_baseline": -0.096250019967556,
+      "mean_abs_diff_from_baseline": 0.1426367312669754,
+      "max_abs_diff": 1.1875,
+      "frac_decreased": 0.625,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank17_L14H29_mean",
+      "ablations": [
+        [
+          14,
+          29,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.438241958618164,
+      "std_delta": 5.1369500160217285,
+      "median_delta": 7.249999523162842,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.39732575416565,
+      "mean_diff_from_baseline": -0.007080093491822481,
+      "mean_abs_diff_from_baseline": 0.05750979483127594,
+      "max_abs_diff": 0.3125,
+      "frac_decreased": 0.4424999952316284,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_rank18_L28H20_mean",
+      "ablations": [
+        [
+          28,
+          20,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.434658050537109,
+      "std_delta": 5.14047384262085,
+      "median_delta": 7.3125,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.415267944335938,
+      "mean_diff_from_baseline": -0.010664094239473343,
+      "mean_abs_diff_from_baseline": 0.08074218779802322,
+      "max_abs_diff": 0.875,
+      "frac_decreased": 0.3799999952316284,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank19_L29H02_mean",
+      "ablations": [
+        [
+          29,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.382236480712891,
+      "std_delta": 5.1414079666137695,
+      "median_delta": 7.125000476837158,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.40507960319519,
+      "mean_diff_from_baseline": -0.06308593600988388,
+      "mean_abs_diff_from_baseline": 0.1361718773841858,
+      "max_abs_diff": 0.9375004768371582,
+      "frac_decreased": 0.48750001192092896,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_rank20_L20H30_mean",
+      "ablations": [
+        [
+          20,
+          30,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.435420036315918,
+      "std_delta": 5.136950492858887,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.488979816436768,
+      "mean_diff_from_baseline": -0.00990235060453415,
+      "mean_abs_diff_from_baseline": 0.04953128471970558,
+      "max_abs_diff": 0.59375,
+      "frac_decreased": 0.36250001192092896,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank01_L26H20_mean",
+      "ablations": [
+        [
+          26,
+          20,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.43039083480835,
+      "std_delta": 5.136780261993408,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.39765763282776,
+      "mean_diff_from_baseline": -0.014931649900972843,
+      "mean_abs_diff_from_baseline": 0.10227543115615845,
+      "max_abs_diff": 1.25,
+      "frac_decreased": 0.38999998569488525,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank02_L17H03_mean",
+      "ablations": [
+        [
+          17,
+          3,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.429238319396973,
+      "std_delta": 5.131836414337158,
+      "median_delta": 7.25,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.446736812591553,
+      "mean_diff_from_baseline": -0.01608399860560894,
+      "mean_abs_diff_from_baseline": 0.06897463649511337,
+      "max_abs_diff": 0.65625,
+      "frac_decreased": 0.4625000059604645,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank03_L23H00_mean",
+      "ablations": [
+        [
+          23,
+          0,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.445547103881836,
+      "std_delta": 5.145599842071533,
+      "median_delta": 7.28125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.437103271484375,
+      "mean_diff_from_baseline": 0.0002245943178422749,
+      "mean_abs_diff_from_baseline": 0.04793946444988251,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.3375000059604645,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank04_L21H24_mean",
+      "ablations": [
+        [
+          21,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.448564529418945,
+      "std_delta": 5.1398820877075195,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.47331929206848,
+      "mean_diff_from_baseline": 0.0032421571668237448,
+      "mean_abs_diff_from_baseline": 0.04058597609400749,
+      "max_abs_diff": 0.1875,
+      "frac_decreased": 0.32249999046325684,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank05_L31H10_mean",
+      "ablations": [
+        [
+          31,
+          10,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.40866231918335,
+      "std_delta": 5.119096279144287,
+      "median_delta": 7.250000476837158,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.32251286506653,
+      "mean_diff_from_baseline": -0.03666017949581146,
+      "mean_abs_diff_from_baseline": 0.09619142860174179,
+      "max_abs_diff": 1.0,
+      "frac_decreased": 0.4950000047683716,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank06_L31H09_mean",
+      "ablations": [
+        [
+          31,
+          9,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.478554725646973,
+      "std_delta": 5.17152214050293,
+      "median_delta": 7.375,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.353542804718018,
+      "mean_diff_from_baseline": 0.033232416957616806,
+      "mean_abs_diff_from_baseline": 0.07243164628744125,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.2750000059604645,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank07_L31H09_mean",
+      "ablations": [
+        [
+          31,
+          9,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.478554725646973,
+      "std_delta": 5.17152214050293,
+      "median_delta": 7.375,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.363420486450195,
+      "mean_diff_from_baseline": 0.033232416957616806,
+      "mean_abs_diff_from_baseline": 0.07243164628744125,
+      "max_abs_diff": 0.375,
+      "frac_decreased": 0.2750000059604645,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank08_L22H04_mean",
+      "ablations": [
+        [
+          22,
+          4,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.44113302230835,
+      "std_delta": 5.1414008140563965,
+      "median_delta": 7.25,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.417198181152344,
+      "mean_diff_from_baseline": -0.0041894447058439255,
+      "mean_abs_diff_from_baseline": 0.050439462065696716,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.4074999988079071,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank09_L30H23_mean",
+      "ablations": [
+        [
+          30,
+          23,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.440664291381836,
+      "std_delta": 5.142350196838379,
+      "median_delta": 7.25,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.3627290725708,
+      "mean_diff_from_baseline": -0.0046582273207604885,
+      "mean_abs_diff_from_baseline": 0.040537141263484955,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.3425000011920929,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank10_L30H03_mean",
+      "ablations": [
+        [
+          30,
+          3,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.447197437286377,
+      "std_delta": 5.149338722229004,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.398982763290405,
+      "mean_diff_from_baseline": 0.0018749939044937491,
+      "mean_abs_diff_from_baseline": 0.022929722443223,
+      "max_abs_diff": 0.21875,
+      "frac_decreased": 0.2199999988079071,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank11_L16H22_mean",
+      "ablations": [
+        [
+          16,
+          22,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.452568531036377,
+      "std_delta": 5.151393413543701,
+      "median_delta": 7.34375,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.375372886657715,
+      "mean_diff_from_baseline": 0.007246083579957485,
+      "mean_abs_diff_from_baseline": 0.14478516578674316,
+      "max_abs_diff": 2.5,
+      "frac_decreased": 0.4099999964237213,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank12_L17H24_mean",
+      "ablations": [
+        [
+          17,
+          24,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.443359375,
+      "std_delta": 5.142588138580322,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.3294837474823,
+      "mean_diff_from_baseline": -0.001962910871952772,
+      "mean_abs_diff_from_baseline": 0.043388690799474716,
+      "max_abs_diff": 0.3125,
+      "frac_decreased": 0.35249999165534973,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank13_L13H29_mean",
+      "ablations": [
+        [
+          13,
+          29,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.434579849243164,
+      "std_delta": 5.117828369140625,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.33223247528076,
+      "mean_diff_from_baseline": -0.010742192156612873,
+      "mean_abs_diff_from_baseline": 0.10158205777406693,
+      "max_abs_diff": 0.4999995231628418,
+      "frac_decreased": 0.4699999988079071,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank14_L20H17_mean",
+      "ablations": [
+        [
+          20,
+          17,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.448095798492432,
+      "std_delta": 5.14431095123291,
+      "median_delta": 7.312499523162842,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.33813452720642,
+      "mean_diff_from_baseline": 0.002773422049358487,
+      "mean_abs_diff_from_baseline": 0.04136720672249794,
+      "max_abs_diff": 0.1875,
+      "frac_decreased": 0.32249999046325684,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank15_L15H02_mean",
+      "ablations": [
+        [
+          15,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.445019721984863,
+      "std_delta": 5.146814346313477,
+      "median_delta": 7.3125,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.315781593322754,
+      "mean_diff_from_baseline": -0.00030274316668510437,
+      "mean_abs_diff_from_baseline": 0.048037152737379074,
+      "max_abs_diff": 0.25,
+      "frac_decreased": 0.38499999046325684,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank16_L31H20_mean",
+      "ablations": [
+        [
+          31,
+          20,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.448281288146973,
+      "std_delta": 5.147802352905273,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.274280071258545,
+      "mean_diff_from_baseline": 0.0029589736368507147,
+      "mean_abs_diff_from_baseline": 0.022431673482060432,
+      "max_abs_diff": 0.1875004768371582,
+      "frac_decreased": 0.23000000417232513,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank17_L14H13_mean",
+      "ablations": [
+        [
+          14,
+          13,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.431728363037109,
+      "std_delta": 5.12962007522583,
+      "median_delta": 7.25,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.32076144218445,
+      "mean_diff_from_baseline": -0.013593774288892746,
+      "mean_abs_diff_from_baseline": 0.08349612355232239,
+      "max_abs_diff": 0.90625,
+      "frac_decreased": 0.4749999940395355,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank18_L28H01_mean",
+      "ablations": [
+        [
+          28,
+          1,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.449101448059082,
+      "std_delta": 5.146453857421875,
+      "median_delta": 7.25,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 16.385154724121094,
+      "mean_diff_from_baseline": 0.003779290011152625,
+      "mean_abs_diff_from_baseline": 0.034072306007146835,
+      "max_abs_diff": 0.1875009536743164,
+      "frac_decreased": 0.2775000035762787,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "ctrl_rank19_L29H00_mean",
+      "ablations": [
+        [
+          29,
+          0,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.436855316162109,
+      "std_delta": 5.141452312469482,
+      "median_delta": 7.249999523162842,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.41693115234375,
+      "mean_diff_from_baseline": -0.008466815575957298,
+      "mean_abs_diff_from_baseline": 0.054169949144124985,
+      "max_abs_diff": 0.875,
+      "frac_decreased": 0.3499999940395355,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_rank20_L20H02_mean",
+      "ablations": [
+        [
+          20,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.445624828338623,
+      "std_delta": 5.144702434539795,
+      "median_delta": 7.25,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 16.504761457443237,
+      "mean_diff_from_baseline": 0.0003027111233677715,
+      "mean_abs_diff_from_baseline": 0.04286136478185654,
+      "max_abs_diff": 0.1875,
+      "frac_decreased": 0.36500000953674316,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_collective_k5_mean",
+      "ablations": [
+        [
+          26,
+          23,
+          "mean"
+        ],
+        [
+          17,
+          21,
+          "mean"
+        ],
+        [
+          23,
+          28,
+          "mean"
+        ],
+        [
+          21,
+          9,
+          "mean"
+        ],
+        [
+          31,
+          2,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.309326171875,
+      "std_delta": 5.098653793334961,
+      "median_delta": 7.1875,
+      "frac_pos": 0.9300000071525574,
+      "elapsed_s": 17.232443809509277,
+      "mean_diff_from_baseline": -0.13599610328674316,
+      "mean_abs_diff_from_baseline": 0.24216796457767487,
+      "max_abs_diff": 2.3125,
+      "frac_decreased": 0.6499999761581421,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "ctrl_collective_k5_mean",
+      "ablations": [
+        [
+          26,
+          20,
+          "mean"
+        ],
+        [
+          17,
+          3,
+          "mean"
+        ],
+        [
+          23,
+          0,
+          "mean"
+        ],
+        [
+          21,
+          24,
+          "mean"
+        ],
+        [
+          31,
+          10,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.381357192993164,
+      "std_delta": 5.086768627166748,
+      "median_delta": 7.28125,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 17.24221134185791,
+      "mean_diff_from_baseline": -0.0639648512005806,
+      "mean_abs_diff_from_baseline": 0.17910155653953552,
+      "max_abs_diff": 1.25,
+      "frac_decreased": 0.5199999809265137,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_collective_signedPOS_n5_mean",
+      "ablations": [
+        [
+          31,
+          2,
+          "mean"
+        ],
+        [
+          31,
+          25,
+          "mean"
+        ],
+        [
+          30,
+          25,
+          "mean"
+        ],
+        [
+          13,
+          18,
+          "mean"
+        ],
+        [
+          15,
+          6,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.555849552154541,
+      "std_delta": 5.2109880447387695,
+      "median_delta": 7.265625,
+      "frac_pos": 0.925000011920929,
+      "elapsed_s": 17.14125156402588,
+      "mean_diff_from_baseline": 0.11052733659744263,
+      "mean_abs_diff_from_baseline": 0.21416015923023224,
+      "max_abs_diff": 1.84375,
+      "frac_decreased": 0.29499998688697815,
+      "frac_sign_flip": 0.0024999999441206455
+    },
+    {
+      "name": "top_collective_signedNEG_n15_mean",
+      "ablations": [
+        [
+          26,
+          23,
+          "mean"
+        ],
+        [
+          17,
+          21,
+          "mean"
+        ],
+        [
+          23,
+          28,
+          "mean"
+        ],
+        [
+          21,
+          9,
+          "mean"
+        ],
+        [
+          31,
+          24,
+          "mean"
+        ],
+        [
+          22,
+          17,
+          "mean"
+        ],
+        [
+          30,
+          24,
+          "mean"
+        ],
+        [
+          16,
+          1,
+          "mean"
+        ],
+        [
+          17,
+          29,
+          "mean"
+        ],
+        [
+          20,
+          23,
+          "mean"
+        ],
+        [
+          31,
+          1,
+          "mean"
+        ],
+        [
+          14,
+          29,
+          "mean"
+        ],
+        [
+          28,
+          20,
+          "mean"
+        ],
+        [
+          29,
+          2,
+          "mean"
+        ],
+        [
+          20,
+          30,
+          "mean"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 6.977851390838623,
+      "std_delta": 4.944790363311768,
+      "median_delta": 6.6875,
+      "frac_pos": 0.9275000095367432,
+      "elapsed_s": 18.516024589538574,
+      "mean_diff_from_baseline": -0.4674707055091858,
+      "mean_abs_diff_from_baseline": 0.5467675924301147,
+      "max_abs_diff": 3.75,
+      "frac_decreased": 0.7975000143051147,
+      "frac_sign_flip": 0.0
+    },
+    {
+      "name": "top_collective_k5_zero",
+      "ablations": [
+        [
+          26,
+          23,
+          "zero"
+        ],
+        [
+          17,
+          21,
+          "zero"
+        ],
+        [
+          23,
+          28,
+          "zero"
+        ],
+        [
+          21,
+          9,
+          "zero"
+        ],
+        [
+          31,
+          2,
+          "zero"
+        ]
+      ],
+      "n_pairs": 400,
+      "mean_delta": 7.276191234588623,
+      "std_delta": 5.104183197021484,
+      "median_delta": 7.1875,
+      "frac_pos": 0.9300000071525574,
+      "elapsed_s": 17.18308973312378,
+      "mean_diff_from_baseline": -0.16913087666034698,
+      "mean_abs_diff_from_baseline": 0.2652246057987213,
+      "max_abs_diff": 2.75,
+      "frac_decreased": 0.6650000214576721,
+      "frac_sign_flip": 0.0024999999441206455
+    }
+  ]
+}

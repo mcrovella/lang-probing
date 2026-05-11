@@ -1,0 +1,41 @@
+2026-05-11 04:28:12,277 INFO === head_ablation_multiblimp: target=French (fra) mode=smoke ===
+2026-05-11 04:28:12,277 INFO     top_k=5 top_k_collective=5 max_pairs=50
+2026-05-11 04:28:12,481 INFO GPU compute capability: 8.9
+2026-05-11 04:28:12,784 INFO Aggregated over 7 dirs: ['Arabic__French', 'English__French', 'German__French', 'Hebrew__French', 'Hindi__French', 'Spanish__French', 'Turkish__French']
+2026-05-11 04:28:12,784 INFO Top-5 heads:
+2026-05-11 04:28:12,784 INFO   rank= 1  L30.H25  abs=0.8277  signed=+0.8189
+2026-05-11 04:28:12,784 INFO   rank= 2  L30.H27  abs=0.6625  signed=-0.6518
+2026-05-11 04:28:12,784 INFO   rank= 3  L17.H21  abs=0.3403  signed=-0.2964
+2026-05-11 04:28:12,784 INFO   rank= 4  L23.H28  abs=0.3296  signed=-0.2865
+2026-05-11 04:28:12,784 INFO   rank= 5  L28.H10  abs=0.2776  signed=-0.2459
+2026-05-11 04:28:12,784 INFO Loading model meta-llama/Llama-3.1-8B...
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-05-11 04:28:14,183 INFO   loaded in 1.4s on cuda
+2026-05-11 04:28:14,189 INFO   n_layers=32  n_heads=32  head_dim=128
+2026-05-11 04:28:14,189 INFO Stratified controls:
+2026-05-11 04:28:14,189 INFO   rank= 1  top=L30.H25  ctrl=L30.H20
+2026-05-11 04:28:14,189 INFO   rank= 2  top=L30.H27  ctrl=L30.H 3
+2026-05-11 04:28:14,189 INFO   rank= 3  top=L17.H21  ctrl=L17.H 0
+2026-05-11 04:28:14,189 INFO   rank= 4  top=L23.H28  ctrl=L23.H23
+2026-05-11 04:28:14,189 INFO   rank= 5  top=L28.H10  ctrl=L28.H 8
+2026-05-11 04:28:14,233 INFO Loaded 50 pairs (skipped 0 degenerate)
+2026-05-11 04:28:14,233 INFO Computing per-head mean activations over reference pairs...
+You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.05s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.13s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:09<00:03,  3.11s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.21s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.54s/it]
+2026-05-11 04:28:30,037 INFO   mean-acts pass: 25/50 pairs (485 positions)
+2026-05-11 04:28:33,729 INFO   mean-acts pass: 50/50 pairs (962 positions)
+2026-05-11 04:28:33,836 INFO   mean activations done in 19.6s; shape=(32, 32, 128)
+2026-05-11 04:28:33,836 INFO Running 11 conditions...
+2026-05-11 04:28:35,476 INFO   [  1/11] baseline                                            mean_Δ=+9.6230  frac_pos=0.94  1.6s
+2026-05-11 04:28:37,093 INFO   [  2/11] top_rank01_L30H25_mean                              mean_Δ=+9.6359  frac_pos=0.94  1.6s
+2026-05-11 04:28:38,712 INFO   [  3/11] top_rank02_L30H27_mean                              mean_Δ=+9.6473  frac_pos=0.94  1.6s
+2026-05-11 04:28:40,329 INFO   [  4/11] top_rank03_L17H21_mean                              mean_Δ=+9.6069  frac_pos=0.94  1.6s
+2026-05-11 04:28:41,948 INFO   [  5/11] top_rank04_L23H28_mean                              mean_Δ=+9.6044  frac_pos=0.94  1.6s
+2026-05-11 04:28:43,565 INFO   [  6/11] top_rank05_L28H10_mean                              mean_Δ=+9.5987  frac_pos=0.94  1.6s
+2026-05-11 04:28:45,187 INFO   [  7/11] ctrl_rank01_L30H20_mean                             mean_Δ=+9.6022  frac_pos=0.94  1.6s
+2026-05-11 04:28:46,805 INFO   [  8/11] ctrl_rank02_L30H03_mean                             mean_Δ=+9.6179  frac_pos=0.94  1.6s
+2026-05-11 04:28:48,426 INFO   [  9/11] ctrl_rank03_L17H00_mean                             mean_Δ=+9.6202  frac_pos=0.94  1.6s
+2026-05-11 04:28:50,043 INFO   [ 10/11] ctrl_rank04_L23H23_mean                             mean_Δ=+9.6270  frac_pos=0.94  1.6s
+2026-05-11 04:28:51,659 INFO   [ 11/11] ctrl_rank05_L28H08_mean                             mean_Δ=+9.6241  frac_pos=0.94  1.6s
+2026-05-11 04:28:51,665 INFO === Done: 11 conditions in 17.8s -> /projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp/fra ===
+2026-05-11 04:28:51,665 INFO BASELINE Δ = +9.6230 (frac_pos=0.94) -- should be >> 0

@@ -1,0 +1,29 @@
+#!/bin/bash -l
+
+#$ -N habl_smoke
+#$ -l h_rt=0:30:00
+#$ -l gpus=1
+#$ -l gpu_c=8.9
+#$ -l gpu_memory=40G
+#$ -l gpu_type=L40S|L40|A40|A6000|RTX6000ada|A100
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.out
+#$ -V
+
+set -e
+
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key fra \
+    --top_k 5 \
+    --top_k_collective 5 \
+    --max_pairs 50 \
+    --mode full
+

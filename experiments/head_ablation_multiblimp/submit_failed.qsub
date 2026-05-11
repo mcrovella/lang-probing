@@ -1,0 +1,40 @@
+#!/bin/bash -l
+
+# Resubmit failed langs from array 5416049 (only eng succeeded).
+# Use A100-80G to give headroom + expandable_segments to mitigate fragmentation.
+
+#$ -N habl_arr2
+#$ -t 1-7
+#$ -l h_rt=2:00:00
+#$ -l gpus=1
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+# Lang lookup: skipped eng (already complete in array 5416049)
+LANGS=(_ ara deu fra heb hin spa tur)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== Array2 task ${SGE_TASK_ID}: lang=${LANG} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --top_k 20 \
+    --top_k_collective 5 \
+    --max_pairs 400 \
+    --mode full
+

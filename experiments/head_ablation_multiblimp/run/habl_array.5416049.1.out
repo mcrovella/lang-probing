@@ -1,0 +1,120 @@
+=== Array task 1: lang=ara ===
+2026-05-11 04:42:43,699 INFO === head_ablation_multiblimp: target=Arabic (ara) mode=full ===
+2026-05-11 04:42:43,699 INFO     top_k=20 top_k_collective=5 max_pairs=400
+2026-05-11 04:42:43,864 INFO GPU compute capability: 8.9
+2026-05-11 04:42:44,121 INFO Aggregated over 7 dirs: ['English__Arabic', 'French__Arabic', 'German__Arabic', 'Hebrew__Arabic', 'Hindi__Arabic', 'Spanish__Arabic', 'Turkish__Arabic']
+2026-05-11 04:42:44,121 INFO Top-20 heads:
+2026-05-11 04:42:44,121 INFO   rank= 1  L26.H23  abs=0.6071  signed=-0.5272
+2026-05-11 04:42:44,121 INFO   rank= 2  L17.H21  abs=0.3504  signed=-0.3137
+2026-05-11 04:42:44,121 INFO   rank= 3  L23.H28  abs=0.3306  signed=-0.2661
+2026-05-11 04:42:44,121 INFO   rank= 4  L21.H 9  abs=0.2773  signed=-0.2239
+2026-05-11 04:42:44,121 INFO   rank= 5  L31.H 2  abs=0.2748  signed=+0.2402
+2026-05-11 04:42:44,121 INFO   rank= 6  L31.H25  abs=0.2270  signed=+0.2120
+2026-05-11 04:42:44,121 INFO   rank= 7  L31.H24  abs=0.2231  signed=-0.2013
+2026-05-11 04:42:44,121 INFO   rank= 8  L22.H17  abs=0.2190  signed=-0.1768
+2026-05-11 04:42:44,121 INFO   rank= 9  L30.H24  abs=0.2094  signed=-0.1688
+2026-05-11 04:42:44,121 INFO   rank=10  L30.H25  abs=0.1984  signed=+0.1653
+2026-05-11 04:42:44,121 INFO   rank=11  L16.H 1  abs=0.1973  signed=-0.1360
+2026-05-11 04:42:44,121 INFO   rank=12  L17.H29  abs=0.1951  signed=-0.1486
+2026-05-11 04:42:44,121 INFO   rank=13  L13.H18  abs=0.1950  signed=+0.0610
+2026-05-11 04:42:44,121 INFO   rank=14  L20.H23  abs=0.1931  signed=-0.1430
+2026-05-11 04:42:44,121 INFO   rank=15  L15.H 6  abs=0.1786  signed=+0.1651
+2026-05-11 04:42:44,121 INFO   rank=16  L31.H 1  abs=0.1714  signed=-0.1451
+2026-05-11 04:42:44,121 INFO   rank=17  L14.H29  abs=0.1710  signed=-0.0374
+2026-05-11 04:42:44,121 INFO   rank=18  L28.H20  abs=0.1699  signed=-0.0537
+2026-05-11 04:42:44,121 INFO   rank=19  L29.H 2  abs=0.1611  signed=-0.0664
+2026-05-11 04:42:44,121 INFO   rank=20  L20.H30  abs=0.1602  signed=-0.1314
+2026-05-11 04:42:44,121 INFO Loading model meta-llama/Llama-3.1-8B...
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-05-11 04:42:45,308 INFO   loaded in 1.2s on cuda
+2026-05-11 04:42:45,313 INFO   n_layers=32  n_heads=32  head_dim=128
+2026-05-11 04:42:45,313 INFO Stratified controls:
+2026-05-11 04:42:45,313 INFO   rank= 1  top=L26.H23  ctrl=L26.H20
+2026-05-11 04:42:45,313 INFO   rank= 2  top=L17.H21  ctrl=L17.H 3
+2026-05-11 04:42:45,313 INFO   rank= 3  top=L23.H28  ctrl=L23.H 0
+2026-05-11 04:42:45,313 INFO   rank= 4  top=L21.H 9  ctrl=L21.H24
+2026-05-11 04:42:45,313 INFO   rank= 5  top=L31.H 2  ctrl=L31.H10
+2026-05-11 04:42:45,313 INFO   rank= 6  top=L31.H25  ctrl=L31.H 9
+2026-05-11 04:42:45,313 INFO   rank= 7  top=L31.H24  ctrl=L31.H 9
+2026-05-11 04:42:45,313 INFO   rank= 8  top=L22.H17  ctrl=L22.H 4
+2026-05-11 04:42:45,313 INFO   rank= 9  top=L30.H24  ctrl=L30.H23
+2026-05-11 04:42:45,313 INFO   rank=10  top=L30.H25  ctrl=L30.H 3
+2026-05-11 04:42:45,313 INFO   rank=11  top=L16.H 1  ctrl=L16.H22
+2026-05-11 04:42:45,313 INFO   rank=12  top=L17.H29  ctrl=L17.H24
+2026-05-11 04:42:45,313 INFO   rank=13  top=L13.H18  ctrl=L13.H29
+2026-05-11 04:42:45,313 INFO   rank=14  top=L20.H23  ctrl=L20.H17
+2026-05-11 04:42:45,313 INFO   rank=15  top=L15.H 6  ctrl=L15.H 2
+2026-05-11 04:42:45,313 INFO   rank=16  top=L31.H 1  ctrl=L31.H20
+2026-05-11 04:42:45,313 INFO   rank=17  top=L14.H29  ctrl=L14.H13
+2026-05-11 04:42:45,313 INFO   rank=18  top=L28.H20  ctrl=L28.H 1
+2026-05-11 04:42:45,313 INFO   rank=19  top=L29.H 2  ctrl=L29.H 0
+2026-05-11 04:42:45,313 INFO   rank=20  top=L20.H30  ctrl=L20.H 2
+2026-05-11 04:42:45,384 INFO Loaded 400 pairs (skipped 126 degenerate)
+2026-05-11 04:42:45,385 INFO Computing per-head mean activations over reference pairs...
+You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.01s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.67s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:10<00:03,  3.54s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.63s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.94s/it]
+2026-05-11 04:43:02,662 INFO   mean-acts pass: 25/400 pairs (667 positions)
+2026-05-11 04:43:06,310 INFO   mean-acts pass: 50/400 pairs (1270 positions)
+2026-05-11 04:43:10,144 INFO   mean-acts pass: 75/400 pairs (1908 positions)
+2026-05-11 04:43:14,055 INFO   mean-acts pass: 100/400 pairs (2509 positions)
+2026-05-11 04:43:18,110 INFO   mean-acts pass: 125/400 pairs (3111 positions)
+2026-05-11 04:43:22,253 INFO   mean-acts pass: 150/400 pairs (3558 positions)
+2026-05-11 04:43:26,611 INFO   mean-acts pass: 175/400 pairs (4102 positions)
+2026-05-11 04:43:31,108 INFO   mean-acts pass: 200/400 pairs (4679 positions)
+Traceback (most recent call last):
+  File "/projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run.py", line 460, in <module>
+    main()
+  File "/projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run.py", line 383, in main
+    mean_acts = compute_mean_activations(model, pairs, n_layers, n_heads, head_dim)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run.py", line 110, in compute_mean_activations
+    with model.trace(input_ids, **TRACER_KWARGS), torch.no_grad():
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/nnsight/intervention/tracing/base.py", line 599, in __exit__
+    self.backend(self)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/nnsight/intervention/backends/execution.py", line 24, in __call__
+    raise wrap_exception(e, tracer.info) from None
+nnsight.NNsightException: 
+
+Traceback (most recent call last):
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/utils/generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 459, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/utils/generic.py", line 1072, in wrapper
+    outputs = func(self, *args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 395, in forward
+    hidden_states = decoder_layer(
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 309, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+  File "/projectnb/mcnet/jbrin/.conda/envs/probes/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 155, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+
+OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 44.39 GiB of which 9.31 MiB is free. Including non-PyTorch memory, this process has 44.38 GiB memory in use. Of the allocated memory 43.86 GiB is allocated by PyTorch, and 21.59 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
