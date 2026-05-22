@@ -42,6 +42,9 @@ def main():
     p.add_argument("--sweep_dir", default="outputs/gcm_translation")
     p.add_argument("--out_dir", default="outputs/gcm_translation/_aggregate")
     p.add_argument("--top_k_for_universality", type=int, default=20)
+    p.add_argument("--include_same_lang", action="store_true",
+                   help="Include same-language addendum dirs in universality counts. "
+                        "Default is cross-language only, matching the 56-direction paper claim.")
     p.add_argument("--counterfactual_attribution_aggregate",
                    default="outputs/counterfactual_attribution/aggregated_by_concept.json",
                    help="Optional: cross-reference SAE GCM top-features vs grammar top-features.")
@@ -51,7 +54,14 @@ def main():
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    direction_dirs = sorted([d for d in sweep.iterdir() if d.is_dir() and "__" in d.name])
+    direction_dirs = []
+    for d in sorted(sweep.iterdir()):
+        if not d.is_dir() or "__" not in d.name:
+            continue
+        src, tgt = d.name.split("__", 1)
+        if src == tgt and not args.include_same_lang:
+            continue
+        direction_dirs.append(d)
     print(f"Found {len(direction_dirs)} directions under {sweep}")
 
     summary_all = {}

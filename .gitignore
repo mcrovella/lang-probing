@@ -8,6 +8,8 @@ IMPLEMENTATION_SUMMARY.md
 outputs/
 logs/
 
+# Yeah
+*.out
 
 # Model files
 *.pkl

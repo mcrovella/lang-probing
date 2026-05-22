@@ -15,8 +15,14 @@ Conditions per language (--mode full):
   * 20 per-head k=1 mean-ablations of stratified controls
   * 1 collective k=5 mean-ablation of top-5
   * 1 collective k=5 mean-ablation of control-5
+  * (1 + n_ctrl_seeds extra) collective k=5 mean of randomly-resampled
+    same-layer controls (lets us estimate ctrl variance across random
+    samples — needed to interpret single-sample ctrl deviations like
+    Hindi's first-pass +0.23)
   * 1 collective mean-ablation of top heads with mean_signed_ie > 0
   * 1 collective mean-ablation of top heads with mean_signed_ie < 0
+  * 1 matched-size random control for POS-IE collective (same n)
+  * 1 matched-size random control for NEG-IE collective (same n)
   * 1 collective zero-ablation of top-5 (mean-vs-zero spot check)
 
 Smoke mode (--mode smoke):
@@ -175,50 +181,62 @@ def score_pair(
             for L, ops in sorted(by_layer.items()):
                 self_attn = layers[L].self_attn
                 o_in = self_attn.o_proj.input  # [B, S, d_model]
-                W_o = self_attn.o_proj.weight  # [d_model_out, d_model_in]
-                B = o_in.shape[0]
-                S = o_in.shape[1]
-                # Reshape to per-head: [B, S, n_heads, head_dim]
-                # Sanity: o_proj.input is per-query-head concat (GQA: pre-projection)
-                assert o_in.shape[-1] == n_heads * head_dim, \
-                    f"unexpected o_proj.input dim {o_in.shape} (expected last={n_heads*head_dim})"
-                o_in_heads = o_in.view(B, S, n_heads, head_dim)
-                replacement = o_in_heads.clone()
+                W_o = self_attn.o_proj.weight  # [d_model, d_model]
+                # Per-head delta accumulation. Earlier versions cloned
+                # o_in.view(B,S,n_heads,head_dim) — a [B,S,4096] bf16 alloc
+                # per layer per pair per condition. We instead compute the
+                # delta one head at a time via column-sliced W_o, which
+                # avoids the full clone and reduces peak memory enough that
+                # heb/hin at n=400 no longer OOM on 80GB.
                 for (h, mode) in ops:
+                    h_start = h * head_dim
+                    h_end = h_start + head_dim
+                    head_in = o_in[:, :, h_start:h_end]   # [B, S, head_dim]
+                    W_h = W_o[:, h_start:h_end]           # [d_model, head_dim]
                     if mode == "zero":
-                        replacement[:, :, h, :] = 0
+                        delta_in = -head_in
                     elif mode == "mean":
-                        # mean_acts is pre-loaded on GPU in main(); just dtype-cast.
-                        replacement[:, :, h, :] = mean_acts[L, h].to(o_in.dtype)
+                        mv = mean_acts[L, h].to(o_in.dtype)
+                        delta_in = mv - head_in           # broadcasts [head_dim] over [B,S]
                     else:
                         raise ValueError(f"unknown ablation mode {mode!r}")
-                # Pre-o_proj delta: [B, S, d_model]
-                delta_pre = (replacement - o_in_heads).view(B, S, -1)
-                # Project through W_o (Linear: out = in @ W.T). Cast to o_in.dtype
-                # rather than W_o.dtype to avoid querying a Parameter proxy under
-                # the trace (canonical pattern: gcm_core.py:434-438).
-                delta_post = torch.matmul(delta_pre.to(o_in.dtype), W_o.T)
-                self_attn.o_proj.output[:] = self_attn.o_proj.output + delta_post
+                    # Project the per-head delta through W_o's column slice.
+                    # Cast to o_in.dtype rather than W_o.dtype to avoid
+                    # querying a Parameter proxy under the trace
+                    # (canonical pattern: gcm_core.py:434-438).
+                    delta_post = torch.matmul(delta_in.to(o_in.dtype), W_h.T)
+                    self_attn.o_proj.output[:] = self_attn.o_proj.output + delta_post
 
         logits = model.lm_head.output  # [1, S, vocab]
         cf_logits = logits[:, cf_pos, :]
         log_probs = F.log_softmax(cf_logits.float(), dim=-1)
         delta = (log_probs[:, orig_id] - log_probs[:, cf_id]).cpu().save()
 
-    return float(_unwrap(delta).item())
+    val = float(_unwrap(delta).item())
+    del delta  # release the nnsight save proxy explicitly
+    return val
 
 
 def run_condition(model, pairs, name, ablations, mean_acts, n_heads, head_dim,
-                  baseline_deltas=None):
+                  baseline_deltas=None, cleanup_every: int = 50):
     """Score all pairs under one ablation condition; return mean+stats.
 
     If baseline_deltas is provided, also compute disruption metrics
     (mean|diff|, frac_decreased, frac_sign_flip) per-pair relative to baseline.
+
+    cleanup_every: call gc.collect() + torch.cuda.empty_cache() every N pairs
+    inside the per-pair score loop. nnsight 0.5 holds onto trace residue
+    between calls; without periodic cleanup the per-condition memory grows
+    enough that long sweeps (heb/hin, n=400) OOM mid-loop on 80GB.
     """
     t0 = time.time()
     deltas = []
-    for p in pairs:
+    for i, p in enumerate(pairs):
         deltas.append(score_pair(model, p, ablations, mean_acts, n_heads, head_dim))
+        if (i + 1) % cleanup_every == 0:
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
     elapsed = time.time() - t0
     t = torch.tensor(deltas)
     out = {
@@ -243,25 +261,38 @@ def run_condition(model, pairs, name, ablations, mean_acts, n_heads, head_dim,
     return out
 
 
-def build_conditions(mode: str, top_heads, control_heads, top_k_collective: int):
+def build_conditions(
+    mode: str,
+    top_heads,
+    control_heads,
+    top_k_collective: int,
+    n_heads_per_layer: int,
+    n_ctrl_seeds: int = 0,
+    base_seed: int = 42,
+):
     """
     Build the list of conditions to run.
 
     Each condition is a dict with: name, ablations [(L,h,mode), ...].
+
+    Additional controls beyond the original layout:
+      * matched-size random controls for POS-IE and NEG-IE collective
+        (same layer-stratification, same head count) — addresses the
+        "5 vs 15 heads" group-size confound in the sign-split.
+      * `n_ctrl_seeds` extra k=5 collective controls with different
+        random seeds — gives a distribution of single-sample ctrl effects,
+        useful when a single ctrl deviates (e.g. Hindi's +0.23 on the
+        first sample).
     """
     conds = []
 
-    # Baseline
     conds.append({"name": "baseline", "ablations": []})
 
-    # Per-head k=1 mean ablations: top
     for i, h in enumerate(top_heads):
         conds.append({
             "name": f"top_rank{i+1:02d}_L{h['layer']:02d}H{h['head']:02d}_mean",
             "ablations": [(h["layer"], h["head"], "mean")],
         })
-
-    # Per-head k=1 mean ablations: controls
     for i, c in enumerate(control_heads):
         conds.append({
             "name": f"ctrl_rank{i+1:02d}_L{c['layer']:02d}H{c['head']:02d}_mean",
@@ -269,9 +300,9 @@ def build_conditions(mode: str, top_heads, control_heads, top_k_collective: int)
         })
 
     if mode == "smoke":
-        return conds  # baseline + per-head top + per-head ctrl
+        return conds
 
-    # Collective top-k_collective mean
+    # k=5 collective: top + matched ctrl (existing)
     top_k_subset = top_heads[:top_k_collective]
     ctrl_k_subset = control_heads[:top_k_collective]
     conds.append({
@@ -283,7 +314,20 @@ def build_conditions(mode: str, top_heads, control_heads, top_k_collective: int)
         "ablations": [(h["layer"], h["head"], "mean") for h in ctrl_k_subset],
     })
 
-    # Sign-split collective (using all top heads, not just top-K subset)
+    # Extra randomly-resampled k=5 controls (for ctrl variance estimation).
+    # Each seed produces a different stratified sample over the same layers.
+    for s in range(n_ctrl_seeds):
+        alt_ctrl = sample_stratified_controls(
+            top_heads[:top_k_collective],
+            n_heads_per_layer=n_heads_per_layer,
+            seed=base_seed + 100 + s,
+        )
+        conds.append({
+            "name": f"ctrl_collective_k{top_k_collective}_seed{s:02d}_mean",
+            "ablations": [(h["layer"], h["head"], "mean") for h in alt_ctrl],
+        })
+
+    # Sign-split collective ablations
     pos_heads = [h for h in top_heads if h["mean_signed_ie_agg"] > 0]
     neg_heads = [h for h in top_heads if h["mean_signed_ie_agg"] < 0]
     if pos_heads:
@@ -291,10 +335,26 @@ def build_conditions(mode: str, top_heads, control_heads, top_k_collective: int)
             "name": f"top_collective_signedPOS_n{len(pos_heads)}_mean",
             "ablations": [(h["layer"], h["head"], "mean") for h in pos_heads],
         })
+        # Matched-size random control over the POS-IE layers
+        pos_ctrl = sample_stratified_controls(
+            pos_heads, n_heads_per_layer=n_heads_per_layer, seed=base_seed + 1,
+        )
+        conds.append({
+            "name": f"ctrl_collective_matched_POS_n{len(pos_heads)}_mean",
+            "ablations": [(h["layer"], h["head"], "mean") for h in pos_ctrl],
+        })
     if neg_heads:
         conds.append({
             "name": f"top_collective_signedNEG_n{len(neg_heads)}_mean",
             "ablations": [(h["layer"], h["head"], "mean") for h in neg_heads],
+        })
+        # Matched-size random control over the NEG-IE layers
+        neg_ctrl = sample_stratified_controls(
+            neg_heads, n_heads_per_layer=n_heads_per_layer, seed=base_seed + 2,
+        )
+        conds.append({
+            "name": f"ctrl_collective_matched_NEG_n{len(neg_heads)}_mean",
+            "ablations": [(h["layer"], h["head"], "mean") for h in neg_ctrl],
         })
 
     # Zero ablation spot check on top-k_collective (mean-vs-zero comparison)
@@ -314,6 +374,10 @@ def main():
     ap.add_argument("--max_pairs", type=int, default=400)
     ap.add_argument("--mode", choices=["smoke", "full"], default="full")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--n_ctrl_seeds", type=int, default=0,
+                    help="Extra k_collective random controls with distinct seeds "
+                         "(estimates ctrl variance; useful for langs where the "
+                         "first ctrl deviates from near-zero).")
     ap.add_argument("--gcm_dir", default="/projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation")
     ap.add_argument("--pairs_dir", default="/projectnb/mcnet/jbrin/lang-probing/data/multilingual_pairs")
     ap.add_argument("--output_dir", default="/projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp")
@@ -386,7 +450,11 @@ def main():
     mean_acts = mean_acts.to(device)
 
     # --- 5. Conditions ---
-    conditions = build_conditions(args.mode, top_heads, control_heads, args.top_k_collective)
+    conditions = build_conditions(
+        args.mode, top_heads, control_heads, args.top_k_collective,
+        n_heads_per_layer=n_heads, n_ctrl_seeds=args.n_ctrl_seeds,
+        base_seed=args.seed,
+    )
     logger.info(f"Running {len(conditions)} conditions...")
 
     results = []

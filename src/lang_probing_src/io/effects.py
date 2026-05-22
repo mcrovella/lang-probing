@@ -1,6 +1,7 @@
 import os
 import glob
 import logging
+import gc
 import torch
 import numpy as np
 from tqdm import tqdm
@@ -23,33 +24,42 @@ def get_input_features_vector(output_dir, language, concept, value):
     return torch.load(save_path, weights_only=True).numpy()
 
 
-def load_effects_files(out_dir=None):
+def index_effects_files(out_dir=None):
     # Default to <OUTPUTS_DIR>/output_features so the path stays consistent
     # if OUTPUTS_DIR is overridden.
     if out_dir is None:
         out_dir = os.path.join(OUTPUTS_DIR, "output_features")
-    # Iterate through the subfolders, each corresponding to a language pair
+
+    # Timestamped output dirs can contain repeated language pairs, including
+    # tiny pilots. Pick the latest timestamp per pair first, then load only one
+    # tensor per pair. This avoids nondeterministic overwrites and large memory
+    # spikes from loading superseded outputs.
+    latest_by_pair = {}
+    for subfolder in sorted(os.listdir(out_dir)):
+        subdir = os.path.join(out_dir, subfolder)
+        if not os.path.isdir(subdir):
+            continue
+        effects_file = glob.glob(os.path.join(subdir, "effects_*.pt"))
+        if len(effects_file) == 0:
+            raise ValueError(f"No effects file found for {subfolder}")
+        effects_file = effects_file[0]
+
+        # The suffix is a language pair, such as effects_English_French.pt
+        source_lang, target_lang = effects_file.split("/")[-1].split("_")[1:]
+        target_lang, _ = target_lang.split(".")
+        language_pair = (source_lang, target_lang)
+        latest_by_pair[language_pair] = effects_file
+
+    return latest_by_pair
+
+
+def load_effects_files(out_dir=None):
+    latest_by_pair = index_effects_files(out_dir)
+
     effects_files = {}
-    for subfolder in tqdm(os.listdir(out_dir)):
-        if os.path.isdir(os.path.join(out_dir, subfolder)):
-
-            # Find effects_*.pt file
-            effects_file = glob.glob(os.path.join(out_dir, subfolder, "effects_*.pt"))
-            if len(effects_file) == 0:
-                raise ValueError(f"No effects file found for {subfolder}")
-            effects_file = effects_file[0]
-
-            # The suffix is a language pair, such as effects_English_French.pt
-            source_lang, target_lang = effects_file.split("/")[-1].split("_")[1:]
-            target_lang, _ = target_lang.split(".")
-            language_pair = (source_lang, target_lang)
-
-            logger.debug("Loading effects file for %s", language_pair)
-
-            # Load the effects file and, if necessary, overwrite with more recent version
-            # Make sure they're on CPU
-            effects = torch.load(effects_file, weights_only=False)
-            effects_files[language_pair] = effects
+    for language_pair, effects_file in tqdm(sorted(latest_by_pair.items())):
+        logger.debug("Loading effects file for %s from %s", language_pair, effects_file)
+        effects_files[language_pair] = torch.load(effects_file, weights_only=False)
 
     return effects_files
 
@@ -65,4 +75,22 @@ def get_language_pairs_and_concepts(effects_files):
             for concept_value in effects_files[language_pair][concept_key]: 
                 concepts[concept_key].add(concept_value)
     
+    return sorted(language_pairs), concepts
+
+
+def get_language_pairs_and_concepts_from_index(effects_index):
+    """Collect language pairs and concept/value keys without keeping all effects in memory."""
+    language_pairs = set()
+    concepts = {}
+    for language_pair, path in tqdm(sorted(effects_index.items())):
+        language_pairs.add(language_pair)
+        effects = torch.load(path, map_location="cpu", weights_only=False)
+        for concept_key in effects:
+            if concept_key not in concepts:
+                concepts[concept_key] = set()
+            for concept_value in effects[concept_key]:
+                concepts[concept_key].add(concept_value)
+        del effects
+        gc.collect()
+
     return sorted(language_pairs), concepts

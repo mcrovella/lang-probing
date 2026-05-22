@@ -1,0 +1,42 @@
+#!/bin/bash -l
+
+# v2 array: 8 langs at n=400 with matched-size POS/NEG controls + 5 extra
+# random control seeds. Uses memory-fixed run.py (per-head delta + per-pair
+# cleanup every 50 pairs). Pins to A100 80G for headroom and expandable
+# segments to keep heb/hin from re-OOMing.
+
+#$ -N habl_v2
+#$ -t 1-8
+#$ -l h_rt=1:30:00
+#$ -l gpus=1
+#$ -l gpu_type=A100
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(_ ara eng deu fra heb hin spa tur)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== V2 task ${SGE_TASK_ID}: lang=${LANG} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --top_k 20 \
+    --top_k_collective 5 \
+    --max_pairs 400 \
+    --n_ctrl_seeds 5 \
+    --mode full

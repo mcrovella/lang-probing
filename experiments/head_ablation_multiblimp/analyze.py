@@ -51,6 +51,11 @@ CSV_COLUMNS = [
     "top_minus_ctrl_collective",
     "signedPOS_delta_change",
     "signedNEG_delta_change",
+    "matched_POS_ctrl_delta_change",
+    "matched_NEG_ctrl_delta_change",
+    "signedPOS_vs_matched_POS",
+    "signedNEG_vs_matched_NEG",
+    "ctrl_k5_seeds_std",
     "zero_minus_mean_topk5",
     "spearman_rank_vs_effect",
     "spearman_p_value",
@@ -207,6 +212,27 @@ def analyze_language(lang_key: str, output_dir: Path) -> dict | None:
     signed_pos_dc = _dc_prefix("top_collective_signedPOS_")
     signed_neg_dc = _dc_prefix("top_collective_signedNEG_")
 
+    # Matched-size controls for POS/NEG collectives
+    matched_pos_dc = _dc_prefix("ctrl_collective_matched_POS_")
+    matched_neg_dc = _dc_prefix("ctrl_collective_matched_NEG_")
+
+    # Size-controlled comparisons (signedX − matchedX ctrl)
+    def _diff_finite(a, b):
+        if a == a and b == b:
+            return a - b
+        return float("nan")
+
+    signed_pos_vs_matched = _diff_finite(signed_pos_dc, matched_pos_dc)
+    signed_neg_vs_matched = _diff_finite(signed_neg_dc, matched_neg_dc)
+
+    # Extra k=5 ctrl seeds variance
+    seed_conds = _find_condition_prefix(conditions, "ctrl_collective_k5_seed")
+    seed_dc_list = [
+        c.get("mean_delta", float("nan")) - baseline_delta
+        for c in seed_conds
+    ]
+    ctrl_k5_seeds_std = _std_finite(seed_dc_list)
+
     # Zero vs mean spot check
     zero_cond_name = f"top_collective_k{top_k_collective}_zero"
     zero_delta = _find_condition(conditions, zero_cond_name)
@@ -231,6 +257,11 @@ def analyze_language(lang_key: str, output_dir: Path) -> dict | None:
         "top_minus_ctrl_collective": top_minus_ctrl,
         "signedPOS_delta_change": signed_pos_dc,
         "signedNEG_delta_change": signed_neg_dc,
+        "matched_POS_ctrl_delta_change": matched_pos_dc,
+        "matched_NEG_ctrl_delta_change": matched_neg_dc,
+        "signedPOS_vs_matched_POS": signed_pos_vs_matched,
+        "signedNEG_vs_matched_NEG": signed_neg_vs_matched,
+        "ctrl_k5_seeds_std": ctrl_k5_seeds_std,
         "zero_minus_mean_topk5": zero_minus_mean,
         "spearman_rank_vs_effect": spearman_r,
         "spearman_p_value": spearman_p,
@@ -245,6 +276,7 @@ def analyze_language(lang_key: str, output_dir: Path) -> dict | None:
         "_top_dc_list": top_dc_list,
         "_ctrl_dc_list": ctrl_dc_list,
         "_paired_count": n_pairs_heads,
+        "_seed_dc_list": seed_dc_list,
     }
 
 
@@ -257,6 +289,8 @@ def print_table(rows: list[dict]):
         f"{'lang':>4}  {'n_pairs':>7}  {'baseline':>8}  "
         f"{'top_coll5_dc':>12}  {'ctrl_coll5_dc':>13}  "
         f"{'top-ctrl':>8}  {'sPOS_dc':>7}  {'sNEG_dc':>7}  "
+        f"{'mPOS_ctrl':>9}  {'mNEG_ctrl':>9}  "
+        f"{'sPOS-mPOS':>9}  {'sNEG-mNEG':>9}  {'sCtrl_std':>9}  "
         f"{'zero-mean':>9}  {'spearman_r':>10}  {'sp_p':>6}"
     )
     sep = "-" * len(header)
@@ -278,6 +312,11 @@ def print_table(rows: list[dict]):
             f"{_fmt(r['top_minus_ctrl_collective'], 8, 4)}  "
             f"{_fmt(r['signedPOS_delta_change'], 7, 4)}  "
             f"{_fmt(r['signedNEG_delta_change'], 7, 4)}  "
+            f"{_fmt(r['matched_POS_ctrl_delta_change'], 9, 4)}  "
+            f"{_fmt(r['matched_NEG_ctrl_delta_change'], 9, 4)}  "
+            f"{_fmt(r['signedPOS_vs_matched_POS'], 9, 4)}  "
+            f"{_fmt(r['signedNEG_vs_matched_NEG'], 9, 4)}  "
+            f"{_fmt(r['ctrl_k5_seeds_std'], 9, 4)}  "
             f"{_fmt(r['zero_minus_mean_topk5'], 9, 4)}  "
             f"{_fmt(r['spearman_rank_vs_effect'], 10, 4)}  "
             f"{_fmt(r['spearman_p_value'], 6, 4)}"
@@ -286,6 +325,9 @@ def print_table(rows: list[dict]):
     print(
         "Columns: top_coll5_dc / ctrl_coll5_dc = mean_delta(condition) - mean_delta(baseline).\n"
         "         More negative = ablation hurts model more.\n"
+        "         mPOS_ctrl / mNEG_ctrl = matched-size random ctrl for POS/NEG collective.\n"
+        "         sPOS-mPOS / sNEG-mNEG = size-controlled comparison (signed minus matched ctrl).\n"
+        "         sCtrl_std = std of extra k=5 ctrl-seed deltas (-- if none present).\n"
         "         spearman_r = Spearman ρ of GCM rank (1..K) vs per-head delta_change."
     )
 

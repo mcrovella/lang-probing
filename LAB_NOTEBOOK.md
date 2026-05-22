@@ -124,3 +124,94 @@ One minor find: older `_l30_*` probes exist for English (created Nov 22 13:45-13
 - **Random ablation baseline has 66.7% exact zeros.** Expected near-zero mean with nonzero variance. Exact zeros suggest either no samples entered the ablation mask (probe never fired for that language/concept), or a bug where the "random" feature set collided with a no-op branch. To investigate in Wave 5 cleanup.
 - **The linear-model R² for Llama (0.02) is weak enough that the H1 claim might need rephrasing.** Aya at 0.10 is better but still low. The `.tex` claim of "88% faithful rank-1 approximation" is unverified here (code lives elsewhere); reproducing it in this repo is a Wave 5 TODO.
 - **Probe accuracies surprisingly high.** 96.68% mean is suspicious — word-level grammatical morphology may be decidable from surface lexical features alone. Would want to compare against shuffled-label baselines; filed as a stretch TODO.
+
+# May 11 (written by JB)
+
+Report on my progress for this meeting
+
+Back to last week... the GCM translation experiment
+
+> GCM translation methodology: for each ordered translation direction, we use FLORES sentence pairs to build a contrastive setup with one original source sentence and one counterfactual source sentence. Both candidate target translations are scored under the same original prompt, and the metric is the model's log-prob preference for the counterfactual target over the original target. GCM estimates the indirect effect of each component by a first-order Taylor approximation: gradient of this metric with respect to the component, dotted with the activation difference between original and counterfactual source runs. This gives a per-pair IE score for all attention heads at once. In this repo, the head component is the per-query-head slice of `self_attn.o_proj.input` at the last source-token position; the sweep covers all 56 cross-language directions among the 8 languages, with 100 pairs per direction.
+
+![GCM three-way head decomposition](experiments/gcm_translation/img/three_way_decomposition_heads_restricted.png)
+
+Focus on the difference between the red and blue bars here. This shows that some heads do have an effect, when compared to a baseline of choosing random sentences in the target language instead of the actual target language translation
+
+From here, we'd like to investigate what ablating these heads does on Multi-BLiMP. This dataset has some grammatically correct/incorrect minimal pairs
+
+> Example English Multi-BLiMP pair from `data/multilingual_pairs/eng.json`: prefix `"Yes, he"`; correct continuation `" is"`; incorrect continuation `" am"`. So the two completions are "Yes, he is" vs. "Yes, he am" for a Person agreement contrast (`SV-P`, original value 3 vs. counterfactual value 1).
+
+We aggregate the mean absolute value of the indirect effect across the 7 directions where L is the target language. L->L is excluded.
+
+Delta = log p(correct token | prefix) - log p(incorrect token | prefix)
+
+We then mean ablate by setting o_proj.input to be the position-averaged mean over all the samples in BLiMP 
+> This is per language. For each target language run, `mean_acts.pt` is computed from that language's sampled Multi-BLiMP pairs only, then reused for that language's ablation conditions.
+
+Then, for comparison: random control, pulling random heads from the same layer outside of the top 20 heads
+
+Splitting top heads by their sign: seeing the effects of positive or negative the mean aggregated signed indirect effect
+
+Zero-ablation
+
+We compute this for n=400 for each language (Hindi and Hebrew initially OOMed, so n=200 for those, but working on rerunning)
+
+![Cross-language summary](experiments/head_ablation_multiblimp/img/cross_lang_summary.png)
+
+> top-5 collective mean-ablation effect by language, with the matched same-layer random control overlaid. Negative values mean the ablation hurt the grammaticality preference.
+
+![Cross-language sign split](experiments/head_ablation_multiblimp/img/cross_lang_sign_split.png)
+
+> POS-signed versus NEG-signed GCM top-head collectives. The main result is that the NEG-signed groups consistently reduce the Multi-BLiMP delta, while POS-signed groups consistently increase it.
+
+![Cross-language mean vs zero](experiments/head_ablation_multiblimp/img/cross_lang_mean_vs_zero.png)
+
+> comparison of top-5 mean ablation and top-5 zero ablation. This is a sanity check that the qualitative pattern is not just an artifact of using mean replacement.
+
+![Cross-language per-head summary](experiments/head_ablation_multiblimp/img/cross_lang_per_head_summary.png)
+
+> average individual-head effect for GCM top heads versus same-layer controls. Single-head effects are small, which is why the sign-split collective ablations are more informative.
+
+![Cross-language correlations](experiments/head_ablation_multiblimp/img/cross_lang_correlations.png)
+
+> Spearman correlation between GCM rank and individual-head ablation effect by language. These are not the headline result; the clearer signal comes from grouping heads by signed IE.
+
+Notes:
+- Try mean-ablation over a general dataset intead of BLiMP
+- Check on how exactly we're sampling BLiMP phenomena to get the 400 examples
+- Instead of just pooling over the target lang, try also doing this for the source lang
+- Plot Aaron has in mind: 4 different bars: {source, target} x {pos IE, neg IE}
+- Important: check that there are no accidental sign flips
+- Try setting a theshold of sum IE, and ablating those heads
+    - Top-k% size
+    - Try for {positive, negative} sum of IE (# of heads needed to get to a certain theshold, say 50% of the total sum of {positive, negative} heads)
+    - Plot the IE over heads, ranked (just to see)
+- Investigating differences in pos IE and neg IE heads
+    - Look to IOI paper for inspiration
+    - Inspect input/output effects of heads in translation task
+- Important: write minimum viable paper with the results we have
+    - Add detail to the method of the current Overleaf
+    - Add attn head hypothesis: heads implicated in a translation context should also be responsible for monolingual grammatical performance
+    - Pos vs. neg plot with controls
+    - {Source, target} x {pos IE, neg IE}
+    - Aim to have a rough version and send to Aaron
+
+More notes:
+- Shuffle over source samples instead of target
+- Compare BLEU vs. Multi-BLiMP with and without ablations of heads
+- Linear vs. bilinear model
+- I like the angle of "why are pretrained models good at translation at all"
+    - They reuse language modeling features to translate
+    - Every paper is a position paper
+
+
+- Linear vs. bilinear model
+- GCM from FLORES -> Multi-BLiMP performance (ablation vs. no ablation)
+- BLEU vs. Multi-BLiMP
+- Monolingual fineturning is competitive with multilingual/parallel corpora
+
+- Focus on the overall narrative of the paper
+- Give draft to nonrelated people
+
+- Get figures in the paper and clear prose explanation of the method first
+- Send over the BLEU and perplexity accuracies rates

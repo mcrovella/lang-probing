@@ -10,9 +10,13 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
 
 EXP = Path(__file__).resolve().parent
-AGG = EXP.parent.parent / "outputs" / "gcm_translation" / "_aggregate"
+ROOT = EXP.parent.parent
+SWEEP = ROOT / "outputs" / "gcm_translation"
+AGG = SWEEP / "_aggregate"
+NULL_AGG = ROOT / "outputs" / "gcm_translation_null" / "_aggregate"
 IMG = EXP / "img"
 IMG.mkdir(exist_ok=True)
 
@@ -21,11 +25,16 @@ def _load(name):
     return json.load(open(AGG / name))
 
 
+def _load_json(path: Path):
+    return json.load(open(path))
+
+
 # ---------- Plot A: direction x universal-head matrix ----------
 def plot_direction_by_universal_head():
     boot = _load("bootstrap_summary.json")
     uh = boot["universal_heads"]
     top = sorted(uh, key=lambda e: -e["n_directions_in_topk"])[:20]
+    top_k = 20
 
     directions = sorted({d["direction"] for e in top for d in e["directions"]})
     n_d, n_h = len(directions), len(top)
@@ -45,14 +54,59 @@ def plot_direction_by_universal_head():
     ax.set_xlabel("Universal head (sorted by # directions)")
     ax.set_ylabel("Translation direction (src__tgt)")
     ax.set_title(
-        "Universal heads reuse across translation directions\n"
-        "Color = mean |IE| (per pair, N=100); cell present = head was in that direction's top-K"
+        f"Top-{top_k} universal heads reuse across translation directions\n"
+        f"Color = mean |IE| (per pair, N=100); cell present = head was in that direction's top-{top_k}"
     )
     plt.colorbar(im, ax=ax, label="mean |IE|")
     plt.tight_layout()
     plt.savefig(IMG / "meeting_direction_by_universal_head.png", dpi=130)
     plt.close(fig)
     print("  meeting_direction_by_universal_head.png")
+
+
+def plot_direction_by_universal_head_signed():
+    """Signed IE for the same top-20 universal heads, across all 56 directions."""
+    uh = _load("universal_heads.json")
+    top = sorted(uh, key=lambda e: -e["n_directions_in_topk"])[:20]
+    directions = sorted(
+        d.name for d in SWEEP.iterdir()
+        if d.is_dir() and "__" in d.name and d.name.split("__", 1)[0] != d.name.split("__", 1)[1]
+    )
+    n_d, n_h = len(directions), len(top)
+    M = np.full((n_d, n_h), np.nan)
+
+    tensors = {}
+    for i, dn in enumerate(directions):
+        h_path = SWEEP / dn / "heads_ie.pt"
+        if not h_path.exists():
+            continue
+        tensors[dn] = torch.load(h_path, map_location="cpu", weights_only=False).float()
+        for j, e in enumerate(top):
+            M[i, j] = float(torch.nanmean(tensors[dn][:, e["layer"], e["head"]]).item())
+
+    vmax = float(np.nanmax(np.abs(M))) if np.isfinite(M).any() else 1.0
+    fig, ax = plt.subplots(figsize=(11, 14))
+    im = ax.imshow(M, aspect="auto", cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+    ax.set_xticks(range(n_h))
+    ax.set_xticklabels(
+        [f"L{e['layer']}H{e['head']}\n({e['n_directions_in_topk']}/56)" for e in top],
+        rotation=45,
+        ha="right",
+        fontsize=8,
+    )
+    ax.set_yticks(range(n_d))
+    ax.set_yticklabels(directions, fontsize=7)
+    ax.set_xlabel("Top-20 universal head (count in per-direction top-20 shown)")
+    ax.set_ylabel("Translation direction (src__tgt)")
+    ax.set_title(
+        "Signed IE of top-20 universal heads across all 56 translation directions\n"
+        "Red = positive IE (pushes toward counterfactual); blue = negative IE (pushes toward gold)"
+    )
+    plt.colorbar(im, ax=ax, label="mean signed IE")
+    plt.tight_layout()
+    plt.savefig(IMG / "meeting_direction_by_universal_head_signed.png", dpi=130)
+    plt.close(fig)
+    print("  meeting_direction_by_universal_head_signed.png")
 
 
 # ---------- Plot B: layer distribution ----------
@@ -120,6 +174,47 @@ def plot_sae_grammar_overlap():
     print("  meeting_sae_grammar_overlap.png")
 
 
+def plot_sae_real_vs_null_same():
+    """Scatter showing SAE features that separate real_cross from the content floor."""
+    path = NULL_AGG / "three_way_summary_full.json"
+    if not path.exists():
+        print(f"  skip meeting_sae_real_vs_null_same.png: missing {path}")
+        return
+    summary = _load_json(path)
+    rows = summary.get("sae_features_ranked_by_translation_circuit", [])[:100]
+    if not rows:
+        print("  skip meeting_sae_real_vs_null_same.png: no SAE summary rows")
+        return
+
+    real = np.array([r["real_mean"] for r in rows])
+    null_same = np.array([r["null_same_mean"] for r in rows])
+    tc = np.array([r["translation_circuit_mean"] for r in rows])
+    feats = [r["feature_idx"] for r in rows]
+    vmax = max(abs(float(tc.min())), abs(float(tc.max())), 1e-6)
+
+    fig, ax = plt.subplots(figsize=(7, 6))
+    sc = ax.scatter(null_same, real, c=tc, cmap="RdBu_r", vmin=-vmax, vmax=vmax,
+                    s=42, alpha=0.82, edgecolor="black", linewidth=0.25)
+    lim = max(float(real.max()), float(null_same.max())) * 1.08
+    ax.plot([0, lim], [0, lim], color="black", linestyle="--", linewidth=1, alpha=0.35)
+    for idx in np.argsort(-tc)[:8]:
+        ax.text(null_same[idx], real[idx], f"f{feats[idx]}", fontsize=8,
+                ha="left", va="bottom")
+    ax.set_xlim(left=0)
+    ax.set_ylim(bottom=0)
+    ax.set_xlabel("null_same mean |IE| (content floor)")
+    ax.set_ylabel("real_cross mean |IE|")
+    ax.set_title(
+        "SAE features: real translation signal vs monolingual content floor\n"
+        "Color = real_cross - null_cross translation-circuit contribution"
+    )
+    plt.colorbar(sc, ax=ax, label="translation-circuit mean")
+    plt.tight_layout()
+    plt.savefig(IMG / "meeting_sae_real_vs_null_same.png", dpi=130)
+    plt.close(fig)
+    print("  meeting_sae_real_vs_null_same.png")
+
+
 # ---------- Plot D: per-direction translation strength ----------
 def plot_per_direction_strength():
     sa = _load("summary_all_directions.json")
@@ -160,8 +255,10 @@ def plot_per_direction_strength():
 
 def main():
     plot_direction_by_universal_head()
+    plot_direction_by_universal_head_signed()
     plot_layer_distribution()
     plot_sae_grammar_overlap()
+    plot_sae_real_vs_null_same()
     plot_per_direction_strength()
     print("\nAll plots written to", IMG)
 

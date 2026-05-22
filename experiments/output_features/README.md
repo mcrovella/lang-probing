@@ -22,14 +22,15 @@ Batch-submission template: `run/attribution_flores.sh` (currently a one-liner �
 
 ## Dependencies
 
-- **`torchtyping`** (via `src/lang_probing_src/features/sparse_activations.py`). **Pre-existing gap; not in `requirements.txt`.** Install before running: `pip install torchtyping`. See [TODO.md](../../TODO.md).
+- **`torchtyping`** (via `src/lang_probing_src/features/sparse_activations.py`). It is listed in the repo `requirements.txt`; the current `probes` conda env used during the paper-todo pass did **not** have it installed (`importlib.util.find_spec("torchtyping") == None`), so reruns need the environment refreshed.
 - Word probes at `outputs/probes/word_probes/`.
 - FLORES-101 sentence pairs.
 - Llama-3.1-8B + layer-16 SAE.
 
 ## Known issues
 
-- Old form used `from src.config …` (broken import); canonical is `from lang_probing_src.config …`. Post-restructure this import still needs updating in `run.py` (see [TODO.md](../../TODO.md)).
+- The old `from src.config ...` import bug is fixed in `run.py`; it now imports from `lang_probing_src.config`.
+- Saved outputs are timestamped and include at least one tiny pilot (`English_French`, 2 examples) plus later 256-example runs. Downstream loading now indexes the latest timestamped file per `(source, target)` pair before loading, to avoid nondeterministic overwrites.
 
 ## Outputs
 

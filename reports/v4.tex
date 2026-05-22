@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[review]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+% \usepackage{inconsolata}
+
+% Including images in your LaTeX document requires adding
+% additional package(s)
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\newcommand{\am}[1]{\textcolor{orange}{[AM: #1]}}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Read, Translate, Write: LLMs Translate with Fuzzy Semantic Hubs}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a separate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+\author{First Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+
+Machine translation has long been an influential area of natural language processing. The attention mechanism was first proposed to improve machine translation performance \citep{bahdanau2015neuralmachinetranslationjointly,luong-etal-2015-effective,vaswani2017attention}; one consequence of attention was the emergence of language models that could be efficiently trained on massive corpora \citep{devlin-etal-2019-bert,radford2018improving}. So-called large language models (LLMs) have revolutionized many areas of natural language processing, but have been relatively slowly adopted in machine translation (MT).
+
+A reason for the slow adoption of LLMs in MT has been a focus on low-resource languages, where LLMs face significant challenges \citep{hendy2023goodgptmodelsmachine,robinson2023chatgptmtcompetitivehigh}. Because LLMs require large training corpora, they are difficult to train effectively on low-resource languages. However, they also hold significant promise: even when not trained on a given language, LLMs can be prompted to translate from or into a language they have seen very little of in their training data \citep{cahyawijaya-etal-2024-llms}---e.g., by prompting with a grammar book \citep{tanzer2024a}. Moreover, their representations of high-resource languages could enable cross-lingual transfer \citep{conneau-etal-2020-unsupervised} with little data in the target language.
+
+Whether LLMs can deliver on this promise depends in part on the mechanisms underlying how they translate. Specifically, do LLMs rely on task- and language-agnostic mechanisms to translate, or are they more specialized to specific language pairs? If the former, this opens up a clear path toward improving MT performance, potentially without large parallel corpora \citep{artetxe2018unsupervised}. Much recent work provides mechanistic evidence supporting this hypothesis in the language modeling context \citep{wendler-etal-2024-llamas,brinkmann-etal-2025-large,wu2025the}. We therefore posit that LLMs might translate using the same mechanisms they use to language model: the ``stages of inference'' hypothesis  \citep{lad2024the} holds that LLMs devote the first half of their layers to reading an input and composing increasingly abstract concept representations . Then, the latter half of the model reads these concept representations, and uses them to decide which token should be predicted given prior context. This implies that translation would not necessarily require language pair--specific mechanisms: instead, it only requires that a model be capable of reading abstract features from the source language, and generating text for the target language conditioned on those features.
+% This means that the middle layers of a model are essentially ``semantic hubs'' \aaron{cite} containing a few concepts that explain much of the variance in the pretraining corpus.
+
+If this hypothesis is true, it has three main implications for MT. (1) Given language pair $(S,T)$, translation performance should be predictable from monolingual capabilities in $S$ and $T$ in isolation without cross-linguistic interaction terms. (2) There should exist task-agnostic representations that are causally relevant for predicting correct outputs in both machine translation \emph{and} monolingual language modeling settings. Finally, (3) adding translation capabilities for a new language should only require improvements to monolingual capabilities for that language---i.e., monolingual corpora should yield similar improvements in translation performance as parallel corpora, assuming the model can already effectively handle the other language in the language pair.
+
+We investigate each of these three implications, and find positive evidence for each. While no single experiment is a smoking gun confirming the noisy channel hypothesis, each provides convergent evidence in support of it. This could provide a preliminary explanation for the value of exposure to (largely monolingual) documents in producing models more effective at translation.
+
+\section{Related Work}
+\paragraph{Massively multilingual feature representations.} Our work is partially motivated by the observation that grammatical concept representations are highly multilingual in large language models, even across typologically distinct language pairs \citep{brinkmann-etal-2025-large}. Similar evidence has been observed in \citep{wendler-etal-2024-llamas,dumas-etal-2025-separating}.
+
+\paragraph{Interpretability.}
+
+\paragraph{Low-resource machine translation.} 
+
+\section{A Motivating Observation: Monolingual Capabilities Explain Translation Performance}
+How much of a model's ability to translate can be explained by its monolingual language modeling capabilities? We start by defining a \textbf{linear model} from monolingual competence to translation competence.
+
+We use accuracies on MultiBLiMP as a proxy for monolingual competence. We take the macroaverage of scores across BLiMP categories for a given language.
+
+For translation, we have language pair $(S, T)$, where $S$ is the source and $T$ is the target language. Translation competence $t_{ST}$ is quantified as a BLEU score for $(S, T)$. For each language pair, we measure $l_S$ and $l_T$, and learn coefficients $\beta_S$ and $\beta_T$ to maximize predictive accuracy in the following function:
+\begin{equation}
+    \beta_S l_S + \beta_Tl_T = t_{ST}
+\end{equation}
+We hypothesize that if a model is encoding an input into some universal feature space, then the predictive power of this model will be high. If a model relies on specialized translation mechanisms, the predictive power should be relatively low.
+
+For further context, we also train a bilinear model with an interaction term:
+\begin{equation}
+    \beta_Sl_S + \beta_Tl_T + \beta_{ST}l_{ST} = t_{ST}
+\end{equation}
+If our hypothesis is correct, then the bilinear model should not have significantly greater predictive power than the linear model.
+
+\am{TODO: results}
+
+\am{TODO @Jake: slot in the BLiMP vs.\ BLEU figures from `v2.tex`}
+
+\section{Ablations of attention heads that distinguish valid translations from random sentences}
+
+Quick explanation of GCM
+
+Identification of top heads via GCM (i.e. the heads with the largest indirect effect)
+
+Then we investigate what ablating these heads does on BLiMP minimal pairs
+
+$\Delta$ is the difference between 
+
+\section{Finetuning on monolingual data is competitive with finetuning on parallel corpora}
+
+\am{TODO @Jannik: prose + figures}
+
+\section{Discussion and Conclusions}
+We have found that a linear model conditioned on proxies for monolingual competence is a strong predictor of translation performance, that many components are influential in both translation and monolingual tasks, and that continued pre-trainining on monolingual data often yields similar gains in performance to continued pre-training with multilingual data. Together, these act as convergent evidence in support of our main hypothesis.
+
+We emphasize that mechanisms selective for the translation task are still likely to exist; indeed, \am{TODO: Todd FV citation} find that there are components selective for word translation. It is likely that LLMs use a mixture of mechanisms \am{TODO: cite mixture of mechanisms paper} to achieve their translation performance. Our goal was to explain why monolingual pretraining is helpful for translation at all, and not to explain the entirety of LLM translation performance.
+
+\section*{Limitations}
+
+% Entries for the entire Anthology, followed by custom entries
+\bibliography{custom}
+
+\appendix
+
+\section{Example Appendix}
+\label{sec:appendix}
+
+This is an appendix.
+
+\end{document}
