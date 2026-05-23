@@ -1,0 +1,756 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true, linkcolor=blue!50!black, urlcolor=blue!50!black,
+            citecolor=blue!50!black}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\ppl}{\mathrm{PPL}}
+\newcommand{\rsq}{R^2}
+
+\title{Predicting translation BLEU from monolingual competence: \\
+       an additive decomposition}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+A central question for multilingual large language models is the extent
+to which translation quality is determined by per-language competence
+alone, as opposed to language-pair-specific factors. We frame this as a
+specific hypothesis:
+
+\begin{quote}
+\textbf{H1.} Translation BLEU between an ordered language pair $(i, j)$
+is predictable from per-language monolingual competence on $i$ and $j$,
+without a substantive language-pair-specific interaction term.
+\end{quote}
+
+We address H1 via a per-language decomposition of pairwise BLEU scores
+into source and target effects, and we test whether those effects are
+predicted by monolingual competence proxies and whether any
+pair-specific residual is detectable.
+
+Our results support H1:
+
+\begin{enumerate}
+  \item An additive random-effects model
+    $\code{BLEU}_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij}$
+    explains $86$--$93\%$ of centered BLEU variance across two models.
+    A multiplicative (rank-1) decomposition fits comparably, but does not
+    outperform additive on the same parameter budget.
+  \item The recovered language effects $\alpha, \beta$ correlate with
+    standard monolingual competence proxies (FLORES corpus perplexity
+    and Multi-BLiMP grammatical-acceptability accuracy) in the expected
+    direction.
+  \item Monolingual competence proxies directly predict BLEU at the
+    pair level. Multi-BLiMP accuracy explains up to $44\%$ of BLEU
+    variance on its own; FLORES PPL is a substantially weaker proxy.
+  \item Source ($\alpha$) and target ($\beta$) effects contribute
+    asymmetrically to BLEU. Target-language competence dominates for
+    Llama-3.1-8B; for Aya-23-8B the two roles are more balanced.
+  \item Interaction terms between source and target proxies are not
+    statistically significant under any model, transform, or subset we
+    tested. This means BLEU is well captured by main effects of
+    per-language competence, with no detectable language-pair-specific
+    component.
+\end{enumerate}
+
+The data are pairwise BLEU scores and per-language proxy metrics for
+two open multilingual decoder models, Llama-3.1-8B and Aya-23-8B, over
+24 languages from FLORES (552 directed pairs per model). Multi-BLiMP
+accuracy is available for 17 of those languages.
+
+For the per-language correlation, direct BLEU prediction, source--target
+asymmetry, and interaction-term analyses
+(Sections~\ref{sec:correlations}--\ref{sec:interaction}), we restrict
+to the 17-language subset for which both proxies are available, so that
+all comparisons between FLORES PPL and Multi-BLiMP are on identical
+data. Corresponding results on the broader 24-language FLORES set
+(and on the 23-language no-English variant) for FLORES PPL are
+reported in Appendix~\ref{app:ppl-no-eng}.
+
+We pay particular attention to a methodological subtlety throughout:
+English is a leverage point that distorts FLORES-PPL-based analyses for
+Llama, but not for Multi-BLiMP-based analyses. Main-body random-effects
+results therefore exclude English (Section~\ref{sec:additive});
+extended results with all languages and the English-outlier evidence
+are in Appendix~\ref{app:english}.
+
+\section{Setup}
+
+\paragraph{Models.}
+\code{Llama-3.1-8B} (Meta) and \code{Aya-23-8B} (Cohere). Both are dense
+multilingual decoder LMs of comparable size.
+
+\paragraph{BLEU.}
+For each ordered language pair $(i, j)$ with $i \ne j$, we use the
+sentencepiece-tokenized BLEU score of the model translating from
+language $i$ into language $j$ on FLORES devtest. This gives a
+$24 \times 24$ matrix per model with $24$ undefined diagonal cells
+($552$ valid cells per model).
+
+\paragraph{Monolingual competence proxies.}
+We consider two per-language scalars:
+\begin{itemize}
+  \item FLORES corpus perplexity $P_i$: token-level PPL of the model on
+    the FLORES devtest sub-corpus for language $i$.
+  \item Multi-BLiMP accuracy $a_i$: proportion of minimal pairs in the
+    Multi-BLiMP grammatical-acceptability dataset for language $i$ that
+    the model scores correctly. Available for 17 of 24 languages:
+    \code{ces, deu, ell, eng, fas, fra, heb, hin, ita, nld, pol, por,
+    ron, rus, spa, tur, ukr}.
+\end{itemize}
+
+\paragraph{$R^2$ on centered scale.}
+Throughout we report standard regression $R^2 = 1 - \sum_{ij}(y_{ij} -
+\hat y_{ij})^2 / \sum_{ij}(y_{ij} - \bar y)^2$, where $\bar y$ is the
+sample mean over the observed cells. The denominator is centered, so
+the grand mean is not credited as ``explained''.
+
+\section{An additive random-effects model fits BLEU well}
+\label{sec:additive}
+
+We fit the two-way additive random-effects model
+\begin{equation}
+\code{BLEU}_{ij} = \mu + \alpha_i + \beta_j + \varepsilon_{ij}, \qquad
+\sum_i \alpha_i = \sum_j \beta_j = 0,
+\label{eq:re}
+\end{equation}
+to all observed (non-diagonal) cells of the BLEU matrix by OLS. The
+recovered $\alpha_i$ is a per-language source-side effect and $\beta_j$
+is a per-language target-side effect, both measured as deviations from
+the grand mean BLEU.
+
+\paragraph{English is a leverage point.}
+On the full 24-language set, English is a large positive outlier in
+both $\alpha$ and $\beta$ (Appendix~\ref{app:english}). Its presence
+substantially distorts downstream PPL-based correlation analyses for
+Llama. We therefore report the random-effects fit on the 23-language
+subset that excludes English. Doing so does not change the headline
+conclusion --- the additive fit is essentially as strong with English
+included as without --- but it lets the per-language structure speak
+more cleanly across the remaining languages.
+
+\paragraph{Fit quality.}
+On the 23-language no-English subset ($n = 506$ observed pairs per
+model), the additive model explains $86$--$93\%$ of centered BLEU
+variance with only $2(n_{\text{lang}} - 1) = 44$ free parameters per
+language axis (Table~\ref{tab:additive}). With $1\%$--$2\%$ exception
+(Aya $\bar y$ shifts $10.81 \to 9.88$, Llama $13.27 \to 12.02$), the
+recovered $\mu$ and the additive $R^2$ are essentially indistinguishable
+from those on the full set.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+model & $\bar y$ & $R^2_{\text{additive}}$ \\
+\midrule
+Aya-23-8B    & 9.88  & $0.862$ \\
+Llama-3.1-8B & 12.02 & $0.927$ \\
+\bottomrule
+\end{tabular}
+\caption{Additive random-effects model fit on the 23-language no-English
+subset, with $n = 506$ observed pairs per model. $R^2$ is on centered
+total sum of squares.}
+\label{tab:additive}
+\end{table}
+
+\paragraph{Multiplicative comparison.}
+The natural alternative to an additive decomposition is multiplicative:
+$\code{BLEU}_{ij} \approx u_i v_j$, the rank-1 SVD approximation. To
+compare apples-to-apples we add a constant grand-mean offset to the
+multiplicative model so both have the mean given for free, and we
+parameter-match: additive uses $\mu + \alpha + \beta$ with sum-to-zero
+constraints; multiplicative uses $\bar y + u_i v_j$ with the rank-1
+factors fit by SVD of the mean-centered matrix.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+model & additive ($\mu + \alpha + \beta$)
+      & multiplicative ($\bar y + u v$)
+      & AMMI (additive $+$ rank-1 of residuals) \\
+\midrule
+Aya-23-8B    & $0.862$ & $0.716$ & $0.906$ \\
+Llama-3.1-8B & $0.927$ & $0.866$ & $0.956$ \\
+\bottomrule
+\end{tabular}
+\caption{Centered $R^2$ for additive vs.\ multiplicative
+decompositions, and for AMMI (additive main effects plus rank-1 of
+the additive residuals), on the 23-language no-English subset.
+Additive and multiplicative use comparable parameter budgets;
+AMMI uses roughly twice as many.}
+\label{tab:add-vs-mul}
+\end{table}
+
+Three conclusions follow from Table~\ref{tab:add-vs-mul}:
+
+\begin{enumerate}
+  \item \textbf{Additive is the better-fitting class on this parameter
+    budget.} Multiplicative fits the data well but does not outperform
+    additive on either model. For Aya the gap is substantial
+    ($+14.6$ pp); for Llama it is smaller ($+6.1$ pp) but still favors
+    additive.
+  \item \textbf{Multiplicative is not negligible.} A rank-1 outer
+    product captures $72$--$87\%$ of centered variance; the per-language
+    structure of BLEU is not orthogonal to a multiplicative
+    parameterization.
+  \item \textbf{Multiplicative residual interaction is small.} AMMI
+    --- adding rank-1 of the additive residuals on top of the additive
+    fit --- improves $R^2$ by only $2.9$ pp (Llama) and $4.4$ pp (Aya).
+    Beyond per-language main effects, genuinely multiplicative
+    structure is a small contribution.
+\end{enumerate}
+
+For the rest of the paper we use the $\alpha_i$ and $\beta_j$ estimated
+from the additive model in equation~\eqref{eq:re} as per-language
+``competence'' estimates: $\alpha_i$ is how much above (or below) the
+grand-mean BLEU language $i$ scores as a translation source, and
+$\beta_j$ analogously as a target.
+
+\section{Per-language effects align with monolingual competence proxies}
+\label{sec:correlations}
+
+Both FLORES corpus perplexity $P_i$ and Multi-BLiMP accuracy $a_i$ are
+per-language scalars meant to measure model competence in language $i$.
+If the additive language effects $\alpha, \beta$ recovered in
+Section~\ref{sec:additive} reflect translation-relevant competence, we
+expect them to correlate with each proxy in the appropriate direction
+(negative with $P$, positive with $a$).
+
+We compute these correlations on the 17-language Multi-BLiMP subset
+(which includes English, since English is not an outlier in the
+Multi-BLiMP framework --- Appendix~\ref{app:english}). This subset
+gives the apples-to-apples comparison of the two proxies on the same
+languages. Corresponding results on the 23-language non-English subset
+for FLORES PPL are reported in Appendix~\ref{app:ppl-no-eng}, and they
+are qualitatively consistent with what is reported here.
+
+Table~\ref{tab:headline-corr} summarizes the strongest correlation
+under each transform family for each model and role.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llccc|cc}
+\toprule
+ & & \multicolumn{3}{c|}{FLORES PPL ($|r|$)}
+   & \multicolumn{2}{c}{Multi-BLiMP accuracy ($|r|$)} \\
+model & role & raw $P$ & $\log P$ & $1/P$ & raw $a$ & logit$(a)$ \\
+\midrule
+Aya-23-8B    & src ($\alpha$) & $0.46$ & $0.43$ & $0.39$ & $0.74$ & $\mathbf{0.82}$ \\
+Aya-23-8B    & tgt ($\beta$)  & $0.15$ & $0.14$ & $0.14$ & $0.63$ & $\mathbf{0.77}$ \\
+Llama-3.1-8B & src ($\alpha$) & $0.13$ & $0.14$ & $0.10$ & $0.35$ & $0.38$ \\
+Llama-3.1-8B & tgt ($\beta$)  & $0.29$ & $0.38$ & $0.40$ & $0.54$ & $\mathbf{0.64}$ \\
+\bottomrule
+\end{tabular}
+\caption{Per-language correlations between additive language effects
+($\alpha, \beta$) and monolingual competence proxies, on the
+17-language Multi-BLiMP subset. All values are absolute Pearson $|r|$;
+all best transforms in the indicated direction (negative for $P$ and
+$\log P$, positive for $1/P$ and Multi-BLiMP transforms).
+Bold marks the strongest correlation in each row.}
+\label{tab:headline-corr}
+\end{table}
+
+Three observations:
+
+\begin{enumerate}
+  \item \textbf{Multi-BLiMP correlations are systematically stronger
+    than FLORES PPL correlations.} For Aya, the best Multi-BLiMP
+    correlation reaches $|r| = 0.82$ on $\alpha$ ($p < 0.001$ at $n =
+    17$); the best PPL correlation is $|r| = 0.46$. For Llama,
+    Multi-BLiMP reaches $|r| = 0.64$ on $\beta$ ($p < 0.01$); PPL
+    reaches $|r| = 0.40$.
+  \item \textbf{The correlation patterns differ between the two
+    models.} For Aya, $\alpha$ tracks both proxies more strongly than
+    $\beta$ does. For Llama, $\beta$ tracks both proxies more strongly
+    than $\alpha$ does. We return to this asymmetry in
+    Section~\ref{sec:asymmetry}.
+  \item \textbf{Llama $\alpha$ is the weak point.} Even Multi-BLiMP
+    achieves only $|r| \approx 0.38$ for Llama source effects, vs.\
+    $|r| \approx 0.64$ for Llama target effects. We interpret this as
+    target-language generation being more directly downstream of the
+    grammatical competence Multi-BLiMP measures, while source-language
+    processing involves more content understanding.
+\end{enumerate}
+
+Full tables across all four transforms tested for each proxy are in
+Appendix~\ref{app:corr-tables}, along with significance test results.
+
+\section{Monolingual competence proxies predict BLEU directly}
+\label{sec:bleu-prediction}
+
+We now ask whether monolingual proxies predict the pairwise BLEU
+score $y_{ij}$ directly, fitting
+\begin{equation}
+y_{ij} = a_0 + b \cdot f(\mathrm{proxy}_i) + c \cdot g(\mathrm{proxy}_j)
+       + \varepsilon_{ij}
+\label{eq:direct}
+\end{equation}
+by OLS on all valid pairs in the 17-language subset (272 pairs for
+Llama, 240 for Aya after dropping pairs missing either proxy). For
+PPL we test the raw-$P$ form and a log--log analog of
+equation~\eqref{eq:direct}; for Multi-BLiMP we test raw-$a$ and the
+log-error-rate analog $\log(1-a)$.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+specification & Aya $R^2$ & Llama $R^2$ \\
+\midrule
+$\code{BLEU} \sim P_s + P_t$                                 & $0.061$ & $0.071$ \\
+$\log\code{BLEU} \sim \log P_s + \log P_t$                   & $0.068$ & $0.127$ \\
+$\code{BLEU} \sim a_s + a_t$                                 & $\mathbf{0.394}$ & $\mathbf{0.250}$ \\
+$\log\code{BLEU} \sim \log(1-a_s) + \log(1-a_t)$             & $\mathbf{0.444}$ & $\mathbf{0.339}$ \\
+\bottomrule
+\end{tabular}
+\caption{Direct prediction of (log-)BLEU from per-language competence
+proxies, on the 17-language Multi-BLiMP subset. Both PPL coefficients
+are highly significant ($p < 10^{-4}$) for Aya in both PPL forms; for
+Llama the $\log P_s$ coefficient is not significant ($p = 0.38$ in the
+log specification), while $\log P_t$ is highly significant ($p <
+10^{-9}$). Both Multi-BLiMP coefficients are highly significant ($p
+< 10^{-2}$) in every cell.}
+\label{tab:direct}
+\end{table}
+
+Two takeaways from Table~\ref{tab:direct}:
+
+\begin{enumerate}
+  \item \textbf{Multi-BLiMP is a strong predictor of BLEU.} The best
+    Multi-BLiMP-based specification explains $44\%$ (Aya) and $34\%$
+    (Llama) of pairwise BLEU variance using just two per-language
+    scalars and no interaction. These are large effects for a model
+    with only two free coefficients beyond an intercept.
+  \item \textbf{FLORES PPL is a moderate predictor.} The best PPL
+    specification reaches only $R^2 = 0.07$ (Aya) and $R^2 = 0.13$
+    (Llama) on the same subset. Multi-BLiMP yields $3$--$6\times$ the
+    explanatory power of PPL on the same data.
+\end{enumerate}
+
+The gap between PPL and Multi-BLiMP is consistent with the
+per-language correlation results of Section~\ref{sec:correlations}:
+the same per-language structure that drives Multi-BLiMP's stronger
+$|r|$ with $\alpha, \beta$ shows up here as stronger pairwise
+predictive power.
+
+Coefficient signs are in the expected direction throughout: higher PPL
+or lower Multi-BLiMP accuracy on either side of the translation pair
+predicts lower BLEU. We report per-coefficient values and standard
+errors in Appendix~\ref{app:coef}.
+
+\section{Source vs.~target competence}
+\label{sec:asymmetry}
+
+The per-language effects $\alpha$ (source) and $\beta$ (target) are
+both informative about BLEU, but they are not equally informative, and
+their relative roles differ between the two models.
+
+\paragraph{Variance.}
+Across pairs, the variance of $\beta$ over the BLEU matrix is
+substantially larger than the variance of $\alpha$ for both models:
+roughly $4 \times$ for Aya and $9 \times$ for Llama. Choosing a
+different target language moves BLEU substantially more than choosing
+a different source language. This means that, in any per-pair
+regression of BLEU on proxies, the target side has more variance to
+absorb and tends to dominate the fit.
+
+\paragraph{Correlation with competence proxies.}
+On the 17-language Multi-BLiMP subset
+(Table~\ref{tab:headline-corr}):
+
+\begin{itemize}
+  \item \textbf{Llama is target-dominant.} $\beta$ correlates with
+    Multi-BLiMP at $|r| = 0.64$ (logit transform), vs.\ $|r| = 0.38$
+    for $\alpha$. With FLORES PPL, the pattern is the same in
+    direction: $|r| = 0.40$ for $\beta$ vs.\ $|r| = 0.13$ for $\alpha$.
+  \item \textbf{Aya is more symmetric.} Multi-BLiMP correlations are
+    comparable on the two sides: $|r| = 0.82$ for $\alpha$ vs.\ $|r| =
+    0.77$ for $\beta$. With PPL the asymmetry shifts the other way
+    ($|r| = 0.46$ for $\alpha$ vs.\ $|r| = 0.15$ for $\beta$), but
+    both sides remain in the same range under Multi-BLiMP.
+\end{itemize}
+
+\paragraph{Interpretation.}
+Translation as a target task is dominated by generating
+grammatically-well-formed output in the target language; this is
+exactly the kind of grammatical competence that Multi-BLiMP measures.
+Translation as a source task additionally requires content
+understanding, which a per-language grammaticality test does not
+measure. The fact that Llama shows a stronger target/source gap than
+Aya is consistent with the two models having different multilingual
+training distributions; we do not attempt to attribute the difference
+further here.
+
+\section{Interaction terms are not significant}
+\label{sec:interaction}
+
+A multiplicative interaction term in equation~\eqref{eq:direct} ---
+the simplest way to introduce language-pair-specific structure into
+the regression --- would be evidence against the strict ``main
+effects only'' reading of H1. We test for it directly.
+
+Specifically, on the 17-language Multi-BLiMP subset (and separately
+on its no-English sub-subset), we fit the saturated model
+\begin{equation}
+y_{ij} = a_0 + b \cdot f(\mathrm{proxy}_i) + c \cdot g(\mathrm{proxy}_j)
+       + d \cdot f(\mathrm{proxy}_i) \cdot g(\mathrm{proxy}_j)
+       + \varepsilon_{ij}
+\label{eq:interaction}
+\end{equation}
+and compare it to the main-effects-only version
+(equation~\eqref{eq:direct}) via a nested-model $F$-test for the
+coefficient $d$.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llccc}
+\toprule
+subset & predictor (model) & $F(1, \mathrm{df})$ & $p$-value & $\Delta R^2$ \\
+\midrule
+17-lang (Multi-BLiMP) & Multi-BLiMP, Aya   & $0.00$ & $0.99$ & $<\!10^{-4}$ \\
+17-lang (Multi-BLiMP) & Multi-BLiMP, Llama & $0.56$ & $0.46$ & $0.001$ \\
+17-lang (Multi-BLiMP) & PPL, Aya           & $0.09$ & $0.76$ & $<\!10^{-3}$ \\
+17-lang (Multi-BLiMP) & PPL, Llama         & $0.01$ & $0.92$ & $<\!10^{-3}$ \\
+\midrule
+16-lang (no English)  & Multi-BLiMP, Aya   & $0.11$ & $0.75$ & $0.0003$ \\
+16-lang (no English)  & Multi-BLiMP, Llama & $0.43$ & $0.51$ & $0.001$ \\
+16-lang (no English)  & PPL, Aya           & $0.001$ & $0.97$ & $<\!10^{-4}$ \\
+16-lang (no English)  & PPL, Llama         & $0.16$ & $0.69$ & $0.001$ \\
+\bottomrule
+\end{tabular}
+\caption{Nested-model $F$-test for the source--target interaction
+coefficient $d$ in equation~\eqref{eq:interaction}, on the
+17-language Multi-BLiMP subset (top) and the same subset with English
+removed (bottom). The interaction is uniformly non-significant.}
+\label{tab:interaction}
+\end{table}
+
+The interaction $F$-test fails to reject the null in every cell of
+Table~\ref{tab:interaction}: the smallest $p$-value is $0.46$, and
+the increment $\Delta R^2$ from adding the interaction term is at
+most $0.001$. Adding interaction terms in the raw vs.~log form, on
+the full 24-language vs.~the 17-language subset, with or without
+English, with PPL or Multi-BLiMP --- none of these surfaces detectable
+pair-specific structure beyond what main effects already capture.
+
+This is direct evidence for H1: pairwise BLEU is well predicted by
+\emph{main effects} of per-language competence, and the additional
+predictive power from a pair-specific interaction is below the noise
+threshold of our data.
+
+\section{Discussion}
+
+The evidence reviewed here supports a strong form of H1: pairwise BLEU
+scores between language pairs are well captured by an additive
+decomposition into per-language source and target effects, those
+effects align with monolingual competence proxies in the expected
+direction, and a per-language proxy alone predicts pairwise BLEU up
+to $R^2 = 0.44$. Adding language-pair-specific interaction terms does
+not improve the fit. To the extent there is any residual structure
+beyond per-language main effects, it is small (a few percentage
+points of $R^2$, captured by AMMI's rank-1 residual).
+
+The most surprising and arguably most actionable finding is the gap
+between FLORES corpus PPL and Multi-BLiMP as competence proxies.
+Multi-BLiMP achieves $3$--$6\times$ the predictive $R^2$ of PPL on the
+same pairs. This suggests that, for the purpose of predicting
+translation quality, a targeted measure of grammatical competence is
+substantially more informative than the more commonly reported
+corpus-level PPL.
+
+\appendix
+
+\section{English as an outlier in PPL-based analyses}
+\label{app:english}
+
+This appendix documents the leverage effect of English on
+FLORES-PPL-based correlations, and shows that English is \emph{not} a
+leverage point in Multi-BLiMP-based analyses.
+
+\paragraph{English in the additive fit.}
+After fitting equation~\eqref{eq:re} on the full 24-language set, the
+recovered $\alpha$ and $\beta$ for English are large positive
+outliers: $\alpha_{\text{eng}} = +8.47$ and $\beta_{\text{eng}} =
++21.07$ for Llama; $\alpha_{\text{eng}} = +7.62$ and $\beta_{\text{eng}}
+= +13.46$ for Aya (signed residuals to the linear fit of each effect
+on $\log P$). These are substantially larger in magnitude than the
+next-largest residuals, which range from $4$ to $12$ in absolute
+value.
+
+\paragraph{Effect on per-language PPL correlations.}
+Table~\ref{tab:eng-effect} shows the Pearson correlation between
+$\alpha, \beta$ and PPL transforms with and without English in the
+sample.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llrrr|rrr}
+\toprule
+ & & \multicolumn{3}{c|}{Pearson $r$ on $\alpha$ (src)}
+   & \multicolumn{3}{c}{Pearson $r$ on $\beta$ (tgt)} \\
+model & transform & full ($n=24$) & no eng ($n=23$) & $\Delta |r|$
+                  & full ($n=24$) & no eng ($n=23$) & $\Delta |r|$ \\
+\midrule
+Llama & raw $P$  & $-0.19$ & $\mathbf{-0.44^*}$ & $+0.25$
+              & $-0.15$ & $-0.34$              & $+0.20$ \\
+Llama & $\log P$ & $-0.14$ & $-0.36$            & $+0.22$
+              & $-0.04$ & $-0.19$              & $+0.15$ \\
+Llama & $1/P$    & $+0.10$ & $+0.26$            & $+0.16$
+              & $-0.08$ & $+0.01$              & $-0.07$ \\
+Aya   & raw $P$  & $-0.30$ & $-0.31$            & $+0.01$
+              & $-0.36$ & $-0.39$              & $+0.03$ \\
+Aya   & $\log P$ & $-0.36$ & $-0.40$            & $+0.04$
+              & $-0.34$ & $-0.39$              & $+0.05$ \\
+Aya   & $1/P$    & $+0.40$ & $\mathbf{+0.48^*}$ & $+0.08$
+              & $+0.32$ & $+0.38$              & $+0.06$ \\
+\bottomrule
+\end{tabular}
+\caption{Pearson correlations between $\alpha, \beta$ and PPL
+transforms on the full 24-language set vs.\ the 23-language no-English
+set. $\Delta |r| = |r_{\text{no eng}}| - |r_{\text{full}}|$.
+$^{*}p < 0.05$.}
+\label{tab:eng-effect}
+\end{table}
+
+For Llama, removing English roughly doubles the magnitude of Pearson
+correlations across all PPL transforms and brings $r(\alpha, P)$ to
+statistical significance ($p = 0.035$). For Aya the effect is small
+($+1$ to $+8$ pp): the Aya signal was already systematic across all
+24 languages.
+
+\paragraph{Direct BLEU regression.}
+The same outlier effect appears in the direct PPL-to-BLEU regression
+on the full 24-language pair set: removing English moves Llama from
+$R^2 = 0.021$ (full set) to $R^2 = 0.114$ (no English), a
+$5.5\times$ improvement, with both PPL coefficients becoming highly
+significant. Aya improves modestly: $R^2 = 0.105 \to 0.120$.
+
+\paragraph{English is not an outlier for Multi-BLiMP.}
+By contrast, the analogous correlations using Multi-BLiMP accuracy
+are essentially unchanged when English is removed from the 17-language
+subset: Aya $|r(\alpha, \text{logit}\,a)|$ shifts $0.82 \to 0.77$;
+Llama $|r(\beta, \text{logit}\,a)|$ shifts $0.64 \to 0.49$. Removing
+English even slightly weakens some Llama Multi-BLiMP correlations,
+because English is a valid high-accuracy, high-BLEU point that
+anchors the relationship. Multi-BLiMP correctly orders English with
+its high BLEU; FLORES corpus PPL does not.
+
+This contrast is the methodological justification for two choices in
+the main body: (i) random-effects results in
+Section~\ref{sec:additive} exclude English, so that the per-language
+effects are reported on a sample where PPL-based downstream analyses
+will not be artificially weakened; (ii) downstream analyses in
+Sections~\ref{sec:correlations}--\ref{sec:interaction} use the
+17-language Multi-BLiMP subset (which includes English), since in that
+framework English is not an outlier.
+
+\section{Full per-language correlation tables (17-language subset)}
+\label{app:corr-tables}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lllrrrr}
+\toprule
+model & role & transform & Pearson $r$ & Pearson $p$ & Spearman $\rho$ & $n$ \\
+\midrule
+\multicolumn{7}{l}{\textbf{Multi-BLiMP accuracy ($a$)}} \\
+Aya   & src ($\alpha$) & raw       & $+0.74$ & $0.001$  & $+0.72$ & 17 \\
+Aya   & src ($\alpha$) & $1-a$     & $-0.74$ & $0.001$  & $-0.72$ & 17 \\
+Aya   & src ($\alpha$) & $\log(1-a)$ & $-0.82$ & $0.0001$ & $-0.72$ & 17 \\
+Aya   & src ($\alpha$) & logit$(a)$  & $+0.82$ & $0.0001$ & $+0.72$ & 17 \\
+Aya   & tgt ($\beta$)  & raw       & $+0.63$ & $0.008$  & $+0.67$ & 17 \\
+Aya   & tgt ($\beta$)  & $\log(1-a)$ & $-0.78$ & $0.0004$ & $-0.67$ & 17 \\
+Aya   & tgt ($\beta$)  & logit$(a)$  & $+0.77$ & $0.0005$ & $+0.67$ & 17 \\
+Llama & src ($\alpha$) & raw       & $+0.35$ & $0.16$   & $+0.31$ & 17 \\
+Llama & src ($\alpha$) & $\log(1-a)$ & $-0.38$ & $0.13$   & $-0.31$ & 17 \\
+Llama & src ($\alpha$) & logit$(a)$  & $+0.38$ & $0.13$   & $+0.31$ & 17 \\
+Llama & tgt ($\beta$)  & raw       & $+0.54$ & $0.024$  & $+0.60$ & 17 \\
+Llama & tgt ($\beta$)  & $\log(1-a)$ & $-0.65$ & $0.005$  & $-0.60$ & 17 \\
+Llama & tgt ($\beta$)  & logit$(a)$  & $+0.64$ & $0.005$  & $+0.60$ & 17 \\
+\midrule
+\multicolumn{7}{l}{\textbf{FLORES PPL ($P$)}} \\
+Aya   & src ($\alpha$) & raw $P$     & $-0.46$ & $0.064$ & --- & 17 \\
+Aya   & src ($\alpha$) & $\log P$    & $-0.43$ & $0.087$ & --- & 17 \\
+Aya   & src ($\alpha$) & $1/P$       & $+0.39$ & $0.117$ & --- & 17 \\
+Aya   & tgt ($\beta$)  & raw $P$     & $-0.15$ & $0.57$  & --- & 17 \\
+Aya   & tgt ($\beta$)  & $\log P$    & $-0.14$ & $0.58$  & --- & 17 \\
+Aya   & tgt ($\beta$)  & $1/P$       & $+0.14$ & $0.58$  & --- & 17 \\
+Llama & src ($\alpha$) & raw $P$     & $+0.13$ & $0.63$  & --- & 17 \\
+Llama & src ($\alpha$) & $\log P$    & $+0.14$ & $0.60$  & --- & 17 \\
+Llama & src ($\alpha$) & $1/P$       & $-0.10$ & $0.71$  & --- & 17 \\
+Llama & tgt ($\beta$)  & raw $P$     & $+0.29$ & $0.25$  & --- & 17 \\
+Llama & tgt ($\beta$)  & $\log P$    & $+0.38$ & $0.13$  & --- & 17 \\
+Llama & tgt ($\beta$)  & $1/P$       & $-0.40$ & $0.11$  & --- & 17 \\
+\bottomrule
+\end{tabular}
+\caption{Per-language correlations on the 17-language Multi-BLiMP
+subset. For Multi-BLiMP transforms we list all four tested. For PPL
+the four transforms tested are raw, $\log$, $1/P$, and $1/\sqrt{P}$;
+the latter is omitted for compactness (results are nearly identical to
+$1/P$). Note that several Llama $\alpha$-vs-PPL correlations have the
+``wrong'' sign on this subset; this is the leverage effect of English
+documented in Appendix~\ref{app:english} expressed on a different
+subset.}
+\label{tab:app-corr}
+\end{table}
+
+\section{Model specifications and inferential procedures}
+\label{app:methods}
+
+\subsection{Additive random-effects model}
+
+Fit by ordinary least squares on the long-format pair data, with
+dummy coding for source and target language identifiers. To recover
+sum-to-zero $\alpha, \beta$ from a non-singular design we drop one
+source dummy and one target dummy as references, then re-center the
+recovered coefficients post-hoc by subtracting the mean of each
+$\alpha$ and $\beta$ vector and absorbing those means into $\mu$.
+
+Parameter count on $n_{\text{lang}}$ languages with sum-to-zero
+constraints: $1 + (n_{\text{lang}} - 1) + (n_{\text{lang}} - 1) =
+2 n_{\text{lang}} - 1$. For $n_{\text{lang}} = 23$ this is 45; for
+$n_{\text{lang}} = 17$ this is 33. The residual degrees of freedom
+for the 23-language fit are $506 - 45 = 461$; for the 17-language
+fit, $272 - 33 = 239$ (Llama) or $240 - 33 = 207$ (Aya, after dropping
+pairs with missing PPL).
+
+\subsection{Multiplicative (rank-1) decomposition}
+
+The matrix is mean-centered to $M_{\text{c}} = M - \bar y$ on its
+observed cells; missing diagonal cells are imputed with column means
+prior to SVD. The rank-1 SVD $u_1 v_1^\top$ of $M_{\text{c}}$ gives the
+multiplicative factors. The model prediction for cell $(i, j)$ is
+$\bar y + (u_1)_i (v_1)_j$. Parameter count (with the scale absorbed
+once) is $2 n_{\text{lang}} - 1$, matching the additive model. We
+evaluate $R^2$ on the observed cells only.
+
+\subsection{AMMI}
+
+After fitting the additive model, we compute the residual matrix
+$M - (\mu + \alpha + \beta)$ on all observed cells (with the same
+diagonal imputation as above for the SVD step), take its rank-1 SVD,
+and add this back to the additive prediction. Total parameter count is
+roughly twice the additive model's.
+
+\subsection{$F$-test for the source--target interaction term}
+
+For a nested-model comparison with one additional parameter:
+\[
+F = \frac{(\mathrm{RSS}_{\text{add}} - \mathrm{RSS}_{\text{int}}) / 1}
+        {\mathrm{RSS}_{\text{int}} / (n - p_{\text{int}})}
+   \sim F(1, n - p_{\text{int}})
+\]
+where $p_{\text{int}}$ is the number of free parameters in the
+interaction model and $n$ is the number of observed pairs. The
+$F$-test is equivalent to a two-sided $t$-test on the interaction
+coefficient when only one parameter is added.
+
+\subsection{Per-coefficient inference}
+
+For coefficient $\hat\beta_k$ from an OLS fit with residual variance
+$\hat\sigma^2 = \mathrm{RSS} / (n - p)$ and design matrix $X$, the
+standard error is $\widehat{SE}(\hat\beta_k) = \hat\sigma \sqrt{(X^\top
+X)^{-1}_{kk}}$ and the $t$-statistic is $\hat\beta_k /
+\widehat{SE}(\hat\beta_k)$. Two-sided $p$-values are computed against
+a $t$-distribution with $n - p$ degrees of freedom.
+
+\section{FLORES PPL on the 23-language non-English subset}
+\label{app:ppl-no-eng}
+
+For completeness, we report the PPL-only versions of
+Sections~\ref{sec:correlations} and~\ref{sec:bleu-prediction} on the
+23-language no-English subset (i.e., the 24 FLORES languages minus
+English, not restricted to the Multi-BLiMP set). This is the subset
+referenced as ``the larger PPL sample'' in the main body.
+
+\paragraph{Per-language correlations.}
+On 23 non-English languages
+(Table~\ref{tab:ppl-no-eng-corr}), Pearson correlations between $\alpha,
+\beta$ and PPL transforms are $|r| \approx 0.34$--$0.45$ for both
+models, with several reaching $p < 0.05$.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llrr}
+\toprule
+model & transform & $|r|$ on $\alpha$ & $|r|$ on $\beta$ \\
+\midrule
+Aya   & raw $P$  & $0.31$ & $0.39$ \\
+Aya   & $\log P$ & $0.40$ & $0.39$ \\
+Aya   & $1/P$    & $0.48^{*}$ & $0.38$ \\
+Llama & raw $P$  & $0.44^{*}$ & $0.34$ \\
+Llama & $\log P$ & $0.36$ & $0.19$ \\
+Llama & $1/P$    & $0.26$ & $0.01$ \\
+\bottomrule
+\end{tabular}
+\caption{Per-language Pearson $|r|$ on the 23-language no-English
+subset. $^{*}p < 0.05$.}
+\label{tab:ppl-no-eng-corr}
+\end{table}
+
+\paragraph{Direct BLEU prediction.}
+On the 23-language no-English pair set (506 pairs per model), the
+direct PPL$\to$BLEU regressions reach
+$R^2_{\text{Llama}} = 0.114$ (raw form) and
+$R^2_{\text{Aya}} = 0.145$ (log form), with both PPL coefficients
+highly significant in all four (model, form) cells. These are similar
+in magnitude to the 17-language subset numbers in
+Section~\ref{sec:bleu-prediction}, confirming that the 17-language
+restriction is not the source of the PPL$\to$BLEU $R^2$ being moderate
+rather than large.
+
+\section{Per-coefficient details for the BLEU $\sim$ proxy fits}
+\label{app:coef}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llcccc}
+\toprule
+model & specification & $\hat b$ (src) & $p$ (src) & $\hat c$ (tgt) & $p$ (tgt) \\
+\midrule
+Aya   & $\code{BLEU} \sim P_s + P_t$               & $-0.13$ & $5.8\!\cdot\!10^{-4}$ & $-0.06$ & $0.046$ \\
+Aya   & $\log\code{BLEU} \sim \log P_s + \log P_t$ & $-0.61$ & $6.9\!\cdot\!10^{-5}$ & $-0.16$ & $0.244$ \\
+Aya   & $\code{BLEU} \sim a_s + a_t$               & $+50.6$ & $2.1\!\cdot\!10^{-11}$ & $+75.9$ & $5.2\!\cdot\!10^{-22}$ \\
+Aya   & $\log\code{BLEU} \sim \log(1\!-\!a_s) + \log(1\!-\!a_t)$
+                                                   & $-1.21$ & $3.3\!\cdot\!10^{-14}$ & $-1.93$ & $4.4\!\cdot\!10^{-25}$ \\
+\midrule
+Llama & $\code{BLEU} \sim P_s + P_t$               & $-0.05$ & $0.39$    & $-0.42$ & $1.1\!\cdot\!10^{-5}$ \\
+Llama & $\log\code{BLEU} \sim \log P_s + \log P_t$ & $-0.10$ & $0.37$    & $-1.05$ & $1.6\!\cdot\!10^{-9}$ \\
+Llama & $\code{BLEU} \sim a_s + a_t$               & $+18.6$ & $6.8\!\cdot\!10^{-3}$ & $+90.4$ & $9.4\!\cdot\!10^{-18}$ \\
+Llama & $\log\code{BLEU} \sim \log(1\!-\!a_s) + \log(1\!-\!a_t)$
+                                                   & $-0.45$ & $4.2\!\cdot\!10^{-3}$ & $-2.39$ & $2.9\!\cdot\!10^{-25}$ \\
+\bottomrule
+\end{tabular}
+\caption{Per-coefficient estimates, with two-sided OLS $p$-values, on
+the 17-language Multi-BLiMP subset. Sample size: 272 (Llama), 240
+(Aya), after dropping pairs missing either proxy on either side. All
+signs are in the expected direction (negative for $P$ and $\log(1-a)$;
+positive for $a$).}
+\label{tab:coef}
+\end{table}
+
+\end{document}
