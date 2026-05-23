@@ -89,11 +89,14 @@ Machine translation has long been an influential area of natural language proces
 A reason for the slow adoption of LLMs in MT has been a focus on low-resource languages, where LLMs face significant challenges \citep{hendy2023goodgptmodelsmachine,robinson2023chatgptmtcompetitivehigh}. Because LLMs require large training corpora, they are difficult to train effectively on low-resource languages. However, they also hold significant promise: even when not trained on a given language, LLMs can be prompted to translate from or into a language they have seen very little of in their training data \citep{cahyawijaya-etal-2024-llms}---e.g., by prompting with a grammar book \citep{tanzer2024a}. Moreover, their representations of high-resource languages could enable cross-lingual transfer \citep{conneau-etal-2020-unsupervised} with little data in the target language.
 
 Whether LLMs can deliver on this promise depends in part on the mechanisms underlying how they translate. Specifically, do LLMs rely on task- and language-agnostic mechanisms to translate, or are they more specialized to specific language pairs? If the former, this opens up a clear path toward improving MT performance, potentially without large parallel corpora \citep{artetxe2018unsupervised}. Much recent work provides mechanistic evidence supporting this hypothesis in the language modeling context \citep{wendler-etal-2024-llamas,brinkmann-etal-2025-large,wu2025the}. We therefore posit that LLMs might translate using the same mechanisms they use to language model: the ``stages of inference'' hypothesis  \citep{lad2024the} holds that LLMs devote the first half of their layers to reading an input and composing increasingly abstract concept representations . Then, the latter half of the model reads these concept representations, and uses them to decide which token should be predicted given prior context. This implies that translation would not necessarily require language pair--specific mechanisms: instead, it only requires that a model be capable of reading abstract features from the source language, and generating text for the target language conditioned on those features.
-% This means that the middle layers of a model are essentially ``semantic hubs'' \aaron{cite} containing a few concepts that explain much of the variance in the pretraining corpus.
+% This means that the middle layers of a model are essentially ``semantic hubs'' \am{cite} containing a few concepts that explain much of the variance in the pretraining corpus.
 
 If this hypothesis is true, it has three main implications for MT. (1) Given language pair $(S,T)$, translation performance should be predictable from monolingual capabilities in $S$ and $T$ in isolation without cross-linguistic interaction terms. (2) There should exist task-agnostic representations that are causally relevant for predicting correct outputs in both machine translation \emph{and} monolingual language modeling settings. Finally, (3) adding translation capabilities for a new language should only require improvements to monolingual capabilities for that language---i.e., monolingual corpora should yield similar improvements in translation performance as parallel corpora, assuming the model can already effectively handle the other language in the language pair.
 
 We investigate each of these three implications, and find positive evidence for each. While no single experiment is a smoking gun confirming the noisy channel hypothesis, each provides convergent evidence in support of it. This could provide a preliminary explanation for the value of exposure to (largely monolingual) documents in producing models more effective at translation.
+
+\jb{Because of the updated experiments -> change noisy channel to something else that focuses on task agnosticness}
+
 \jb{Jannik's suggestion: add bolded contributions to this section}
 
 \section{Related Work}
@@ -135,14 +138,13 @@ Model & $R^2$ & MAE \\
 \midrule
 Multi-BLiMP accuracy --- linear   & 0.250 & 4.86 \\
 Multi-BLiMP accuracy --- bilinear & 0.251 & 4.84 \\
-\jb{We'll remove these and focus on the Multi-BLiMP} Per-token perplexity --- linear  & 0.071 & 5.43 \\
-Bits-per-byte --- linear         & 0.012 & 5.49 \\
 \bottomrule
-\jb{TODO: add p values / Spearman correlation}
 \end{tabular}
 \caption{Table of some general results from ~\ref{fig:proxy}}
 \label{tab:proxy}
 \end{table}
+
+\jb{TODO: add p values / Spearman correlation in ~\ref{tab:proxy}}
 
 \jb{TODO: add the 3 subplots with perplexity, linear model, bilinear model to the appendix. Gives visual interpretation of what the R scores mean.}
 
@@ -150,18 +152,14 @@ Bits-per-byte --- linear         & 0.012 & 5.49 \\
 \centering
 \includegraphics[width=.82\linewidth]{figures/fig_multiblimp_marginal.png}
 \caption{MultiBLiMP minimal pair accuracy vs. mean BLEU when translating into each language, over 17 Multi-BLiMP languages \jb{According to Claude, (\texttt{ces, deu, ell, eng, fas, fra, heb, hin, ita, nld, pol, por, ron, rus, spa, tur, ukr}). TODO: verify}. Spearman $\rho=0.62$ ($p=0.008$).
-\jb{Aaron notices that Multi-BLiMP might be saturated, and there's lots of variability in BLEU even at high Multi-BLiMP scores}
-}
+\jb{Aaron notices that Multi-BLiMP might be saturated, and there's lots of variability in BLEU even at high Multi-BLiMP scores}}
 \label{fig:proxy}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/bleu_matrix_rank1_llama.png}
-\caption{Llama BLEU matrix and its rank-1 SVD reconstruction. The missing cells along the diagonal are imputed by the mean of the target column. \jb{TODO: mask the diagonal out instead of imputation, I think this would overestimate the faithfulness}
-
-
-\jb{This is a little slippery, since the interaction effects may be marginalized, and can still be used in the rank1 approximation. Move to appendix}}
+\caption{Llama BLEU matrix and its rank-1 SVD reconstruction. The missing cells along the diagonal are imputed by the mean of the target column. \jb{TODO: mask the diagonal out instead of imputation, I think this would overestimate the faithfulness} \jb{This is a little slippery, since the interaction effects may be marginalized, and can still be used in the rank1 approximation. Move to appendix}}
 \label{fig:rank1}
 \end{figure}
 % \jb{Comment from an audit: Mean-imputation can inflate the low-rank fit; a masked / observed-cells-only recompute is the clean check (PAPER\_TODO A1).}}
@@ -181,7 +179,7 @@ Bits-per-byte --- linear         & 0.012 & 5.49 \\
 
 We turn our attention to show, mechanistically, that the model components implicated in translation are oftentimes those responsible for core language modeling in the monolingual setting.
 
-\subsection{Using GCM to Identify Translation-relevant Components}
+\subsection{Using GCM to Identify Translation-Relevant Components}
 
 We search for model components that are causal in promoting the valid translation over an invalid, but grammatically correct counterfactual.
 
@@ -226,47 +224,7 @@ The magnitude of the indirect effect is how much of the model's preference flows
 
 Now, we can set $r_{\text{orig}}$ to be a gold translation of the original source, and $r_{\text{cf}}$ a grammatically correct but invalid translation. We do this using the FLORES parallel corpus \jb{TODO: cite}. Given a source and target language, we construct a prompt as follows:
 
-\jb{I'm trying to think of how we could demonstrate From Claude:}
-\jb{TODO: just put this in the appendix. Inline you can say something about having a 2-shot prompt, but not much more elaboration is needed}
-% ===================== OPTION A: real FLORES sentences (English -> Spanish) =====================
-The two shots are a fixed, held-out pair of FLORES sentences (rows 0--1, the same
-two for every direction); separators are single newlines and the final line ends
-in a trailing space, so the response begins as a bare target token:
-\begin{quote}\ttfamily\small\setlength{\parindent}{0pt}
-English: On Monday, scientists from the Stanford University School of Medicine announced the invention of a new diagnostic tool that can sort cells by type: a tiny printable chip that can be manufactured using standard inkjet printers for possibly about one U.S. cent each.\\
-Spanish: El lunes, los científicos de la facultad de medicina de la Universidad de Stanford anunciaron el invento de una nueva herramienta de diagnóstico que puede catalogar las células según su tipo: un pequeñísimo chip que se puede imprimir y fabricar con impresoras de inyección de uso corriente, por un posible costo de, aproximadamente, un centavo de dólar por cada uno.\\
-English: Lead researchers say this may bring early detection of cancer, tuberculosis, HIV and malaria to patients in low-income countries, where the survival rates for illnesses such as breast cancer can be half those of richer countries.\\
-Spanish: Los principales investigadores principales sostienen que esto puede permitir la detección precoz del cáncer, la tuberculosis, el VIH y la malaria en pacientes de países de bajos recursos, donde la tasa de supervivencia de enfermedades como el cáncer de mama puede ser la mitad de la de los países más avanzados.\\
-English: The JAS 39C Gripen crashed onto a runway at around 9:30 am local time (0230 UTC) and exploded, closing the airport to commercial flights.\\
-Spanish:
-\end{quote}
-Under this single prompt we score two candidate continuations: the gold target
-$r_{\text{orig}} =$ ``\texttt{El JAS 39C Gripen impactó contra una pista cerca de
-las 9:30 de la mañana hora local (0230 UTC) y explotó, lo que causó el cierre del
-aeropuerto para vuelos comerciales.}'' and a counterfactual $r_{\text{cf}} =$ the
-gold translation of a different source, ``\texttt{Se identificó al piloto como
-Dilokrit Pattavee, líder de escuadrón.}'' (grammatical Spanish, but not a valid
-translation of the query).
 
-% ===================== OPTION B: schematic template =====================
-The two shots are a fixed, held-out pair of FLORES sentences (the same two for
-every language direction); separators are single newlines and the final line
-ends in a trailing space, so the response begins as a bare target token:
-\begin{quote}\ttfamily
-[source language]: (source sentence 1)\\
-{}[target language]: (target sentence 1)\\
-{}[source language]: (source sentence 2)\\
-{}[target language]: (target sentence 2)\\
-{}[source language]: (query source sentence)\\
-{}[target language]:
-\end{quote}
-where \texttt{[source language]} / \texttt{[target language]} are the language
-names (e.g.\ English / Spanish), the first two pairs are held-out FLORES sentence
-pairs, and under this single prompt we score two continuations: the gold target
-$r_{\text{orig}}$ (the true translation of the query) and a counterfactual
-$r_{\text{cf}}$ (the gold target of a \emph{different} source --- grammatical but
-not a valid translation of the query).
-\jb{End Clauding}
 
 We patch at the last source token position only. For each of the 56 ordered cross-language pairs in \{English, Spanish, German, French, Turkish, Arabic, Hindi, Hebrew\}, we compute the IE for attention heads and SAE features.
 
@@ -312,9 +270,7 @@ $|\widehat{\mathrm{IE}}|$ plotted against the content-discrimination floor
 
 \jb{TODO: 
 Ablations of SAE features -> effect on BLEU
-
 Sort the SAE features by their real\_cross. Progressively ablate more and more SAE features, measuring BLEU scores with more ablations
-
 }
 
 \subsection{Signedness of Indirect Effect of Heads Predicts Monolingual Grammatical Performance}
@@ -377,7 +333,6 @@ Now, we can compute the \emph{difference in deltas} between the ablated and orig
 \includegraphics[width=\linewidth]{figures/meeting_direction_by_universal_head_signed.png}
 \caption{
 \jb{Two ideas here for an updated figure: we could get the top IE across all language pairs (in everything that we measured) or have some kind of multilinguality constraint as is present currently}
-
 Signed IE of the top 20 universal heads across all 56
 cross-language directions. Red cells indicate positive IE (the head's original state pushes toward the counterfactual response); blue cells indicate negative IE (pushes toward the gold response). The x-axis is sorted from left to right by the number of directions of which the head has a top 20 indirect effect.}
 \jb{The point of this is to show the cross-taskness and multilinguality. Include a condensed version of this (e.g. the top 14 rows)}
@@ -470,6 +425,8 @@ Best mono Xho FT & 17.72 & 1.48 \\
 \end{tabular}
 \caption{BLEU for non-instruct Llama-3.1-8B LoRA runs. The best monolingual Xhosa run substantially outperforms the best parallel run found in our sweep on Xhosa$\rightarrow$English.}
 
+\jb{TODO: check on the parallel FT for Eng $\to$ Xho}
+
 \jb{Aaron has the idea of adding more language pairs here, and seeing if we could do better about eliciting the parallel data}
 \label{tab:mono-vs-parallel-bleu}
 \end{table}
@@ -530,5 +487,28 @@ We're only looking at 2 models of similar size
 \includegraphics[width=.49\linewidth]{figures/English__Spanish_heads_signed_heatmap.png}
 \caption{English$\to$Spanish GCM}
 \end{figure}
+
+
+\jb{TODO: Inline you can say something about having a 2-shot prompt, but not much more elaboration is needed. Written by Claude:}
+% ===================== OPTION A: real FLORES sentences (English -> Spanish) =====================
+The two shots are a fixed, held-out pair of FLORES sentences (rows 0--1, the same
+two for every direction); separators are single newlines and the final line ends
+in a trailing space, so the response begins as a bare target token:
+\begin{quote}\ttfamily\small\setlength{\parindent}{0pt}
+English: On Monday, scientists from the Stanford University School of Medicine announced the invention of a new diagnostic tool that can sort cells by type: a tiny printable chip that can be manufactured using standard inkjet printers for possibly about one U.S. cent each.\\
+Spanish: El lunes, los científicos de la facultad de medicina de la Universidad de Stanford anunciaron el invento de una nueva herramienta de diagnóstico que puede catalogar las células según su tipo: un pequeñísimo chip que se puede imprimir y fabricar con impresoras de inyección de uso corriente, por un posible costo de, aproximadamente, un centavo de dólar por cada uno.\\
+English: Lead researchers say this may bring early detection of cancer, tuberculosis, HIV and malaria to patients in low-income countries, where the survival rates for illnesses such as breast cancer can be half those of richer countries.\\
+Spanish: Los principales investigadores principales sostienen que esto puede permitir la detección precoz del cáncer, la tuberculosis, el VIH y la malaria en pacientes de países de bajos recursos, donde la tasa de supervivencia de enfermedades como el cáncer de mama puede ser la mitad de la de los países más avanzados.\\
+English: The JAS 39C Gripen crashed onto a runway at around 9:30 am local time (0230 UTC) and exploded, closing the airport to commercial flights.\\
+Spanish:
+\end{quote}
+Under this single prompt we score two candidate continuations: the gold target
+$r_{\text{orig}} =$ ``\texttt{El JAS 39C Gripen impactó contra una pista cerca de
+las 9:30 de la mañana hora local (0230 UTC) y explotó, lo que causó el cierre del
+aeropuerto para vuelos comerciales.}'' and a counterfactual $r_{\text{cf}} =$ the
+gold translation of a different source, ``\texttt{Se identificó al piloto como
+Dilokrit Pattavee, líder de escuadrón.}'' (grammatical Spanish, but not a valid
+translation of the query).
+\jb{End Clauding}
 
 \end{document}

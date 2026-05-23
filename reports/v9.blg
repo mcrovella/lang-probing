@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: v9.aux
+The style file: acl_natbib.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: custom.bib
+Warning--empty booktitle in bahdanau2015neuralmachinetranslationjointly
+Warning--empty journal in radford2018improving
+You've used 17 entries,
+            3764 wiz_defined-function locations,
+            855 strings with 11513 characters,
+and the built_in function-call counts, 15018 in all, are:
+= -- 1309
+> -- 816
+< -- 7
++ -- 339
+- -- 251
+* -- 1045
+:= -- 2180
+add.period$ -- 73
+call.type$ -- 17
+change.case$ -- 190
+chr.to.int$ -- 18
+cite$ -- 19
+duplicate$ -- 881
+empty$ -- 1016
+format.name$ -- 300
+if$ -- 3287
+int.to.chr$ -- 1
+int.to.str$ -- 2
+missing$ -- 194
+newline$ -- 87
+num.names$ -- 68
+pop$ -- 534
+preamble$ -- 1
+purify$ -- 151
+quote$ -- 0
+skip$ -- 772
+stack$ -- 0
+substring$ -- 488
+swap$ -- 503
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 153
+warning$ -- 2
+while$ -- 72
+width$ -- 0
+write$ -- 228
+(There were 2 warnings)
