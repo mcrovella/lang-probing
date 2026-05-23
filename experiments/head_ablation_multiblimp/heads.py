@@ -80,9 +80,12 @@ def aggregate_target_heads(
             f"(exclude_self_source={exclude_self_source})."
         )
 
-    # Average across source directions (each dir already mean over its pairs)
-    abs_agg = torch.stack(abs_maps).mean(dim=0)        # [L, H]
-    signed_agg = torch.stack(signed_maps).mean(dim=0)  # [L, H]
+    # Average across source directions (each dir already mean over its pairs).
+    # Use nanmean so a fully-failed direction (e.g. Aya Hindi->Spanish, 0/100
+    # pairs successful -> all-NaN map) is ignored per-head instead of NaN-ing
+    # out the whole aggregate.
+    abs_agg = torch.nanmean(torch.stack(abs_maps), dim=0)        # [L, H]
+    signed_agg = torch.nanmean(torch.stack(signed_maps), dim=0)  # [L, H]
 
     n_layers, n_heads = abs_agg.shape
     flat = abs_agg.flatten()
@@ -135,6 +138,48 @@ def sample_stratified_controls(
         ctrl_head = rng.choice(candidates)
         controls.append({"layer": layer, "head": ctrl_head})
     return controls
+
+
+def select_signed_heads(
+    signed_map,
+    abs_map,
+    *,
+    n_per_sign: int = 10,
+) -> Dict[str, List[Dict]]:
+    """Select top positive and negative signed-IE heads.
+
+    Positive IE follows the repository convention: favors the original,
+    grammatical completion. Negative IE favors the counterfactual/wrong
+    completion. Within each sign, heads are ranked by signed magnitude on that
+    side (`signed_ie` descending for pos, ascending for neg).
+    """
+    if not torch.is_tensor(signed_map):
+        signed_map = torch.as_tensor(signed_map)
+    if not torch.is_tensor(abs_map):
+        abs_map = torch.as_tensor(abs_map)
+    if signed_map.shape != abs_map.shape:
+        raise ValueError(f"signed_map and abs_map shape mismatch: {signed_map.shape} vs {abs_map.shape}")
+
+    n_layers, n_heads = signed_map.shape
+    entries = []
+    for layer in range(n_layers):
+        for head in range(n_heads):
+            signed_ie = float(signed_map[layer, head].item())
+            abs_ie = float(abs_map[layer, head].item())
+            if not torch.isfinite(torch.tensor(signed_ie)):
+                continue
+            entries.append({
+                "layer": int(layer),
+                "head": int(head),
+                "signed_ie": signed_ie,
+                "abs_ie": abs_ie,
+                "mean_signed_ie_agg": signed_ie,
+                "mean_abs_ie_agg": abs_ie,
+            })
+
+    pos = sorted((e for e in entries if e["signed_ie"] > 0), key=lambda e: e["signed_ie"], reverse=True)
+    neg = sorted((e for e in entries if e["signed_ie"] < 0), key=lambda e: e["signed_ie"])
+    return {"pos": pos[:n_per_sign], "neg": neg[:n_per_sign]}
 
 
 if __name__ == "__main__":

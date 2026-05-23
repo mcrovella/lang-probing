@@ -1,0 +1,42 @@
+#!/bin/bash -l
+
+# Phase 3.4: Aya head-ablation MultiBLiMP diagnostic. Uses Aya GCM head
+# selection (outputs/gcm_translation_aya) + new top-10/top-10 sign scheme,
+# runs ablations on the Aya model. heb/hin at n=200 (OOM at 400). A100 80G.
+
+#$ -N habl_aya
+#$ -t 1-8
+#$ -l h_rt=0:50:00
+#$ -l gpus=1
+#$ -l gpu_type=A100
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m a
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(_ ara eng deu fra heb hin spa tur)
+LANG=${LANGS[$SGE_TASK_ID]}
+MAXP=400
+[ "$LANG" = "heb" ] && MAXP=200
+[ "$LANG" = "hin" ] && MAXP=200
+
+echo "=== Aya head-ablation task ${SGE_TASK_ID}: lang=${LANG} n=${MAXP} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --model_id CohereForAI/aya-23-8B \
+    --max_pairs "$MAXP" \
+    --mode full \
+    --gcm_dir /projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation_aya \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp_aya

@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
-from datasets import Dataset, DatasetDict, load_dataset
+from datasets import Dataset, DatasetDict, get_dataset_config_names, load_dataset
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -32,6 +32,45 @@ from lang_probing_src.config import LANG_CODE_TO_NAME
 
 COL_CORRECT = "sen"
 COL_WRONG = "wrong_sen"
+
+BLEU_LANGS_24 = [
+    "ara", "rus", "fra", "zho_simpl", "ita", "por", "ind", "heb", "pol",
+    "deu", "ell", "tur", "vie", "ukr", "spa", "fas", "kor", "hin", "jpn",
+    "eng", "zho_trad", "ces", "nld", "ron",
+]
+
+# jumelet/multiblimp uses bare ISO-639-3 config names (verified against
+# get_dataset_config_names: 101 configs). 18 of the 24 BLEU langs are present;
+# Chinese (simpl/trad), Indonesian, Vietnamese, Korean, Japanese have no
+# MultiBLiMP config and are reported in the `absent` list by the coverage check.
+BLEU_CODE_TO_MULTIBLIMP_CONFIG = {
+    "ara": "arb",   # Standard Arabic (config is 'arb', not 'ara')
+    "rus": "rus",
+    "fra": "fra",
+    "ita": "ita",
+    "por": "por",
+    "heb": "heb",
+    "pol": "pol",
+    "deu": "deu",
+    "ell": "ell",
+    "tur": "tur",
+    "ukr": "ukr",
+    "spa": "spa",
+    "fas": "fas",   # Persian (config is 'fas')
+    "hin": "hin",
+    "eng": "eng",
+    "ces": "ces",
+    "nld": "nld",
+    "ron": "ron",
+    # No MultiBLiMP config -> excluded by the `cfg in configs` filter, surfaced
+    # in the absent list:
+    "zho_simpl": "zho_Hans",
+    "zho_trad": "zho_Hant",
+    "ind": "ind",
+    "vie": "vie",
+    "kor": "kor",
+    "jpn": "jpn",
+}
 
 
 def _slug(s: str) -> str:
@@ -105,6 +144,170 @@ def perplexity_per_sentence(
         torch.cuda.empty_cache()
 
     return np.concatenate(all_ppl, axis=0)
+
+
+def sequence_logprobs(
+    model: torch.nn.Module,
+    tokenizer: AutoTokenizer,
+    texts: list,
+    device: str,
+    batch_size: int = 64,
+    max_length: Optional[int] = None,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Return summed next-token logprobs and token counts for each text."""
+    if max_length is None:
+        max_length = getattr(model.config, "max_position_embeddings", 2048)
+
+    all_logp: list[np.ndarray] = []
+    all_n_tokens: list[np.ndarray] = []
+
+    for i in range(0, len(texts), batch_size):
+        batch_texts = texts[i : i + batch_size]
+        inputs = tokenizer(
+            batch_texts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=max_length,
+        ).to(device)
+
+        with torch.no_grad():
+            logits = model(**inputs).logits
+
+        shift_logits = logits[..., :-1, :].contiguous()
+        shift_labels = inputs.input_ids[..., 1:].contiguous()
+        shift_attention_mask = inputs.attention_mask[..., 1:].contiguous()
+        log_probs = torch.log_softmax(shift_logits.float(), dim=-1)
+        token_logp = log_probs.gather(-1, shift_labels.unsqueeze(-1)).squeeze(-1)
+        token_logp = token_logp * shift_attention_mask
+
+        logp_total = token_logp.sum(dim=1).cpu().numpy()
+        n_tokens = shift_attention_mask.sum(dim=1).cpu().numpy()
+        all_logp.append(logp_total)
+        all_n_tokens.append(n_tokens)
+
+        del inputs, logits, shift_logits, shift_labels, shift_attention_mask, log_probs, token_logp
+        torch.cuda.empty_cache()
+
+    return np.concatenate(all_logp, axis=0), np.concatenate(all_n_tokens, axis=0)
+
+
+def aggregate_margins(per_item_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Aggregate per-item MultiBLiMP margins by language and phenomenon."""
+    agg_spec = {
+        "margin_total": "mean",
+        "margin_pertoken": "mean",
+        "correct": "mean",
+        "logp_correct": "count",
+    }
+    by_lang = (
+        per_item_df.groupby("lang", dropna=False)
+        .agg(agg_spec)
+        .rename(columns={"logp_correct": "n", "correct": "accuracy"})
+        .reset_index()
+    )
+    by_lang_phen = (
+        per_item_df.groupby(["lang", "phenomenon"], dropna=False)
+        .agg(agg_spec)
+        .rename(columns={"logp_correct": "n", "correct": "accuracy"})
+        .reset_index()
+    )
+    return by_lang, by_lang_phen
+
+
+def available_multiblimp_language_map(
+    dataset_path: str = "jumelet/multiblimp",
+    bleu_codes: Optional[List[str]] = None,
+) -> Tuple[Dict[str, str], List[str]]:
+    """Map BLEU language codes to available MultiBLiMP configs."""
+    bleu_codes = bleu_codes or BLEU_LANGS_24
+    configs = set(get_dataset_config_names(dataset_path))
+    language_map = {
+        code: cfg
+        for code, cfg in BLEU_CODE_TO_MULTIBLIMP_CONFIG.items()
+        if code in bleu_codes and cfg in configs
+    }
+    absent = [code for code in bleu_codes if code not in language_map]
+    return language_map, absent
+
+
+def _first_present(row: dict, names: list[str], default=None):
+    for name in names:
+        if name in row and row[name] is not None:
+            return row[name]
+    return default
+
+
+def run_margins_multilang(
+    dataset_path: str,
+    model_id: str,
+    language_map: Dict[str, str],
+    split: str = "train",
+    batch_size: int = 64,
+    device: str = "cuda",
+    max_length: Optional[int] = None,
+    output_dir: str = "outputs/perplexity_bleu_linear/multiblimp_margins",
+) -> pd.DataFrame:
+    """Compute per-item correct-minus-wrong logprob margins across languages."""
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    tokenizer.padding_side = "right"
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        torch_dtype=torch.float16 if "cuda" in device else torch.float32,
+    ).to(device)
+    model.eval()
+
+    rows = []
+    for lang, config in tqdm(language_map.items(), desc="Margin languages"):
+        ds = load_dataset(dataset_path, name=config, split=split)
+        records = list(ds)
+        texts_correct = [r[COL_CORRECT] for r in records]
+        texts_wrong = [r[COL_WRONG] for r in records]
+        logp_correct, n_tok_correct = sequence_logprobs(
+            model, tokenizer, texts_correct, device, batch_size, max_length
+        )
+        logp_wrong, n_tok_wrong = sequence_logprobs(
+            model, tokenizer, texts_wrong, device, batch_size, max_length
+        )
+        denom = np.maximum(n_tok_correct, 1) + np.maximum(n_tok_wrong, 1)
+        margin_total = logp_correct - logp_wrong
+        margin_pertoken = (logp_correct / np.maximum(n_tok_correct, 1)) - (
+            logp_wrong / np.maximum(n_tok_wrong, 1)
+        )
+        for i, r in enumerate(records):
+            rows.append({
+                "lang": lang,
+                "config": config,
+                "row_id": i,
+                "phenomenon": _first_present(r, ["phenomenon", "linguistic_phenomenon", "category"]),
+                "concept": _first_present(r, ["concept", "field", "subphenomenon"]),
+                "logp_correct": float(logp_correct[i]),
+                "logp_wrong": float(logp_wrong[i]),
+                "n_tokens_correct": int(n_tok_correct[i]),
+                "n_tokens_wrong": int(n_tok_wrong[i]),
+                "margin_total": float(margin_total[i]),
+                "margin_pertoken": float(margin_pertoken[i]),
+                "correct": bool(logp_correct[i] > logp_wrong[i]),
+            })
+
+    per_item = pd.DataFrame(rows)
+    model_dir = os.path.join(output_dir, _slug(model_id))
+    os.makedirs(model_dir, exist_ok=True)
+    per_item_path = os.path.join(model_dir, "per_item.parquet")
+    try:
+        per_item.to_parquet(per_item_path, index=False)
+    except Exception:
+        per_item_path = os.path.join(model_dir, "per_item.csv")
+        per_item.to_csv(per_item_path, index=False)
+    by_lang, by_lang_phen = aggregate_margins(per_item)
+    by_lang.to_csv(os.path.join(model_dir, "margins_by_lang.csv"), index=False)
+    by_lang_phen.to_csv(os.path.join(model_dir, "margins_by_lang_phenomenon.csv"), index=False)
+    with open(os.path.join(model_dir, "language_map.json"), "w") as f:
+        json.dump(language_map, f, indent=2)
+    return per_item
 
 
 def compute_error_rate(
@@ -379,6 +582,11 @@ def main():
     parser.add_argument("--config", type=str, default=None, help="Optional dataset config name (single-language run)")
     parser.add_argument("--multilang", action="store_true", help="Run for each language (each lang = dataset config)")
     parser.add_argument(
+        "--margins_multilang",
+        action="store_true",
+        help="Compute MultiBLiMP correct-minus-wrong logprob margins for BLEU language coverage.",
+    )
+    parser.add_argument(
         "--languages",
         nargs="+",
         default=None,
@@ -390,7 +598,30 @@ def main():
     parser.add_argument("--device", type=str, default="cuda")
     args = parser.parse_args()
 
-    if args.multilang:
+    if args.margins_multilang:
+        if args.languages:
+            tokens = []
+            for chunk in args.languages:
+                tokens.extend(s.strip() for s in chunk.split(",") if s.strip())
+            bleu_codes = tokens or BLEU_LANGS_24
+        else:
+            bleu_codes = BLEU_LANGS_24
+        language_map, absent = available_multiblimp_language_map(args.dataset, bleu_codes)
+        print(f"MultiBLiMP coverage: {len(language_map)}/{len(bleu_codes)} present")
+        if absent:
+            print(f"Absent BLEU codes: {', '.join(absent)}")
+        run_margins_multilang(
+            dataset_path=args.dataset,
+            model_id=args.model_id,
+            language_map=language_map,
+            split=args.split,
+            batch_size=args.batch_size,
+            device=args.device,
+            max_length=args.max_length,
+            output_dir=args.output_dir,
+        )
+        print(f"Margins saved under {args.output_dir}")
+    elif args.multilang:
         language_codes = None
         if args.languages:
             # Accept both ["eng", "fra"] and ["eng,fra,deu"] forms.

@@ -53,8 +53,8 @@ ALL_LANGS = ["ara", "eng", "deu", "fra", "heb", "hin", "spa", "tur"]
 # ---------------------------------------------------------------------------
 TOP_COLOR = "#2166ac"       # blue
 CTRL_COLOR = "#bdbdbd"      # gray
-POS_COLOR = "#d73027"       # red
-NEG_COLOR = "#4575b4"       # deep blue
+POS_COLOR = "#d73027"       # red: favors grammatical/original completion
+NEG_COLOR = "#4575b4"       # blue: favors counterfactual/wrong completion
 ZERO_COLOR = "#fc8d59"      # orange
 MEAN_COLOR = "#2166ac"      # blue (same as TOP_COLOR for mean ablation)
 BASELINE_COLOR = "#969696"  # mid gray
@@ -227,8 +227,10 @@ def plot_sign_split(
         n_str = c["name"].split("_n")[-1].split("_")[0] if "_n" in c["name"] else "?"
         return _dc(c, baseline_delta), n_str
 
-    pos_dc, pos_n = _get_dc_prefix("top_collective_signedPOS_")
-    neg_dc, neg_n = _get_dc_prefix("top_collective_signedNEG_")
+    pos_cond = _find_condition(conditions, "pos10_mean")
+    neg_cond = _find_condition(conditions, "neg10_mean")
+    pos_dc, pos_n = (_dc(pos_cond, baseline_delta), "10") if pos_cond else _get_dc_prefix("top_collective_signedPOS_")
+    neg_dc, neg_n = (_dc(neg_cond, baseline_delta), "10") if neg_cond else _get_dc_prefix("top_collective_signedNEG_")
     top_k5_dc = _dc(_find_condition(conditions, f"top_collective_k{top_k_collective}_mean"), baseline_delta)
 
     labels = []
@@ -327,10 +329,17 @@ def plot_sign_split_matched(
         n_str = c["name"].split("_n")[-1].split("_")[0] if "_n" in c["name"] else "?"
         return _dc(c, baseline_delta), n_str
 
-    pos_dc, pos_n = _get_dc_prefix("top_collective_signedPOS_")
-    neg_dc, neg_n = _get_dc_prefix("top_collective_signedNEG_")
-    mpos_dc, mpos_n = _get_dc_prefix("ctrl_collective_matched_POS_")
-    mneg_dc, mneg_n = _get_dc_prefix("ctrl_collective_matched_NEG_")
+    pos_cond = _find_condition(conditions, "pos10_mean")
+    neg_cond = _find_condition(conditions, "neg10_mean")
+    ctrl_cond = _find_condition(conditions, "ctrl_matched10_mean")
+    pos_dc, pos_n = (_dc(pos_cond, baseline_delta), "10") if pos_cond else _get_dc_prefix("top_collective_signedPOS_")
+    neg_dc, neg_n = (_dc(neg_cond, baseline_delta), "10") if neg_cond else _get_dc_prefix("top_collective_signedNEG_")
+    if ctrl_cond:
+        mpos_dc, mpos_n = _dc(ctrl_cond, baseline_delta), "20"
+        mneg_dc, mneg_n = mpos_dc, "20"
+    else:
+        mpos_dc, mpos_n = _get_dc_prefix("ctrl_collective_matched_POS_")
+        mneg_dc, mneg_n = _get_dc_prefix("ctrl_collective_matched_NEG_")
 
     # Only save a "matched" plot when matched controls are actually present.
     # Otherwise the filename overstates the evidence in older 46-condition runs.
@@ -841,18 +850,31 @@ def process_language(lang_key: str, output_dir: Path, img_dir: Path) -> dict | N
         _find_condition(conditions, f"top_collective_k{top_k_collective}_zero"),
         baseline_delta,
     )
-    signed_pos_dc, signed_pos_n = _dc_prefix_with_n(
-        conditions, "top_collective_signedPOS_", baseline_delta
-    )
-    signed_neg_dc, signed_neg_n = _dc_prefix_with_n(
-        conditions, "top_collective_signedNEG_", baseline_delta
-    )
-    matched_pos_dc, matched_pos_n = _dc_prefix_with_n(
-        conditions, "ctrl_collective_matched_POS_", baseline_delta
-    )
-    matched_neg_dc, matched_neg_n = _dc_prefix_with_n(
-        conditions, "ctrl_collective_matched_NEG_", baseline_delta
-    )
+    pos_cond = _find_condition(conditions, "pos10_mean")
+    neg_cond = _find_condition(conditions, "neg10_mean")
+    ctrl_cond = _find_condition(conditions, "ctrl_matched10_mean")
+    if pos_cond:
+        signed_pos_dc, signed_pos_n = _dc(pos_cond, baseline_delta), "10"
+    else:
+        signed_pos_dc, signed_pos_n = _dc_prefix_with_n(
+            conditions, "top_collective_signedPOS_", baseline_delta
+        )
+    if neg_cond:
+        signed_neg_dc, signed_neg_n = _dc(neg_cond, baseline_delta), "10"
+    else:
+        signed_neg_dc, signed_neg_n = _dc_prefix_with_n(
+            conditions, "top_collective_signedNEG_", baseline_delta
+        )
+    if ctrl_cond:
+        matched_pos_dc, matched_pos_n = _dc(ctrl_cond, baseline_delta), "20"
+        matched_neg_dc, matched_neg_n = matched_pos_dc, "20"
+    else:
+        matched_pos_dc, matched_pos_n = _dc_prefix_with_n(
+            conditions, "ctrl_collective_matched_POS_", baseline_delta
+        )
+        matched_neg_dc, matched_neg_n = _dc_prefix_with_n(
+            conditions, "ctrl_collective_matched_NEG_", baseline_delta
+        )
     top_head_mean_dc, top_head_std_dc = _mean_std_finite(top_dc_list)
     ctrl_head_mean_dc, ctrl_head_std_dc = _mean_std_finite(ctrl_dc_list)
 

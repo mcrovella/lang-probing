@@ -42,7 +42,7 @@ from lang_probing_src.utils import setup_model, get_device_info
 # local imports (this experiment)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from flores_pairs import sample_pairs, sample_null_triples, get_shots, make_prompt
-from gcm_core import gcm_attribute_sae, gcm_attribute_heads, tokenize_pair, sum_response_logprobs
+from gcm_core import gcm_attribute_sae, gcm_attribute_heads, tokenize_pair, sum_response_logprobs, set_logit_scale
 from lang_probing_src.config import TRACER_KWARGS
 
 
@@ -61,7 +61,7 @@ def _compute_clean_metrics(model, tokenizer, prompt_orig, response_orig, respons
     neither gcm_attribute_sae nor gcm_attribute_heads duplicates these passes.
 
     Both metrics are scored against prompt_orig (not prompt_cf), matching the
-    GCM formulation: M = logp(r_cf | p_orig, z) - logp(r_orig | p_orig, z).
+    GCM formulation: M = logp(r_orig | p_orig, z) - logp(r_cf | p_orig, z).
     """
     pr_or = tokenize_pair(tokenizer, prompt_orig, response_orig, device, max_response_tokens)
     pr_or_rc = tokenize_pair(tokenizer, prompt_orig, response_cf, device, max_response_tokens)
@@ -87,6 +87,10 @@ def main():
     p.add_argument("--top_heads_k", type=int, default=20)
     p.add_argument("--top_sae_k", type=int, default=50)
     p.add_argument("--components", default="both", choices=["both", "heads", "sae"])
+    p.add_argument("--model_id", default=MODEL_ID,
+                   help="HF model id. Use CohereForAI/aya-23-8B for the Aya rerun.")
+    p.add_argument("--sae_id", default=SAE_ID,
+                   help="SAE repo id. Ignored when --components heads (SAE not loaded).")
     p.add_argument("--max_response_tokens", type=int, default=128,
                    help="Truncate target translation to this many tokens (in token space).")
     p.add_argument("--null_control", action="store_true",
@@ -123,19 +127,29 @@ def main():
         logger.info(f"GPU compute capability: {cap_float:.1f}")
 
     # --- Setup model ---
-    logger.info(f"Loading model {MODEL_ID} and SAE {SAE_ID}...")
+    # Heads-only attribution does not need the SAE; skip loading it (the Aya
+    # rerun runs --components heads, and no Aya SAE is in scope for this plan).
+    effective_sae_id = None if args.components == "heads" else args.sae_id
+    logger.info(f"Loading model {args.model_id} and SAE {effective_sae_id}...")
     t_load = time.time()
-    model, submodule, autoencoder, tokenizer = setup_model(MODEL_ID, SAE_ID)
+    model, submodule, autoencoder, tokenizer = setup_model(args.model_id, effective_sae_id)
     device, _ = get_device_info()
     logger.info(f"  loaded in {time.time() - t_load:.1f}s on {device}")
+
+    # Cohere/Aya apply config.logit_scale after lm_head; we read lm_head.output
+    # directly, so reapply it (Llama has no logit_scale -> stays 1.0).
+    _scale = float(getattr(model.model.config, "logit_scale", 1.0))
+    set_logit_scale(_scale)
+    logger.info(f"  logit_scale = {_scale}")
 
     # Freeze all model + autoencoder params: GCM only needs grad w.r.t. z_leaf,
     # not w.r.t. parameters. Without this, every backward() pass accumulates
     # ~16 GB of gradient memory on the 8B-param model and OOMs after pair 2.
     for p in model.parameters():
         p.requires_grad_(False)
-    for p in autoencoder.parameters():
-        p.requires_grad_(False)
+    if autoencoder is not None:
+        for p in autoencoder.parameters():
+            p.requires_grad_(False)
 
     cfg = model.model.config
     n_layers_cfg = cfg.num_hidden_layers
@@ -370,8 +384,10 @@ def main():
         "split": args.split,
         "max_response_tokens": args.max_response_tokens,
         "elapsed_seconds": time.time() - t_start,
-        "model_id": MODEL_ID,
-        "sae_id": SAE_ID,
+        "model_id": args.model_id,
+        "sae_id": effective_sae_id,
+        "components": args.components,
+        "sign_convention": "orig_minus_cf",
     }
 
     # Sign sanity: per-token-mean comparison (length-bias-free)

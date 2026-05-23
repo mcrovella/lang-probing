@@ -1,22 +1,23 @@
 """
 GCM (Generative Causal Mediation) gradient-based attribution for translation.
 
-Implements arXiv:2602.16080 Eq. 1:
+Implements arXiv:2602.16080 Eq. 1 with the repository sign convention:
 
-    IE_hat = grad_z [logp(r_cf | p_orig) - logp(r_orig | p_orig)] . (z_orig - z_cf)
+    IE_hat = grad_z [logp(r_orig | p_orig) - logp(r_cf | p_orig)] . (z_orig - z_cf)
 
 at every (a) attention head's pre-o_proj activation and (b) SAE feature in
 layer 16, patched at the LAST source-token position.
 
 Sign convention:
-    M(z) = logp(r_cf | p_orig, z) - logp(r_orig | p_orig, z)
+    M(z) = logp(r_orig | p_orig, z) - logp(r_cf | p_orig, z)
     grad = dM/dz |_{z = z_orig}
     delta_z = z_orig - z_cf
     IE = grad . delta_z  (elementwise per component)
     => Positive IE means: this component, when in its z_orig state vs z_cf
-       state, increases the model's preference for r_cf over r_orig. So |IE|
+       state, increases the model's preference for r_orig over r_cf. So |IE|
        measures component importance for distinguishing the two translations,
-       and sign tells which translation it favors (positive = cf, negative = orig).
+       and sign tells which translation it favors (positive = orig/correct,
+       negative = counterfactual/incorrect).
 
 Departures from the original GCM paper, all intentional:
     * Patching at the LAST source-token position only (not all source positions).
@@ -142,6 +143,20 @@ def tokenize_pair(
     )
 
 
+# Logit scale applied before softmax. Cohere/Aya define config.logit_scale
+# (0.0625) which the HF forward multiplies into the logits AFTER lm_head; since
+# we read lm_head.output directly (pre-scale) we must reapply it, or Aya's
+# metric/IE are inflated ~16x. Llama has no logit_scale -> stays 1.0. Set via
+# set_logit_scale() once the model is loaded.
+_LOGIT_SCALE = 1.0
+
+
+def set_logit_scale(scale: float) -> None:
+    """Set the global logit scale (call once after model load)."""
+    global _LOGIT_SCALE
+    _LOGIT_SCALE = float(scale)
+
+
 def sum_response_logprobs(logits: torch.Tensor, input_ids: torch.Tensor, response_start: int) -> torch.Tensor:
     """
     Sum log p(input_ids[t] | input_ids[<t]) over t in [response_start, S).
@@ -154,6 +169,8 @@ def sum_response_logprobs(logits: torch.Tensor, input_ids: torch.Tensor, respons
         raise ValueError(f"Empty response: response_start={response_start} seq_len={seq_len}")
     pred_logits = logits[:, response_start - 1 : seq_len - 1, :]      # [1, n_response, V]
     targets = input_ids[:, response_start:seq_len]                     # [1, n_response]
+    if _LOGIT_SCALE != 1.0:
+        pred_logits = pred_logits * _LOGIT_SCALE
     log_probs = F.log_softmax(pred_logits.float(), dim=-1)
     gathered = log_probs.gather(-1, targets.unsqueeze(-1)).squeeze(-1)  # [1, n_response]
     return gathered.sum()
@@ -295,11 +312,11 @@ def gcm_attribute_sae(
     m_cf_patched = float(m_cf_p_value.item())
     z_leaf.grad = None
 
-    # --- Compose: gradient of M = m_cf - m_orig is grad_cf - grad_orig ---
-    grad = grad_cf - grad_orig                     # [SAE_DIM]
+    # --- Compose: gradient of M = m_orig - m_cf is grad_orig - grad_cf ---
+    grad = grad_orig - grad_cf                     # [SAE_DIM]
     delta_z = (z_orig - z_cf).to(torch.float32)    # [SAE_DIM]
     ie = (grad * delta_z).cpu()
-    M_patched = m_cf_patched - m_orig_patched
+    M_patched = m_orig_patched - m_cf_patched
 
     # Sanity: at z_leaf = z_orig, the patched orig metric should equal the clean orig metric.
     # The SAE clones decoded_clean and reconstructs identically, so this should hold to ~bf16
@@ -484,12 +501,12 @@ def gcm_attribute_heads(
     z_leaf.grad = None
 
     # --- Compose ---
-    grad = grad_cf - grad_orig                                # [n_layers, d_model]
+    grad = grad_orig - grad_cf                                # [n_layers, d_model]
     delta_z = (z_orig - z_cf).to(torch.float32)               # [n_layers, d_model]
     grad_h = grad.view(n_layers, n_heads, head_dim)
     delta_h = delta_z.view(n_layers, n_heads, head_dim)
     ie = (grad_h * delta_h).sum(dim=-1)                       # [n_layers, n_heads]
-    M_patched = m_cf_patched - m_orig_patched
+    M_patched = m_orig_patched - m_cf_patched
 
     sanity_orig_drift = abs(m_orig_patched - m_orig_clean)
 

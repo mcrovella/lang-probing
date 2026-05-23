@@ -1,5 +1,23 @@
 # TODO -- lang-probing
 
+## [PAPER] -- top priority
+
+- Re-run GCM-derived head ablations under the orig-minus-cf sign convention.
+- Run the Aya heads-only GCM sweep after the sign-fix gate.
+- Run BLEU head ablations with the pos10/neg10/ctrl_matched10 scheme.
+- Refit BLEU competence proxies with `multiblimp_margin` beside MultiBLiMP accuracy.
+- Record paper edit recommendations in `reports/v9_suggestions.md`; do not edit `reports/*.tex`.
+
+## Deferred From 2026-05-22 Implementation Plan
+
+- real_cross-null_cross head selection plus high-null/low-real control.
+- alternate k/threshold head-selection schemes.
+- Aya SAE attribution and all SAE downstream experiments.
+- Aya null GCM sweep.
+- per-phenomenon hard-subset selection once margins are in.
+
+## General Backlog
+
 > Generated 2026-04-22 by exhaustive file-by-file audit of every source file,
 > config, script, test, shell script, output, and doc in the repo.
 >

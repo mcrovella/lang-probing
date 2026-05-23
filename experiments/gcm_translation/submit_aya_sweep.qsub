@@ -1,0 +1,50 @@
+#!/bin/bash -l
+
+# Phase 2: Aya 56-direction GCM sweep (heads-only, corrected sign). Smoke
+# (5792937) confirmed Cohere arch compat. 56 ordered cross-language pairs over
+# {English,Spanish,German,French,Turkish,Arabic,Hindi,Hebrew}. Heads-only is
+# light (no SAE graph) -> target the larger L40S pool; gcm run.py has an sm_120
+# guard so Blackwell is refused cleanly.
+
+#$ -N gcm_aya
+#$ -t 1-56
+#$ -l h_rt=1:00:00
+#$ -l gpus=1
+#$ -l gpu_type=A100
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m a
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/gcm_translation/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(English Spanish German French Turkish Arabic Hindi Hebrew)
+PAIRS=()
+for s in "${LANGS[@]}"; do
+  for t in "${LANGS[@]}"; do
+    [ "$s" != "$t" ] && PAIRS+=("$s $t")
+  done
+done
+PAIR=${PAIRS[$((SGE_TASK_ID-1))]}
+SRC=$(echo "$PAIR" | cut -d' ' -f1)
+TGT=$(echo "$PAIR" | cut -d' ' -f2)
+
+echo "=== Aya GCM task ${SGE_TASK_ID}: ${SRC} -> ${TGT} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/gcm_translation/run.py \
+    --src_lang "$SRC" --tgt_lang "$TGT" \
+    --model_id CohereForAI/aya-23-8B \
+    --components heads \
+    --n_pairs 100 \
+    --split dev \
+    --max_response_tokens 128 \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation_aya

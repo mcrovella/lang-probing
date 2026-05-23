@@ -209,12 +209,19 @@ def analyze_language(lang_key: str, output_dir: Path) -> dict | None:
         # take the first match (there should only be one)
         return matches[0].get("mean_delta", float("nan")) - baseline_delta
 
-    signed_pos_dc = _dc_prefix("top_collective_signedPOS_")
-    signed_neg_dc = _dc_prefix("top_collective_signedNEG_")
+    signed_pos_dc = _dc("pos10_mean")
+    if signed_pos_dc != signed_pos_dc:
+        signed_pos_dc = _dc_prefix("top_collective_signedPOS_")
+    signed_neg_dc = _dc("neg10_mean")
+    if signed_neg_dc != signed_neg_dc:
+        signed_neg_dc = _dc_prefix("top_collective_signedNEG_")
 
     # Matched-size controls for POS/NEG collectives
-    matched_pos_dc = _dc_prefix("ctrl_collective_matched_POS_")
-    matched_neg_dc = _dc_prefix("ctrl_collective_matched_NEG_")
+    matched_pos_dc = _dc("ctrl_matched10_mean")
+    matched_neg_dc = matched_pos_dc
+    if matched_pos_dc != matched_pos_dc:
+        matched_pos_dc = _dc_prefix("ctrl_collective_matched_POS_")
+        matched_neg_dc = _dc_prefix("ctrl_collective_matched_NEG_")
 
     # Size-controlled comparisons (signedX − matchedX ctrl)
     def _diff_finite(a, b):

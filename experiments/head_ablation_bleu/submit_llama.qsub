@@ -1,0 +1,37 @@
+#!/bin/bash -l
+
+# Phase 3.3: full Llama BLEU head-ablation. One array task per target lang;
+# translates the other 7 GCM langs -> target at 10% FLORES, conditions
+# baseline/pos10/neg10/ctrl. Generation fits L40S (validated in smoke).
+
+#$ -N bleu_abl
+#$ -t 1-8
+#$ -l h_rt=3:00:00
+#$ -l gpus=1
+#$ -l gpu_type=L40S
+#$ -l gpu_c=8.9
+
+#$ -m a
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_bleu/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(_ ara eng deu fra heb hin spa tur)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== Llama BLEU ablation task ${SGE_TASK_ID}: target=${LANG} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python -m experiments.head_ablation_bleu.run \
+    --target_lang "$LANG" \
+    --split_pct 10 \
+    --batch_size 16 \
+    --gcm_dir /projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_bleu

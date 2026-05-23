@@ -216,7 +216,7 @@ def main():
                     device=device,
                     max_response_tokens=args.max_response_tokens,
                 )
-                M_patched = out["m_cf_patched"] - out["m_orig_patched"]
+                M_patched = out["m_orig_patched"] - out["m_cf_patched"]
                 acp_ie = M_patched - M_clean
                 rows.append({
                     "pair_index_in_full_run": orig_pair_idx,

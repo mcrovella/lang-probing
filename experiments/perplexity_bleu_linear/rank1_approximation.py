@@ -69,6 +69,61 @@ def fill_matrix_for_svd(M: np.ndarray) -> tuple[np.ndarray, dict]:
     return M_filled, info
 
 
+def observed_offdiag_mask(M: np.ndarray) -> np.ndarray:
+    """Observed-cell mask for BLEU matrices; diagonal/self cells are excluded."""
+    mask = np.isfinite(M)
+    n_diag = min(M.shape)
+    diag_rows = np.arange(n_diag)
+    mask[diag_rows, diag_rows] = False
+    return mask
+
+
+def masked_rank1_als(
+    M: np.ndarray,
+    mask: np.ndarray,
+    *,
+    n_iter: int = 200,
+    seed: int = 0,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Rank-1 ALS minimizing ||mask * (M - u v^T)||_F over observed entries."""
+    M = np.asarray(M, dtype=float)
+    mask = np.asarray(mask, dtype=bool)
+    if M.shape != mask.shape:
+        raise ValueError(f"M and mask shape mismatch: {M.shape} vs {mask.shape}")
+    if not mask.any():
+        raise ValueError("mask has no observed entries")
+
+    rng = np.random.default_rng(seed)
+    u = rng.normal(size=M.shape[0])
+    v = rng.normal(size=M.shape[1])
+    M0 = np.where(mask, M, 0.0)
+
+    for _ in range(n_iter):
+        denom_u = (mask * (v[None, :] ** 2)).sum(axis=1)
+        numer_u = (M0 * v[None, :]).sum(axis=1)
+        good_u = denom_u > 1e-12
+        u[good_u] = numer_u[good_u] / denom_u[good_u]
+        u[~good_u] = 0.0
+
+        denom_v = (mask * (u[:, None] ** 2)).sum(axis=0)
+        numer_v = (M0 * u[:, None]).sum(axis=0)
+        good_v = denom_v > 1e-12
+        v[good_v] = numer_v[good_v] / denom_v[good_v]
+        v[~good_v] = 0.0
+
+    return u, v
+
+
+def masked_faithfulness(M: np.ndarray, mask: np.ndarray, u: np.ndarray, v: np.ndarray) -> float:
+    """1 - ||mask*(M - u v^T)||_F / ||mask*M||_F over observed cells."""
+    M = np.asarray(M, dtype=float)
+    mask = np.asarray(mask, dtype=bool)
+    recon = np.outer(u, v)
+    num = np.linalg.norm(np.where(mask, M - recon, 0.0), ord="fro")
+    den = np.linalg.norm(np.where(mask, M, 0.0), ord="fro")
+    return float(1.0 - num / den) if den > 0 else float("nan")
+
+
 def rank_k_approximation(M: np.ndarray, k: int) -> np.ndarray:
     """Best rank-k approximation via truncated SVD."""
     U, S, Vt = np.linalg.svd(M, full_matrices=False)
@@ -122,6 +177,35 @@ def plot_rank1_vs_actual(M: np.ndarray, model: str, faith1: float,
     ax.set_xlabel("Actual BLEU")
     ax.set_ylabel("Rank-1 predicted BLEU")
     ax.set_title(f"Rank-1 SVD: faithfulness = {faith1 * 100:.1f}% ({model})")
+    ax.grid(alpha=0.3)
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(save_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    logger.info("Wrote %s", save_path)
+
+
+def plot_rank1_reconstruction_vs_actual(
+    M: np.ndarray,
+    M1: np.ndarray,
+    mask: np.ndarray,
+    model: str,
+    faith1: float,
+    save_path: Path,
+) -> None:
+    """Scatter observed BLEU cells against a supplied rank-1 reconstruction."""
+    actual = M[mask]
+    predicted = M1[mask]
+    fig, ax = plt.subplots(figsize=(6, 5))
+    ax.scatter(actual, predicted, alpha=0.5, s=20)
+    lim = (float(np.nanmin([actual.min(), predicted.min()])) - 1,
+           float(np.nanmax([actual.max(), predicted.max()])) + 1)
+    ax.plot(lim, lim, color="tab:red", linestyle="--", alpha=0.7, label="y = x")
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+    ax.set_xlabel("Actual BLEU")
+    ax.set_ylabel("Masked rank-1 predicted BLEU")
+    ax.set_title(f"Masked rank-1 ALS: faithfulness = {faith1 * 100:.1f}% ({model})")
     ax.grid(alpha=0.3)
     ax.legend()
     fig.tight_layout()
@@ -274,6 +358,13 @@ def main() -> None:
         type=Path,
         default=Path(IMG_DIR) / "perplexity_bleu_linear",
     )
+    parser.add_argument(
+        "--legacy_impute",
+        action="store_true",
+        help="Use the old column-mean-impute + SVD path instead of masked ALS.",
+    )
+    parser.add_argument("--als_iter", type=int, default=300)
+    parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -285,28 +376,44 @@ def main() -> None:
     logger.info("BLEU matrix: %s (nan count=%d)",
                 M.shape, int(np.isnan(M).sum()))
 
-    # SVD requires a complete matrix.
-    M_filled, imputation = fill_matrix_for_svd(M)
-    if imputation["n_nan"]:
-        logger.info("Imputed %d NaN cells with %s for SVD",
-                    imputation.get("n_imputed", 0), imputation["imputation"])
+    mask = observed_offdiag_mask(M)
+    imputation = {"n_nan": int(np.isnan(M).sum()), "imputation": "none"}
 
-    # Save singular values
-    U, S, Vt = np.linalg.svd(M_filled, full_matrices=False)
-    pd.DataFrame({"rank": np.arange(1, len(S) + 1), "singular_value": S}).to_csv(
-        args.output_dir / f"singular_values_{args.model}.csv", index=False
-    )
+    if args.legacy_impute:
+        # SVD requires a complete matrix.
+        M_filled, imputation = fill_matrix_for_svd(M)
+        if imputation["n_nan"]:
+            logger.info("Imputed %d NaN cells with %s for SVD",
+                        imputation.get("n_imputed", 0), imputation["imputation"])
 
-    # Faithfulness curve + plot
-    faith = plot_faithfulness_vs_rank(
-        M_filled, args.model, args.img_dir / f"linear_effects_ranks_{args.model}.png"
-    )
-
-    # Rank-1 predicted vs actual scatter
-    plot_rank1_vs_actual(
-        M_filled, args.model, float(faith[0]),
-        args.img_dir / f"linear_effects_{args.model}.png",
-    )
+        U, S, Vt = np.linalg.svd(M_filled, full_matrices=False)
+        pd.DataFrame({"rank": np.arange(1, len(S) + 1), "singular_value": S}).to_csv(
+            args.output_dir / f"singular_values_{args.model}.csv", index=False
+        )
+        faith = plot_faithfulness_vs_rank(
+            M_filled, args.model, args.img_dir / f"linear_effects_ranks_{args.model}.png"
+        )
+        faith1 = float(faith[0])
+        M_for_plots = M_filled
+        M1_for_scatter = rank_k_approximation(M_filled, 1)
+        plot_rank1_vs_actual(
+            M_filled, args.model, faith1,
+            args.img_dir / f"linear_effects_{args.model}.png",
+        )
+    else:
+        u, v = masked_rank1_als(M, mask, n_iter=args.als_iter, seed=args.seed)
+        M_for_plots = np.outer(u, v)
+        M1_for_scatter = M_for_plots
+        faith1 = masked_faithfulness(M, mask, u, v)
+        S = np.array([float(np.linalg.norm(u) * np.linalg.norm(v))])
+        faith = np.array([faith1])
+        pd.DataFrame({"rank": [1], "singular_value": S}).to_csv(
+            args.output_dir / f"singular_values_{args.model}.csv", index=False
+        )
+        plot_rank1_reconstruction_vs_actual(
+            M, M1_for_scatter, mask, args.model, faith1,
+            args.img_dir / f"linear_effects_{args.model}.png",
+        )
 
     # Raw matrix + rank-1 matrix figures from the exact same pivot.
     plot_bleu_heatmap(
@@ -314,11 +421,11 @@ def main() -> None:
         args.img_dir / f"bleu_matrix_{args.model}.png",
     )
     plot_actual_vs_rank1_heatmaps(
-        M, M_filled, src_labels, tgt_labels, args.model, float(faith[0]),
+        M, M_for_plots, src_labels, tgt_labels, args.model, faith1,
         args.img_dir / f"bleu_matrix_rank1_{args.model}.png",
     )
     plot_residual_heatmap(
-        M, M_filled, src_labels, tgt_labels, args.model,
+        M, M_for_plots, src_labels, tgt_labels, args.model,
         args.img_dir / f"rank1_residual_heatmap_{args.model}.png",
     )
 
@@ -330,8 +437,9 @@ def main() -> None:
     })
     summary.to_csv(args.output_dir / f"faithfulness_{args.model}.csv", index=False)
 
-    lolo = leave_one_language_out_summary(M_filled, src_labels, tgt_labels)
-    lolo.to_csv(args.output_dir / f"leave_one_language_out_{args.model}.csv", index=False)
+    if args.legacy_impute:
+        lolo = leave_one_language_out_summary(M_for_plots, src_labels, tgt_labels)
+        lolo.to_csv(args.output_dir / f"leave_one_language_out_{args.model}.csv", index=False)
 
     matrix_summary = {
         "model": args.model,
@@ -341,17 +449,19 @@ def main() -> None:
         "n_cells": int(np.prod(M.shape)),
         "n_nan": imputation["n_nan"],
         "imputation": imputation,
-        "rank1_faithfulness": float(faith[0]),
+        "rank1_method": "legacy_impute_svd" if args.legacy_impute else "masked_als_observed_offdiag",
+        "rank1_faithfulness": faith1,
+        "n_observed_offdiag": int(mask.sum()),
         "src_labels": src_labels,
         "tgt_labels": tgt_labels,
     }
     with open(args.output_dir / f"matrix_summary_{args.model}.json", "w") as f:
         json.dump(matrix_summary, f, indent=2)
 
-    print(f"\n=== Rank-1 faithfulness for {args.model}: {faith[0] * 100:.2f}% ===")
+    print(f"\n=== Rank-1 faithfulness for {args.model}: {faith1 * 100:.2f}% ===")
     print(f"    matrix shape: {len(src_labels)} x {len(tgt_labels)}")
     print(f"    (1 - ||M - M_1||_F / ||M||_F)")
-    print(f"Top-5 singular values: {S[:5].round(3)}")
+    print(f"Top singular values/proxy scale: {S[:5].round(3)}")
     print(f"\nSaved:")
     print(f"  img:  {args.img_dir / f'linear_effects_ranks_{args.model}.png'}")
     print(f"  img:  {args.img_dir / f'linear_effects_{args.model}.png'}")
@@ -360,7 +470,8 @@ def main() -> None:
     print(f"  img:  {args.img_dir / f'rank1_residual_heatmap_{args.model}.png'}")
     print(f"  csv:  {args.output_dir / f'faithfulness_{args.model}.csv'}")
     print(f"  csv:  {args.output_dir / f'singular_values_{args.model}.csv'}")
-    print(f"  csv:  {args.output_dir / f'leave_one_language_out_{args.model}.csv'}")
+    if args.legacy_impute:
+        print(f"  csv:  {args.output_dir / f'leave_one_language_out_{args.model}.csv'}")
     print(f"  json: {args.output_dir / f'matrix_summary_{args.model}.json'}")
 
 

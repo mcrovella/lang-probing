@@ -1,0 +1,33 @@
+#!/bin/bash -l
+
+# Aya GCM pre-flight smoke: 1 direction, 5 pairs, heads-only. Confirms the
+# Cohere arch + nnsight o_proj path + tokenizer seam before the 56-dir sweep.
+
+#$ -N gcm_aya_smoke
+#$ -l h_rt=0:30:00
+#$ -l gpus=1
+#$ -l gpu_type=L40S
+#$ -l gpu_c=8.9
+
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/gcm_translation/run/$JOB_NAME.$JOB_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+echo "=== Aya GCM smoke (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/gcm_translation/run.py \
+    --src_lang English --tgt_lang Spanish \
+    --model_id CohereForAI/aya-23-8B \
+    --components heads \
+    --n_pairs 5 \
+    --split dev \
+    --max_response_tokens 128 \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation_aya_smoke

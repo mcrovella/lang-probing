@@ -1,0 +1,35 @@
+#!/bin/bash -l
+
+# Aya-only MultiBLiMP margins. Cohere's 256k vocab makes the loss tensor ~2x
+# Llama's, so it OOMs at batch 64 on 48G L40S. Use A100 80G + batch 16.
+
+#$ -N mblimp_marg_aya
+#$ -l h_rt=1:30:00
+#$ -l gpus=1
+#$ -l gpu_type=L40S
+#$ -l gpu_c=8.9
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/perplexity_bleu_linear/run/$JOB_NAME.$JOB_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+echo "=== Aya margins (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/perplexity_bleu_linear/run_per.py \
+    --margins_multilang \
+    --dataset jumelet/multiblimp \
+    --model_id CohereForAI/aya-23-8B \
+    --split train \
+    --batch_size 16 \
+    --max_length 2048 \
+    --device cuda \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/perplexity_bleu_linear/multiblimp_margins

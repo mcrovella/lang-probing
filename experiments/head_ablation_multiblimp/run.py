@@ -48,13 +48,13 @@ _REPO = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(_REPO / "src"))
 sys.path.insert(0, str(_REPO / "experiments" / "counterfactual_attribution"))
 
-from lang_probing_src.config import MODEL_ID, TRACER_KWARGS
+from lang_probing_src.config import MODEL_ID, MODEL_TO_ID, TRACER_KWARGS
 from lang_probing_src.utils import setup_model, get_device_info
 from attribute_multilingual import prepare_pair
 
 # local
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from heads import LANG_KEY_TO_NAME, aggregate_target_heads, sample_stratified_controls
+from heads import LANG_KEY_TO_NAME, aggregate_target_heads, sample_stratified_controls, select_signed_heads
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -169,6 +169,10 @@ def score_pair(
     orig_id = pair["_last_orig_id"]
     cf_id = pair["_last_cf_id"]
     layers = model.model.layers
+    # Cohere/Aya apply config.logit_scale (0.0625) after lm_head; reapply since
+    # we read lm_head.output directly. Llama has none -> 1.0. The margin
+    # logp(orig)-logp(cf) scales exactly linearly with this.
+    logit_scale = float(getattr(model.model.config, "logit_scale", 1.0))
 
     with model.trace(input_ids, **TRACER_KWARGS), torch.no_grad():
         if ablations:
@@ -209,6 +213,8 @@ def score_pair(
 
         logits = model.lm_head.output  # [1, S, vocab]
         cf_logits = logits[:, cf_pos, :]
+        if logit_scale != 1.0:
+            cf_logits = cf_logits * logit_scale
         log_probs = F.log_softmax(cf_logits.float(), dim=-1)
         delta = (log_probs[:, orig_id] - log_probs[:, cf_id]).cpu().save()
 
@@ -269,6 +275,7 @@ def build_conditions(
     n_heads_per_layer: int,
     n_ctrl_seeds: int = 0,
     base_seed: int = 42,
+    signed_heads=None,
 ):
     """
     Build the list of conditions to run.
@@ -284,83 +291,32 @@ def build_conditions(
         useful when a single ctrl deviates (e.g. Hindi's +0.23 on the
         first sample).
     """
-    conds = []
+    conds = [{"name": "baseline", "ablations": []}]
+    if signed_heads is None:
+        pos_heads = [h for h in top_heads if h["mean_signed_ie_agg"] > 0][:10]
+        neg_heads = [h for h in top_heads if h["mean_signed_ie_agg"] < 0][:10]
+    else:
+        pos_heads = signed_heads.get("pos", [])
+        neg_heads = signed_heads.get("neg", [])
 
-    conds.append({"name": "baseline", "ablations": []})
+    selected = pos_heads + neg_heads
+    ctrl_heads = sample_stratified_controls(
+        selected,
+        n_heads_per_layer=n_heads_per_layer,
+        seed=base_seed,
+    ) if selected else []
 
-    for i, h in enumerate(top_heads):
-        conds.append({
-            "name": f"top_rank{i+1:02d}_L{h['layer']:02d}H{h['head']:02d}_mean",
-            "ablations": [(h["layer"], h["head"], "mean")],
-        })
-    for i, c in enumerate(control_heads):
-        conds.append({
-            "name": f"ctrl_rank{i+1:02d}_L{c['layer']:02d}H{c['head']:02d}_mean",
-            "ablations": [(c["layer"], c["head"], "mean")],
-        })
-
-    if mode == "smoke":
-        return conds
-
-    # k=5 collective: top + matched ctrl (existing)
-    top_k_subset = top_heads[:top_k_collective]
-    ctrl_k_subset = control_heads[:top_k_collective]
     conds.append({
-        "name": f"top_collective_k{top_k_collective}_mean",
-        "ablations": [(h["layer"], h["head"], "mean") for h in top_k_subset],
+        "name": "pos10_mean",
+        "ablations": [(h["layer"], h["head"], "mean") for h in pos_heads],
     })
     conds.append({
-        "name": f"ctrl_collective_k{top_k_collective}_mean",
-        "ablations": [(h["layer"], h["head"], "mean") for h in ctrl_k_subset],
+        "name": "neg10_mean",
+        "ablations": [(h["layer"], h["head"], "mean") for h in neg_heads],
     })
-
-    # Extra randomly-resampled k=5 controls (for ctrl variance estimation).
-    # Each seed produces a different stratified sample over the same layers.
-    for s in range(n_ctrl_seeds):
-        alt_ctrl = sample_stratified_controls(
-            top_heads[:top_k_collective],
-            n_heads_per_layer=n_heads_per_layer,
-            seed=base_seed + 100 + s,
-        )
-        conds.append({
-            "name": f"ctrl_collective_k{top_k_collective}_seed{s:02d}_mean",
-            "ablations": [(h["layer"], h["head"], "mean") for h in alt_ctrl],
-        })
-
-    # Sign-split collective ablations
-    pos_heads = [h for h in top_heads if h["mean_signed_ie_agg"] > 0]
-    neg_heads = [h for h in top_heads if h["mean_signed_ie_agg"] < 0]
-    if pos_heads:
-        conds.append({
-            "name": f"top_collective_signedPOS_n{len(pos_heads)}_mean",
-            "ablations": [(h["layer"], h["head"], "mean") for h in pos_heads],
-        })
-        # Matched-size random control over the POS-IE layers
-        pos_ctrl = sample_stratified_controls(
-            pos_heads, n_heads_per_layer=n_heads_per_layer, seed=base_seed + 1,
-        )
-        conds.append({
-            "name": f"ctrl_collective_matched_POS_n{len(pos_heads)}_mean",
-            "ablations": [(h["layer"], h["head"], "mean") for h in pos_ctrl],
-        })
-    if neg_heads:
-        conds.append({
-            "name": f"top_collective_signedNEG_n{len(neg_heads)}_mean",
-            "ablations": [(h["layer"], h["head"], "mean") for h in neg_heads],
-        })
-        # Matched-size random control over the NEG-IE layers
-        neg_ctrl = sample_stratified_controls(
-            neg_heads, n_heads_per_layer=n_heads_per_layer, seed=base_seed + 2,
-        )
-        conds.append({
-            "name": f"ctrl_collective_matched_NEG_n{len(neg_heads)}_mean",
-            "ablations": [(h["layer"], h["head"], "mean") for h in neg_ctrl],
-        })
-
-    # Zero ablation spot check on top-k_collective (mean-vs-zero comparison)
     conds.append({
-        "name": f"top_collective_k{top_k_collective}_zero",
-        "ablations": [(h["layer"], h["head"], "zero") for h in top_k_subset],
+        "name": "ctrl_matched10_mean",
+        "ablations": [(h["layer"], h["head"], "mean") for h in ctrl_heads],
     })
 
     return conds
@@ -381,6 +337,9 @@ def main():
     ap.add_argument("--gcm_dir", default="/projectnb/mcnet/jbrin/lang-probing/outputs/gcm_translation")
     ap.add_argument("--pairs_dir", default="/projectnb/mcnet/jbrin/lang-probing/data/multilingual_pairs")
     ap.add_argument("--output_dir", default="/projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp")
+    ap.add_argument("--model_id", default=MODEL_ID,
+                    help="HF model id. Use CohereForAI/aya-23-8B (with --gcm_dir the Aya GCM "
+                         "outputs) for the Aya head-ablation diagnostic.")
     args = ap.parse_args()
 
     target_name = LANG_KEY_TO_NAME[args.lang_key]
@@ -407,9 +366,9 @@ def main():
     # (will sample controls after model load)
 
     # --- 2. Load model ---
-    logger.info(f"Loading model {MODEL_ID}...")
+    logger.info(f"Loading model {args.model_id}...")
     t_load = time.time()
-    model, _, _, tokenizer = setup_model(MODEL_ID, sae_id=None)
+    model, _, _, tokenizer = setup_model(args.model_id, sae_id=None)
     device, _ = get_device_info()
     logger.info(f"  loaded in {time.time() - t_load:.1f}s on {device}")
 
@@ -422,11 +381,16 @@ def main():
     head_dim = cfg.hidden_size // n_heads
     logger.info(f"  n_layers={n_layers}  n_heads={n_heads}  head_dim={head_dim}")
 
+    signed_heads = select_signed_heads(res["signed_map"], res["abs_map"], n_per_sign=10)
+    selected_heads = signed_heads["pos"] + signed_heads["neg"]
     # Controls
-    control_heads = sample_stratified_controls(top_heads, n_heads_per_layer=n_heads, seed=args.seed)
+    control_heads = (
+        sample_stratified_controls(selected_heads, n_heads_per_layer=n_heads, seed=args.seed)
+        if selected_heads else []
+    )
     logger.info("Stratified controls:")
-    for i, (top, ctrl) in enumerate(zip(top_heads, control_heads)):
-        logger.info(f"  rank={i+1:2d}  top=L{top['layer']:2d}.H{top['head']:2d}  "
+    for i, (top, ctrl) in enumerate(zip(selected_heads, control_heads)):
+        logger.info(f"  rank={i+1:2d}  selected=L{top['layer']:2d}.H{top['head']:2d}  "
                     f"ctrl=L{ctrl['layer']:2d}.H{ctrl['head']:2d}")
 
     # --- 3. Load pairs ---
@@ -453,7 +417,7 @@ def main():
     conditions = build_conditions(
         args.mode, top_heads, control_heads, args.top_k_collective,
         n_heads_per_layer=n_heads, n_ctrl_seeds=args.n_ctrl_seeds,
-        base_seed=args.seed,
+        base_seed=args.seed, signed_heads=signed_heads,
     )
     logger.info(f"Running {len(conditions)} conditions...")
 
@@ -503,9 +467,10 @@ def main():
         "n_layers": n_layers,
         "n_heads": n_heads,
         "head_dim": head_dim,
-        "model_id": MODEL_ID,
+        "model_id": args.model_id,
         "gcm_source_dirs": res["source_dirs"],
         "top_heads": top_heads,
+        "signed_heads": signed_heads,
         "control_heads": control_heads,
         "pair_meta": pair_meta,
         "total_elapsed_s": total_elapsed,

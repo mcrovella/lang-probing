@@ -49,6 +49,27 @@ def load_perplexities(csv_path: Path) -> Dict[str, float]:
     return lang_to_ppl
 
 
+def load_multiblimp_margins(csv_path: Path) -> Dict[str, float]:
+    """Load per-language mean `margin_total` from margins_by_lang.csv."""
+    if not csv_path.is_file():
+        raise FileNotFoundError(f"Margin CSV not found: {csv_path}")
+    out: Dict[str, float] = {}
+    with csv_path.open(newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            lang = (row.get("lang") or "").strip()
+            val = row.get("margin_total")
+            if not lang or val is None:
+                continue
+            try:
+                out[lang] = float(val)
+            except ValueError:
+                continue
+    if not out:
+        raise ValueError(f"No valid margins found in {csv_path}")
+    return out
+
+
 def build_regression_dataset(
     bleu_csv_path: Path,
     lang_to_ppl: Dict[str, float],
@@ -229,6 +250,18 @@ def parse_args() -> argparse.Namespace:
         default="raw",
         help="Feature transformation to apply to perplexities (default: raw).",
     )
+    parser.add_argument(
+        "--proxy",
+        choices=("perplexity", "multiblimp_margin"),
+        default="perplexity",
+        help="Per-language feature to use in BLEU ~ src + tgt regression.",
+    )
+    parser.add_argument(
+        "--margin-csv",
+        type=str,
+        default=None,
+        help="Optional margins_by_lang.csv path for --proxy multiblimp_margin.",
+    )
     interaction_group = parser.add_mutually_exclusive_group()
     interaction_group.add_argument(
         "--include-interaction",
@@ -269,11 +302,19 @@ def main() -> None:
     perplexity_csv = outputs_dir / f"perplexity_results_{args.model}.csv"
     bleu_csv = outputs_dir / f"bleu_results_{args.model}.csv"
 
-    lang_to_ppl = load_perplexities(perplexity_csv)
+    if args.proxy == "multiblimp_margin":
+        margin_csv = Path(args.margin_csv) if args.margin_csv else (
+            outputs_dir.parent / "multiblimp_margins" / args.model / "margins_by_lang.csv"
+        )
+        lang_to_ppl = load_multiblimp_margins(margin_csv)
+        feature_transform = "raw"
+    else:
+        lang_to_ppl = load_perplexities(perplexity_csv)
+        feature_transform = args.feature_transform
     X, y, pairs = build_regression_dataset(
         bleu_csv,
         lang_to_ppl=lang_to_ppl,
-        feature_transform=args.feature_transform,
+        feature_transform=feature_transform,
         include_interaction=args.include_interaction,
     )
 
@@ -281,12 +322,12 @@ def main() -> None:
     mse, r2 = compute_metrics(y, y_hat)
 
     coeff_names = get_feature_names(
-        feature_transform=args.feature_transform,
+        feature_transform=feature_transform,
         include_interaction=args.include_interaction,
     )
 
     joint_flag = "joint" if args.include_interaction else "nojoint"
-    feature_flag = args.feature_transform
+    feature_flag = f"{args.proxy}_{feature_transform}"
 
     results_dir = outputs_dir / "linear_models"
     coeffs_path = results_dir / f"linear_coeffs_{args.model}_{feature_flag}_{joint_flag}.csv"
@@ -310,4 +351,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

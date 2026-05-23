@@ -1,0 +1,36 @@
+#!/bin/bash -l
+
+# heb/hin retry at n=200 (they OOM at n=400 even on 80G due to longer
+# tokenization). Same new top-10/top-10 sign-fixed scheme, signfix output dir.
+
+#$ -N habl_sf_hh
+#$ -t 1-2
+#$ -l h_rt=0:50:00
+#$ -l gpus=1
+#$ -l gpu_type=A100
+#$ -l gpu_c=8.0
+#$ -l gpu_memory=64G
+
+#$ -m ea
+#$ -j y
+#$ -o /projectnb/mcnet/jbrin/lang-probing/experiments/head_ablation_multiblimp/run/$JOB_NAME.$JOB_ID.$TASK_ID.out
+#$ -V
+
+set -e
+module load miniconda
+conda activate probes
+export HF_HOME="/projectnb/mcnet/jbrin/.cache/huggingface"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+
+LANGS=(_ heb hin)
+LANG=${LANGS[$SGE_TASK_ID]}
+
+echo "=== signfix heb/hin task ${SGE_TASK_ID}: lang=${LANG} (host=$HOSTNAME) ==="
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+cd /projectnb/mcnet/jbrin/lang-probing
+
+python experiments/head_ablation_multiblimp/run.py \
+    --lang_key "$LANG" \
+    --max_pairs 200 \
+    --mode full \
+    --output_dir /projectnb/mcnet/jbrin/lang-probing/outputs/head_ablation_multiblimp_signfix

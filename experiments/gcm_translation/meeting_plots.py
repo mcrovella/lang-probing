@@ -100,9 +100,9 @@ def plot_direction_by_universal_head_signed():
     ax.set_ylabel("Translation direction (src__tgt)")
     ax.set_title(
         "Signed IE of top-20 universal heads across all 56 translation directions\n"
-        "Red = positive IE (pushes toward counterfactual); blue = negative IE (pushes toward gold)"
+        "Red = positive IE (favors original/correct); blue = negative IE (favors counterfactual)"
     )
-    plt.colorbar(im, ax=ax, label="mean signed IE")
+    plt.colorbar(im, ax=ax, label="mean signed IE (positive=favors original)")
     plt.tight_layout()
     plt.savefig(IMG / "meeting_direction_by_universal_head_signed.png", dpi=130)
     plt.close(fig)

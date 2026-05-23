@@ -6,6 +6,7 @@ Proxies used to predict BLEU(src,tgt) via OLS
   1. flores_ppl_per_token  (lower = better)  -- FLORES per-token corpus PPL
   2. bits_per_byte         (lower = better)  -- tokenization-invariant fluency
   3. multiblimp_accuracy   (higher = better) -- grammatical acceptability
+  4. multiblimp_margin     (higher = better) -- mean correct-minus-wrong logprob margin
 
 NOTE: "perplexity accuracy rate" (1 - PER) is *numerically identical* to
 multiblimp_accuracy here (Pearson r = 1.000, max|diff| = 0.0) -- they are the
@@ -40,6 +41,7 @@ PROXY_META = {
     "flores_ppl_per_token": {"higher_better": False, "label": "Per-token perplexity"},
     "bits_per_byte":        {"higher_better": False, "label": "Bits-per-byte"},
     "multiblimp_accuracy":  {"higher_better": True,  "label": "MultiBLiMP accuracy"},
+    "multiblimp_margin":    {"higher_better": True,  "label": "MultiBLiMP logprob margin"},
 }
 
 
@@ -59,6 +61,11 @@ def load_proxies():
     for r in lc(BASE / "shareable_metrics" / "language_metrics.csv"):
         if r["model"] == MODEL and r.get("multiblimp_accuracy"):
             P["multiblimp_accuracy"][r["lang"]] = float(r["multiblimp_accuracy"])
+    margin_candidates = sorted((BASE / "multiblimp_margins").glob("*/margins_by_lang.csv"))
+    for path in margin_candidates:
+        for r in lc(path):
+            if r.get("lang") and r.get("margin_total"):
+                P["multiblimp_margin"][r["lang"]] = float(r["margin_total"])
     return P
 
 
@@ -118,8 +125,9 @@ def main():
     pairs = load_bleu()
     pacc = load_perplexity_accuracy()
 
-    coverage = {k: sorted(P[k]) for k in P}
-    common = sorted(set.intersection(*[set(P[k]) for k in P]))
+    active_keys = [k for k in PROXY_META if P.get(k)]
+    coverage = {k: sorted(P[k]) for k in active_keys}
+    common = sorted(set.intersection(*[set(P[k]) for k in active_keys]))
     common_set = set(common)
     n_common_pairs = sum(1 for s, t, _ in pairs if s in common_set and t in common_set)
     common_str = ", ".join(common)
@@ -133,7 +141,8 @@ def main():
 
     # ---- per-proxy own vs common R^2 (for fig1 + report) ----
     summary = []
-    for k, meta in PROXY_META.items():
+    for k in active_keys:
+        meta = PROXY_META[k]
         own = fit(pairs, P[k]); com = fit(pairs, P[k], restrict=common_set)
         c = com["coef"]; want_pos = meta["higher_better"]
         sign_ok = (c[1] > 0) == want_pos and (c[2] > 0) == want_pos
@@ -150,11 +159,14 @@ def main():
     table_specs = [
         ("MultiBLiMP accuracy -- linear",   "multiblimp_accuracy",   False),
         ("MultiBLiMP accuracy -- bilinear", "multiblimp_accuracy",   True),
+        ("MultiBLiMP margin -- linear",     "multiblimp_margin",     False),
         ("Per-token perplexity -- linear",  "flores_ppl_per_token",  False),
         ("Bits-per-byte -- linear",         "bits_per_byte",         False),
     ]
     table = []
     for name, key, inter in table_specs:
+        if key not in active_keys:
+            continue
         r = fit(pairs, P[key], restrict=common_set, interaction=inter)
         table.append({"model": name, "R2": r["r2"], "adj_R2": r["adj_r2"],
                       "MAE": r["mae"], "n_pairs": r["n"]})
@@ -212,7 +224,7 @@ def main():
 
     # ---- Figure 2: predicted vs actual (3 proxies, common subset) ----
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.4))
-    for ax, k in zip(axes, PROXY_META):
+    for ax, k in zip(axes, active_keys[:3]):
         com = fit(pairs, P[k], restrict=common_set)
         ax.scatter(com["y"], com["yhat"], s=14, alpha=.6, color="#3182bd")
         lo, hi = min(com["y"].min(), com["yhat"].min()), max(com["y"].max(), com["yhat"].max())
@@ -223,8 +235,9 @@ def main():
     fig.tight_layout(); fig.savefig(OUT / "fig2_pred_vs_actual.png", dpi=140); plt.close(fig)
 
     # ---- Figure 3: per-language marginal for all 3 proxies (report only) ----
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4.6))
-    for ax, k in zip(axes, PROXY_META):
+    fig, axes = plt.subplots(1, min(4, len(active_keys)), figsize=(14, 4.6))
+    axes = np.atleast_1d(axes)
+    for ax, k in zip(axes, active_keys[:len(axes)]):
         Ls, a, b, r, p = marginal(pairs, P[k], common_set)
         ax.scatter(a, b, s=24, color="#e6550d")
         for L, xx, yy in zip(Ls, a, b):
